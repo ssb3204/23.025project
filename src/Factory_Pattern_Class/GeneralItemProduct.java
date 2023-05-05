@@ -3,12 +3,13 @@ package Factory_Pattern_Class;
 import java.io.File;
 
 public class GeneralItemProduct implements ItemProduct{
-    private String item_title;
-    private int item_price;
-    private String item_description;
-    private File item_imageFile;
-    private int item_count;
-    private  String userID;
+    private String item_title;//물품 명
+    private int item_price;//물품 가격
+    private String item_description;//물품 설명
+    private File item_imageFile;//물품 파일
+    private int item_count;//물품 개수
+    private  String userID;//판매자 명
+    private String type = "일반";//물품 타입
 
     public GeneralItemProduct(String item_title, int item_price, int item_count, String item_description, File item_imageFile, String userID){
         this.item_title = item_title;
@@ -52,5 +53,9 @@ public class GeneralItemProduct implements ItemProduct{
     @Override
     public void decreaseItemCount() {
         item_count--;
+    }
+    @Override
+    public String getType() {
+        return type;
     }
 }

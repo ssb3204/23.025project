@@ -17,4 +17,6 @@ public interface ItemProduct {
     public String getUserID();
     /**물품의 갯수를 1줄인다*/
     public void decreaseItemCount();
+    /**물품 타입을 반환*/
+    public String getType();
 }
