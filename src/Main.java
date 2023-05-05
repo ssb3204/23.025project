@@ -5,6 +5,5 @@ public class Main {
     public static void main(String[] args) {
         new LoginFrame();
         //new MainUI("!","1");
-        //a
     }
 }
