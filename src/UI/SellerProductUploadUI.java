@@ -216,7 +216,7 @@ public class SellerProductUploadUI implements ActionListener {
             item_description = item_description_textarea.getText();
 
             //이미지파일 저장
-            saveImageFile();
+            //saveImageFile();
 
             return true;
         }
