@@ -68,7 +68,7 @@ public class SellerProductUploadUI implements ActionListener {
         SellerProductUploadUI(MainUI TOP){
             //SellerProductUploadUI 객체를 생성한 이전 클래스 객체를 저장
             TopUI = TOP;
-            userID = "test";
+            userID = TopUI.getId();
 
             //메인 프레임을 생성
             sellerProductUploadUI = new JFrame("물품 등록");
@@ -78,7 +78,8 @@ public class SellerProductUploadUI implements ActionListener {
             sellerProductUploadUI.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
-                    System.exit(0);
+                    TopUI.mainframe.setVisible(true);
+                    sellerProductUploadUI.dispose();
                 }
             });
 
@@ -183,7 +184,6 @@ public class SellerProductUploadUI implements ActionListener {
             try {//가격이 공백, 문자, 음수나 0이 아니라면
                 //물품의 가격을 저장
                 item_price = Integer.parseInt(item_price_field.getText());
-                System.out.println("가격" + item_price);
                 if(item_price < 1){
                     return false;
                 }
@@ -258,7 +258,11 @@ public class SellerProductUploadUI implements ActionListener {
                 //메인UI에 객체를 저장한다.
                 TopUI.add_item_list(product);
 
+                //물품을 추가한 후 총 페이지 수를 구한다
+                TopUI.calcTotalPage();
+
                 TopUI.mainframe.setVisible(true);
+                TopUI.clearFrame();
                 TopUI.loadUI();
                 TopUI.reloadUI();
                 sellerProductUploadUI.dispose();

@@ -19,28 +19,33 @@ public class MainUI implements ActionListener {
     Singleton sell_item_list;//물품 리스트 객체
     JFrame mainframe;//메인프레임
     JButton create_item;//물품 생성 버튼
-    JButton output_button;
 
+
+    JButton output_button;//현재 등록된 물품 출력 버튼
     JButton Mypage_button;//마이페이지 버튼
-
     JButton Logout_button;//로그아웃 버튼
 
     //페이지 번호
     JPanel page_number_panel;
     int total_page = 0;//총 페이지 수
+    JLabel page_number_label;
+    JButton next_page_button;//다음 페이지 버튼
+    JButton prev_page_button;//이전 페이지 버튼
+
+
     
     //물품 목록을 보여주기 위한 속성
     int page_number = 1;//현재 페이지 번호
     List<JPanel> panel_list;
 
     //로그인한 유저의 아이디 및 비밀번호 정보
-    String id;
-    String password;
+    private final String id;
+    private final String password;
 
     public MainUI (String id , String password) {
         //유저 정보를 저장한다.
-        this.id=id;
-        this.password=password;
+        this.id = id;
+        this.password = password;
 
         //물품 리스트를 관리하기 위한 객체 생성
         sell_item_list = Singleton.getInstance();
@@ -90,12 +95,33 @@ public class MainUI implements ActionListener {
 
         
         //페이지 번호 공간
-        page_number_panel = new JPanel(new FlowLayout());
+        calcTotalPage();
+        if(total_page == 0) total_page = 1;
+        page_number_panel = new JPanel(new BorderLayout());
+        page_number_label = new JLabel(page_number + " / " + total_page);
+        page_number_panel.add(page_number_label, BorderLayout.CENTER);
+
+        //다음 페이지 버튼
+        next_page_button = new JButton("다음");
+        next_page_button.addActionListener(this);
+        page_number_panel.add(next_page_button, BorderLayout.EAST);
+
+        //이전 페이지 버튼
+        prev_page_button = new JButton("이전");
+        prev_page_button.addActionListener(this);
+        page_number_panel.add(prev_page_button, BorderLayout.WEST);
+        prev_page_button.setEnabled(false);
+
+        //페이지의 개수가 1개가 넘지 않는다면 다음 페이지 버튼 작동X
+        if(total_page == 1){
+            next_page_button.setEnabled(false);
+        }
+
         mainframe.add(page_number_panel);
-        page_number_panel.setBounds(0, 680, 600, 20);
+        page_number_panel.setBounds(400, 640, 155, 20);
 
-
-        //화면을 로딩 한다.
+        //화면에 물품을 로드 한다.
+        loadUI();
         reloadUI();
         
         //메인프레임 중앙 및 보이기 설정
@@ -213,7 +239,7 @@ public class MainUI implements ActionListener {
                 if (i % 4 == 0) {
                     x = 100;
                     y += 200;
-                } else if (i >= 8) {
+                } else if (i >= range) {
                     return;
                 } else {
                     x += 200;
@@ -227,13 +253,41 @@ public class MainUI implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == create_item){
+            //물품 생성버튼
             mainframe.setVisible(false);
             new SellerProductUploadUI(this);
         }
         else if (e.getSource() == output_button) {
+            //출력버튼
             showItemList();
-        }else if(e.getSource() == Mypage_button) {
+        }
+        else if(e.getSource() == Mypage_button) {
+            //마이페이지 버튼
             new MypageFrame(id, password);
+        }
+        else if(e.getSource() == next_page_button){
+            //다음 페이지 버튼
+            clearFrame();
+            page_number++;
+            updatePageNumber();
+            prev_page_button.setEnabled(true);
+            if(page_number == total_page){
+                next_page_button.setEnabled(false);
+            }
+            loadUI();
+            reloadUI();
+        }
+        else if(e.getSource() == prev_page_button){
+            //이전 페이지 버튼
+            clearFrame();
+            page_number--;
+            updatePageNumber();
+            next_page_button.setEnabled(true);
+            if(page_number == 1){
+                prev_page_button.setEnabled(false);
+            }
+            loadUI();
+            reloadUI();
         }
 
     }
@@ -250,4 +304,28 @@ public class MainUI implements ActionListener {
         //싱글톤 객체의 내용을 보여주는 메서드
         sell_item_list.showItem();
     }
+
+    /**토탈 페이지 수를 계산*/
+    public void calcTotalPage(){
+        total_page = sell_item_list.getSize() / 8;
+        if(total_page == 0 || (sell_item_list.getSize() % 8 != 0)) total_page++;
+        if(total_page >= 2) next_page_button.setEnabled(true);
+        updatePageNumber();
+    }
+
+    /**페이지 번호 업데이트*/
+    public void updatePageNumber(){
+        if(page_number_label != null) {
+            page_number_label.setText(page_number + " / " + total_page);
+        }
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
 }
