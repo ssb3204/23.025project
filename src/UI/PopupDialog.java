@@ -129,14 +129,16 @@ public class PopupDialog implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == item_buy_button){
             System.out.println("물품을 구매하셨습니다.");
-
-            System.out.println("제거 대상 : " + TopUI.panel_list.get(index));
-            TopUI.mainframe.remove(TopUI.panel_list.get(index));
             TopUI.sell_item_list.decreaseItemCount(index);
-            System.out.println("현재 목록 개수" + TopUI.sell_item_list.getSize());
-
-            TopUI.mainframe.setVisible(true);
+            //만약 물품의 개수가 0이라면 물품을 제거한다.
+            if(TopUI.sell_item_list.getItemProduct(index).getCount() == 0) {
+                System.out.println("현재 목록 개수" + TopUI.sell_item_list.getSize());
+                TopUI.sell_item_list.removeItem(index);
+                TopUI.removePanel();
+            }
+            TopUI.loadUI();
             TopUI.reloadUI();
+            TopUI.mainframe.setVisible(true);
             popup_frame.dispose();
         }
     }

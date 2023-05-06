@@ -65,9 +65,11 @@ public class Singleton {
     public void decreaseItemCount(int index){
         sell_item_list.get(index).decreaseItemCount();
         System.out.println("남은 물품 개수" + sell_item_list.get(index).getCount());
-        if(sell_item_list.get(index).getCount() == 0){
-            System.out.println(sell_item_list.get(index).getTitle() + "가 모두 팔려 삭제되었습니다.");
-            sell_item_list.remove(index);
-        }
+    }
+
+    /**위치의 ItemProduct 물품을 삭제*/
+    public void removeItem(int index){
+        System.out.println(sell_item_list.get(index).getTitle() + "가 모두 팔려 삭제되었습니다.");
+        sell_item_list.remove(index);
     }
 }

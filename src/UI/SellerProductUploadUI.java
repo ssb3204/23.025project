@@ -148,7 +148,8 @@ public class SellerProductUploadUI implements ActionListener {
             addButton.setBounds(350, 460, 100, 30);
             addButton.addActionListener(this);
 
-
+            
+            //메인프레임 중앙 위치 설정 및 보이기
             sellerProductUploadUI.setResizable(false);
             sellerProductUploadUI.setVisible(true);
         }
@@ -258,6 +259,7 @@ public class SellerProductUploadUI implements ActionListener {
                 TopUI.add_item_list(product);
 
                 TopUI.mainframe.setVisible(true);
+                TopUI.loadUI();
                 TopUI.reloadUI();
                 sellerProductUploadUI.dispose();
             }
