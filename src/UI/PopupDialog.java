@@ -136,7 +136,7 @@ public class PopupDialog implements ActionListener {
                 TopUI.sell_item_list.removeItem(index);
                 TopUI.removePanel();
             }
-            TopUI.loadUI();
+            TopUI.loadUI(TopUI.panel_list, TopUI.page_number);
             TopUI.reloadUI();
             TopUI.mainframe.setVisible(true);
             popup_frame.dispose();

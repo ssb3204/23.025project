@@ -263,7 +263,7 @@ public class SellerProductUploadUI implements ActionListener {
 
                 TopUI.mainframe.setVisible(true);
                 TopUI.clearFrame();
-                TopUI.loadUI();
+                TopUI.loadUI(TopUI.panel_list, TopUI.page_number);
                 TopUI.reloadUI();
                 sellerProductUploadUI.dispose();
             }

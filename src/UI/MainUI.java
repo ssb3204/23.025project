@@ -19,8 +19,7 @@ public class MainUI implements ActionListener {
     Singleton sell_item_list;//물품 리스트 객체
     JFrame mainframe;//메인프레임
     JButton create_item;//물품 생성 버튼
-
-
+    
     JButton output_button;//현재 등록된 물품 출력 버튼
     JButton Mypage_button;//마이페이지 버튼
     JButton Logout_button;//로그아웃 버튼
@@ -32,7 +31,6 @@ public class MainUI implements ActionListener {
     JButton next_page_button;//다음 페이지 버튼
     JButton prev_page_button;//이전 페이지 버튼
 
-
     
     //물품 목록을 보여주기 위한 속성
     int page_number = 1;//현재 페이지 번호
@@ -42,6 +40,14 @@ public class MainUI implements ActionListener {
     private final String id;
     private final String password;
 
+    //물품 검색 컴포넌트
+    JPanel search_panel;
+    JTextField search_field;
+    JButton search_button;
+    List<JPanel> search_item_list;
+    int search_page_number;
+    int search_total_page;
+    
     public MainUI (String id , String password) {
         //유저 정보를 저장한다.
         this.id = id;
@@ -61,6 +67,20 @@ public class MainUI implements ActionListener {
                 System.exit(0);
             }
         });
+
+
+        //물품 검색
+        search_panel = new JPanel(new BorderLayout());
+        search_field = new JTextField();
+        search_panel.add(search_field, BorderLayout.CENTER);
+        search_button = new JButton("검색");
+        search_panel.add(search_button, BorderLayout.EAST);
+        search_button.addActionListener(this);
+        mainframe.add(search_panel);
+        search_panel.setBounds(275, 20, 450, 30);
+
+        search_item_list = new ArrayList<JPanel>();
+
 
         //물품 등록 버튼
         create_item = new JButton("물품생성");
@@ -121,7 +141,7 @@ public class MainUI implements ActionListener {
         page_number_panel.setBounds(400, 640, 155, 20);
 
         //화면에 물품을 로드 한다.
-        loadUI();
+        loadUI(panel_list, page_number);
         reloadUI();
         
         //메인프레임 중앙 및 보이기 설정
@@ -140,33 +160,7 @@ public class MainUI implements ActionListener {
         System.out.println("패널 리스트를 삭제 후 다시 추가 중 입니다." + sell_item_list.getSize());
         panel_list.clear();
         for(int i = 0; i < sell_item_list.getSize(); i++) {
-            //이미지 라벨 생성
-            JLabel image_label = new JLabel();
-            try {
-                BufferedImage image = ImageIO.read(sell_item_list.getItemProduct(i).getImageFile());
-                // 이미지의 크기를 150x150으로 변경
-                Image resizedImage = image.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
-                ImageIcon icon = new ImageIcon(resizedImage);
-                image_label.setIcon(icon);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-
-            //제목 라벨 생성
-            JLabel title_label = new JLabel(sell_item_list.getItemProduct(i).getTitle());
-            //패널 생성
-            JPanel item_panel = new JPanel(new BorderLayout());
-            item_panel.add(image_label, BorderLayout.CENTER);
-            item_panel.add(title_label, BorderLayout.SOUTH);
-            int finalI = i;
-            item_panel.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    new PopupDialog(MainUI.this, finalI);
-                    mainframe.setVisible(false);
-                }
-            });
-            panel_list.add(item_panel);
+            panel_list.add(createItemPanel(sell_item_list.getItemProduct(i), i));
         }
         System.out.println("패널 리스트 개수 : " + panel_list.size());
     }
@@ -179,6 +173,16 @@ public class MainUI implements ActionListener {
             for (JPanel jp : panel_list) {//개수만큼 반복한다
                 if ((range - 8) < i && i <= (range)) {
                     mainframe.remove(panel_list.get(i - 1));
+                }
+                i++;
+            }
+        }
+        if(search_item_list.size() >= 1){
+            int i = 1;
+            int range = search_page_number * 8;
+            for(JPanel jp : search_item_list) {
+                if ((range - 8) < i && i <= (range)) {
+                    mainframe.remove(search_item_list.get(i - 1));
                 }
                 i++;
             }
@@ -196,10 +200,16 @@ public class MainUI implements ActionListener {
     /**panel_list 에 물품 패널을 추가한다*/
     public void addPanel(){
         int i = sell_item_list.getSize() - 1;
+        //패널로 만들 물품을 보낸 후 패널을 반환 받는다
+        panel_list.add(createItemPanel(sell_item_list.getItemProduct(i), i));
+    }
+
+    /**매개변수로 전달받은 ItemProduct 와 Singleton 에서의 index 를 전달받아 물품 패널로 만들어 반환한다.*/
+    public JPanel createItemPanel(ItemProduct item, int index){
         //이미지 라벨 생성
         JLabel image_label = new JLabel();
         try {
-            BufferedImage image = ImageIO.read(sell_item_list.getItemProduct(i).getImageFile());
+            BufferedImage image = ImageIO.read(item.getImageFile());
             // 이미지의 크기를 150x150으로 변경
             Image resizedImage = image.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
             ImageIcon icon = new ImageIcon(resizedImage);
@@ -209,7 +219,7 @@ public class MainUI implements ActionListener {
         }
 
         //제목 라벨 생성
-        JLabel title_label = new JLabel(sell_item_list.getItemProduct(i).getTitle());
+        JLabel title_label = new JLabel(item.getTitle());
         //패널 생성
         JPanel item_panel = new JPanel(new BorderLayout());
         item_panel.add(image_label, BorderLayout.CENTER);
@@ -217,22 +227,22 @@ public class MainUI implements ActionListener {
         item_panel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                new PopupDialog(MainUI.this, i);
+                new PopupDialog(MainUI.this, index);
                 mainframe.setVisible(false);
             }
         });
-        panel_list.add(item_panel);
+
+        return item_panel;
     }
 
-
     /**메인화면에 등록된 물품들을 로드한다*/
-    public void loadUI(){
+    public void loadUI(List<JPanel> list, int page){
         clearFrame();
         int x = 100;
         int y = 100;
         int i = 1;
-        int range = page_number * 8;//범위 = 페이지 번호 * 페이지에 출력되는 물품 수
-        for(JPanel jp : panel_list){
+        int range = page * 8;//범위 = 페이지 번호 * 페이지에 출력되는 물품 수
+        for(JPanel jp : list){
             if((range - 8) < i && i <= (range)) {
                 mainframe.add(jp);
                 jp.setBounds(x, y, 200, 200);
@@ -274,7 +284,7 @@ public class MainUI implements ActionListener {
             if(page_number == total_page){
                 next_page_button.setEnabled(false);
             }
-            loadUI();
+            loadUI(panel_list, page_number);
             reloadUI();
         }
         else if(e.getSource() == prev_page_button){
@@ -286,10 +296,44 @@ public class MainUI implements ActionListener {
             if(page_number == 1){
                 prev_page_button.setEnabled(false);
             }
-            loadUI();
+            loadUI(panel_list, page_number);
             reloadUI();
         }
+        else if (e.getSource() == search_button){
+            clearFrame();
+            searchItem(search_field.getText());
+            if(search_item_list.size() != 0){
+                System.out.println("검새된 물품 개수 : " + search_page_number);
+                loadUI(search_item_list, search_page_number);
+                reloadUI();
+            }
+            else{
+                System.out.println("검색된 물품이 없습니다.");
+            }
+        }
+    }
 
+    /**검색어에 맞는 물품을 검색한다.*/
+    private void searchItem(String text) {
+        //만약 검색한 물품 리스트에 내용 존재시 리스트를 비운다.
+        if(search_item_list.size() != 0){
+            clearFrame();
+            search_item_list.clear();
+            System.out.println("검색 리스트 초기화");
+        }
+
+        //현재 등록된 물품을 순회하며
+        for(int i = 0; i < sell_item_list.getSize(); i++){
+            //검색어와 같은 물품을 찾는다
+            if(text.equals(sell_item_list.getItemProduct(i).getTitle())){
+                search_item_list.add(createItemPanel(sell_item_list.getItemProduct(i), i));
+            }
+        }
+        search_page_number = 1;
+        search_total_page = search_item_list.size() / 8;
+        if(search_item_list.size() == 0 || (search_item_list.size() % 8 != 0)){
+            search_total_page++;
+        }
     }
 
     /**상품 리스트에 새로운 상품을 추가하는 메서드*/
