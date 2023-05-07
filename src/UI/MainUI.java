@@ -1,6 +1,7 @@
 package UI;
 
 import Factory_Pattern_Class.ItemProduct;
+import Observer_Pattern_class.Notice;
 import Singleton_Pattern_Class.Singleton;
 import example.MypageFrame;
 
@@ -54,7 +55,8 @@ public class MainUI implements ActionListener {
 
     //알림 기능
     JButton notice_button;
-    
+    Notice notice; //알림을 관리할 객체
+            
     public MainUI (String id , String password) {
         //유저 정보를 저장한다.
         this.id = id;
@@ -99,6 +101,10 @@ public class MainUI implements ActionListener {
         notice_button = new JButton("\uD83D\uDD14");
         mainframe.add(notice_button);
         notice_button.setBounds(920,20, 50, 50);
+        //알림 저장 객체
+        notice_button.addActionListener(this);
+        notice = new Notice();
+        sell_item_list.subscribe(notice);
 
 
         //물품 검색
@@ -367,6 +373,10 @@ public class MainUI implements ActionListener {
                 search_mode = false;
                 JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.", "검색 실패", JOptionPane.WARNING_MESSAGE);
             }
+        }
+        else if(e.getSource() == notice_button){
+            //알림버튼
+            notice.showNotice();
         }
     }
 

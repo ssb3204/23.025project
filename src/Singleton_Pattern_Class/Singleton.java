@@ -1,16 +1,37 @@
 package Singleton_Pattern_Class;
 
 import Factory_Pattern_Class.ItemProduct;
+import Observer_Pattern_class.Notice;
+import Observer_Pattern_class.Observer;
+import Observer_Pattern_class.Subject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Singleton {
+public class Singleton implements Subject {
     private static List<ItemProduct> sell_item_list;
     private static  Singleton singleton_instance = new Singleton();
-    
+    //옵저버 관리를 위한 리스트
+    public List<Observer> observer_list = new ArrayList<>();
     private Singleton(){
         sell_item_list = new ArrayList<ItemProduct>();
+    }
+
+    @Override
+    public void subscribe(Observer observer) {
+        observer_list.add(observer);
+    }
+
+    @Override
+    public void unsubscribe(Observer observer) {
+        observer_list.remove(observer);
+    }
+
+    @Override
+    public void notifyObserver(String msg) {
+        for(Observer o: observer_list){
+            o.update(msg);
+        }
     }
 
     /**LazyHolder*/
@@ -64,12 +85,14 @@ public class Singleton {
     /**index 위치의 ItemProduct 물품 개수 1개 감소*/
     public void decreaseItemCount(int index){
         sell_item_list.get(index).decreaseItemCount();
+        notifyObserver(sell_item_list.get(index).getTitle() + "가 1개 판매되었습니다.");
         System.out.println("남은 물품 개수" + sell_item_list.get(index).getCount());
     }
 
     /**위치의 ItemProduct 물품을 삭제*/
     public void deleteItem(int index){
         System.out.println(sell_item_list.get(index).getTitle() + "가 모두 팔려 삭제되었습니다.");
+        notifyObserver(sell_item_list.get(index).getTitle() + "가 모두 팔려 삭제되었습니다.");
         sell_item_list.remove(index);
     }
 }

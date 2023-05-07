@@ -1,8 +1,11 @@
 package Factory_Pattern_Class;
 
+import Observer_Pattern_class.Observer;
+import Observer_Pattern_class.Subject;
+
 import java.io.File;
 
-public class GeneralItemProduct extends ItemProduct{
+public class GeneralItemProduct extends ItemProduct  {
     public GeneralItemProduct(String item_title, int item_price, int item_count, String item_description, File item_imageFile, String userID){
         this.item_title = item_title;
         this.item_price = item_price;

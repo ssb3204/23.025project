@@ -1,6 +1,11 @@
 package Factory_Pattern_Class;
 
+import Observer_Pattern_class.Observer;
+import Observer_Pattern_class.Subject;
+
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class ItemProduct {
     protected String item_title;//물품 명
