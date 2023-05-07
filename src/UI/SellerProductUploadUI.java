@@ -256,7 +256,9 @@ public class SellerProductUploadUI implements ActionListener {
                 ItemProduct product = creator.createItem(item_title, item_price, item_count, item_description, selectedFile, userID);
 
                 //메인UI에 객체를 저장한다.
-                TopUI.add_item_list(product);
+                for(int i = 0; i < 8; i++) {
+                    TopUI.add_item_list(product);
+                }
 
                 //물품을 추가한 후 총 페이지 수를 구한다
                 TopUI.calcTotalPage();

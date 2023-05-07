@@ -9,7 +9,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +33,12 @@ public class MainUI implements ActionListener {
     JButton next_page_button;//다음 페이지 버튼
     JButton prev_page_button;//이전 페이지 버튼
 
-    
+    //메인화면 로고
+    JLabel logo_label;
+    ImageIcon icon;
+    String logoPath = "/resource/logo.jpg";
+    File logo_file;
+
     //물품 목록을 보여주기 위한 속성
     int page_number = 1;//현재 페이지 번호
     List<JPanel> panel_list;
@@ -47,6 +54,7 @@ public class MainUI implements ActionListener {
     List<JPanel> search_item_list;
     int search_page_number;
     int search_total_page;
+    boolean search_mode;
     
     public MainUI (String id , String password) {
         //유저 정보를 저장한다.
@@ -68,6 +76,14 @@ public class MainUI implements ActionListener {
             }
         });
 
+        //로고 추가
+        //이미지 라벨 생성
+        String logoPath = "/resource/logo.jpg";
+        URL logoUrl = getClass().getResource(logoPath);
+        ImageIcon icon = new ImageIcon(logoUrl);
+        logo_label = new JLabel(icon);
+        mainframe.add(logo_label);
+        logo_label.setBounds(100,100,100,100);
 
         //물품 검색
         search_panel = new JPanel(new BorderLayout());
@@ -80,7 +96,7 @@ public class MainUI implements ActionListener {
         search_panel.setBounds(275, 20, 450, 30);
 
         search_item_list = new ArrayList<JPanel>();
-
+        search_mode = false;//검색모드를 일반모드로 한다.
 
         //물품 등록 버튼
         create_item = new JButton("물품생성");
