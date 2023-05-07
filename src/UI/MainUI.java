@@ -277,7 +277,6 @@ public class MainUI implements ActionListener {
             @Override
             public void mouseClicked(MouseEvent e) {
                 new PopupDialog(MainUI.this, index);
-                mainframe.setVisible(false);
             }
         });
 
@@ -313,7 +312,6 @@ public class MainUI implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == create_item){
             //물품 생성버튼
-            mainframe.setVisible(false);
             new SellerProductUploadUI(this);
         }
         else if (e.getSource() == output_button) {

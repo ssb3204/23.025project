@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class PopupDialog implements ActionListener {
     MainUI TopUI;
-    JFrame popup_frame;
+    JDialog popup_frame;
     int index;
 
     //패널
@@ -40,14 +40,13 @@ public class PopupDialog implements ActionListener {
         this.index = index;
 
         //팝업화면 설정
-        popup_frame = new JFrame("물품 상세정보");
+        popup_frame = new JDialog(TopUI.mainframe, "물품 상세정보", true);
         popup_frame.setSize(700, 600);
         popup_frame.setLayout(null);
         popup_frame.setLocationRelativeTo(null);
         popup_frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                TopUI.mainframe.setVisible(true);
                 popup_frame.dispose();
             }
         });
@@ -147,7 +146,6 @@ public class PopupDialog implements ActionListener {
                 TopUI.deletePanel();
                 TopUI.resetFrame();
             }
-            TopUI.mainframe.setVisible(true);
             popup_frame.dispose();
         }
         else if(e.getSource() == delete_button){
@@ -155,7 +153,6 @@ public class PopupDialog implements ActionListener {
             TopUI.sell_item_list.deleteItem(index);
             TopUI.deletePanel();
             TopUI.resetFrame();
-            TopUI.mainframe.setVisible(true);
             popup_frame.dispose();
         }
     }

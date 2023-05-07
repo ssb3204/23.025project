@@ -18,7 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
 public class SellerProductUploadUI implements ActionListener {
-        JFrame sellerProductUploadUI;//상품등록 페이지 프레임
+        JDialog sellerProductUploadUI;//상품등록 페이지 프레임
         JButton addButton;//상품 등록 버튼
 
         MainUI TopUI;//이전 UI의 객체
@@ -71,7 +71,7 @@ public class SellerProductUploadUI implements ActionListener {
             userID = TopUI.getId();
 
             //메인 프레임을 생성
-            sellerProductUploadUI = new JFrame("물품 등록");
+            sellerProductUploadUI = new JDialog(TopUI.mainframe, "물품 등록", true);
             sellerProductUploadUI.setSize(800, 600);
             sellerProductUploadUI.setLayout(null);
             sellerProductUploadUI.setLocationRelativeTo(null);
@@ -263,7 +263,6 @@ public class SellerProductUploadUI implements ActionListener {
                 //물품을 추가한 후 총 페이지 수를 구한다
                 TopUI.calcTotalPage();
 
-                TopUI.mainframe.setVisible(true);
                 TopUI.resetFrame();
                 sellerProductUploadUI.dispose();
             }
