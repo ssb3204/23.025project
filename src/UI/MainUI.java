@@ -62,6 +62,7 @@ public class MainUI implements ActionListener {
 
         //물품 리스트를 관리하기 위한 객체 생성
         sell_item_list = Singleton.getInstance();
+        /**DB 에서 물품 객체를 받아와 sell_item_list 에 추가하는 코드*/
 
         //메인프레임 생성
         mainframe = new JFrame("메인화면");
@@ -71,6 +72,7 @@ public class MainUI implements ActionListener {
         mainframe.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
+                /**DB 에 sell_item_list 객체들을 저장하는 코드*/
                 System.exit(0);
             }
         });
