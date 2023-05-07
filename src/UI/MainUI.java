@@ -6,6 +6,7 @@ import example.MypageFrame;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.AncestorListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
@@ -35,9 +36,7 @@ public class MainUI implements ActionListener {
 
     //메인화면 로고
     JLabel logo_label;
-    ImageIcon icon;
-    String logoPath = "/resource/logo.jpg";
-    File logo_file;
+    String logoPath = "resource/logo.jpg";
 
     //물품 목록을 보여주기 위한 속성
     int page_number = 1;//현재 페이지 번호
@@ -77,13 +76,20 @@ public class MainUI implements ActionListener {
         });
 
         //로고 추가
-        //이미지 라벨 생성
-        String logoPath = "/resource/logo.jpg";
-        URL logoUrl = getClass().getResource(logoPath);
-        ImageIcon icon = new ImageIcon(logoUrl);
-        logo_label = new JLabel(icon);
+        // 이미지 아이콘 생성
+        ImageIcon icon = new ImageIcon(logoPath);
+        Image img = icon.getImage();
+        Image resizedImg = img.getScaledInstance(150, 100, Image.SCALE_SMOOTH);
+        ImageIcon resizedIcon = new ImageIcon(resizedImg);
+        logo_label = new JLabel(resizedIcon);
+        logo_label.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.out.println("클릭");
+            }
+        });
         mainframe.add(logo_label);
-        logo_label.setBounds(100,100,100,100);
+        logo_label.setBounds(30,10,150,100);
 
         //물품 검색
         search_panel = new JPanel(new BorderLayout());
@@ -316,6 +322,7 @@ public class MainUI implements ActionListener {
             reloadUI();
         }
         else if (e.getSource() == search_button){
+            //검색버튼
             clearFrame();
             searchItem(search_field.getText());
             if(search_item_list.size() != 0){
