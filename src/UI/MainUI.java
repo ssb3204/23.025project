@@ -2,6 +2,7 @@ package UI;
 
 import Factory_Pattern_Class.ItemProduct;
 import Observer_Pattern_class.Notice;
+import Observer_Pattern_class.NoticeUI;
 import Singleton_Pattern_Class.Singleton;
 import example.MypageFrame;
 
@@ -377,6 +378,7 @@ public class MainUI implements ActionListener {
         else if(e.getSource() == notice_button){
             //알림버튼
             notice.showNotice();
+            new NoticeUI(mainframe, notice);
         }
     }
 

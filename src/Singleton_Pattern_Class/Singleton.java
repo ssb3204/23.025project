@@ -10,28 +10,11 @@ import java.util.List;
 
 public class Singleton implements Subject {
     private static List<ItemProduct> sell_item_list;
-    private static  Singleton singleton_instance = new Singleton();
+    //private static  Singleton singleton_instance = new Singleton();
     //옵저버 관리를 위한 리스트
     public List<Observer> observer_list = new ArrayList<>();
     private Singleton(){
         sell_item_list = new ArrayList<ItemProduct>();
-    }
-
-    @Override
-    public void subscribe(Observer observer) {
-        observer_list.add(observer);
-    }
-
-    @Override
-    public void unsubscribe(Observer observer) {
-        observer_list.remove(observer);
-    }
-
-    @Override
-    public void notifyObserver(String msg) {
-        for(Observer o: observer_list){
-            o.update(msg);
-        }
     }
 
     /**LazyHolder*/
@@ -94,5 +77,23 @@ public class Singleton implements Subject {
         System.out.println(sell_item_list.get(index).getTitle() + "가 모두 팔려 삭제되었습니다.");
         notifyObserver(sell_item_list.get(index).getTitle() + "가 모두 팔려 삭제되었습니다.");
         sell_item_list.remove(index);
+    }
+
+
+    @Override
+    public void subscribe(Observer observer) {
+        observer_list.add(observer);
+    }
+
+    @Override
+    public void unsubscribe(Observer observer) {
+        observer_list.remove(observer);
+    }
+
+    @Override
+    public void notifyObserver(String msg) {
+        for(Observer o: observer_list){
+            o.update(msg);
+        }
     }
 }

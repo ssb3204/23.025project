@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Notice implements Observer {
-    List<String> notice_list = new ArrayList<String>();
+    private List<String> notice_list = new ArrayList<String>();
 
     @Override
     public void update(String msg) {
@@ -15,5 +15,9 @@ public class Notice implements Observer {
         for(String s: notice_list){
             System.out.println(s);
         }
+    }
+
+    public List<String> getNotice_list(){
+        return notice_list;
     }
 }
