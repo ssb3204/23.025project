@@ -135,9 +135,9 @@ public class PopupDialog implements ActionListener {
                 System.out.println("현재 목록 개수" + TopUI.sell_item_list.getSize());
                 TopUI.sell_item_list.removeItem(index);
                 TopUI.removePanel();
+                TopUI.loadUI(TopUI.panel_list, TopUI.page_number);
+                TopUI.reloadUI();
             }
-            TopUI.loadUI(TopUI.panel_list, TopUI.page_number);
-            TopUI.reloadUI();
             TopUI.mainframe.setVisible(true);
             popup_frame.dispose();
         }

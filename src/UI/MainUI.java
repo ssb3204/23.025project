@@ -6,13 +6,10 @@ import example.MypageFrame;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.event.AncestorListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -172,11 +169,16 @@ public class MainUI implements ActionListener {
     }
 
     /**처음 화면으로 초기화한다.*/
-    private void resetFrame() {
+    public void resetFrame() {
         clearFrame();
         page_number = 1;
         prev_page_button.setEnabled(false);
-        next_page_button.setEnabled(true);
+        if(page_number == total_page){
+            next_page_button.setEnabled(false);
+        }
+        else {
+            next_page_button.setEnabled(true);
+        }
         loadUI(panel_list, page_number);
         updatePageNumber();
         reloadUI();
