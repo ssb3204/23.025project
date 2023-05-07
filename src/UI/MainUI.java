@@ -85,7 +85,7 @@ public class MainUI implements ActionListener {
         logo_label.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println("클릭");
+                resetFrame();
             }
         });
         mainframe.add(logo_label);
@@ -169,6 +169,17 @@ public class MainUI implements ActionListener {
         //메인프레임 중앙 및 보이기 설정
         mainframe.setResizable(false);
         mainframe.setVisible(true);
+    }
+
+    /**처음 화면으로 초기화한다.*/
+    private void resetFrame() {
+        clearFrame();
+        page_number = 1;
+        prev_page_button.setEnabled(false);
+        next_page_button.setEnabled(true);
+        loadUI(panel_list, page_number);
+        updatePageNumber();
+        reloadUI();
     }
 
     /**인덱스 위치의 패널을 제거한다.*/
