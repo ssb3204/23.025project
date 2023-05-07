@@ -51,6 +51,9 @@ public class MainUI implements ActionListener {
     int search_page_number;//검색 모드에서의 현재 페이지
     int search_total_page;//검색된 물품의 총 페이지
     boolean search_mode;//검색 모드 F: 일반, T: 검색 모드
+
+    //알림 기능
+    JButton notice_button;
     
     public MainUI (String id , String password) {
         //유저 정보를 저장한다.
@@ -88,6 +91,13 @@ public class MainUI implements ActionListener {
         });
         mainframe.add(logo_label);
         logo_label.setBounds(30,10,150,100);
+
+
+        //알림 버튼
+        notice_button = new JButton("\uD83D\uDD14");
+        mainframe.add(notice_button);
+        notice_button.setBounds(920,20, 50, 50);
+
 
         //물품 검색
         search_panel = new JPanel(new BorderLayout());
@@ -180,7 +190,7 @@ public class MainUI implements ActionListener {
     }
 
     /**인덱스 위치의 패널을 제거한다.*/
-    public void removePanel(){
+    public void deletePanel(){
         clearFrame();
         resetAndAddPanels();
     }

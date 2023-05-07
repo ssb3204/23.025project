@@ -31,7 +31,8 @@ public class PopupDialog implements ActionListener {
     JTextArea item_description;
     //구매 버튼
     JButton item_buy_button;
-
+    //삭제 버튼
+    JButton delete_button;
 
     public PopupDialog(MainUI TopUI, int index) {
         //값 초기화
@@ -117,7 +118,16 @@ public class PopupDialog implements ActionListener {
         item_buy_button.setBounds(300, 530, 100, 30);
         item_panel.add(item_buy_button);
 
-
+        
+        //삭제버튼
+        //만약 등록 유저가 같거나 어드민이라면
+        if(TopUI.getId() == TopUI.sell_item_list.getItemProduct(index).getUserID() || TopUI.getId() == "admin") {
+            delete_button = new JButton("삭제");
+            delete_button.addActionListener(this);
+            delete_button.setBounds(410, 530, 100, 30);
+            item_panel.add(delete_button);
+        }
+        
         //패널을 메인프레임에 추가한다.
         popup_frame.add(item_panel);
 
@@ -133,10 +143,18 @@ public class PopupDialog implements ActionListener {
             //만약 물품의 개수가 0이라면 물품을 제거한다.
             if(TopUI.sell_item_list.getItemProduct(index).getCount() == 0) {
                 System.out.println("현재 목록 개수" + TopUI.sell_item_list.getSize());
-                TopUI.sell_item_list.removeItem(index);
-                TopUI.removePanel();
+                TopUI.sell_item_list.deleteItem(index);
+                TopUI.deletePanel();
                 TopUI.resetFrame();
             }
+            TopUI.mainframe.setVisible(true);
+            popup_frame.dispose();
+        }
+        else if(e.getSource() == delete_button){
+            System.out.println("물품을 제거합니다.");
+            TopUI.sell_item_list.deleteItem(index);
+            TopUI.deletePanel();
+            TopUI.resetFrame();
             TopUI.mainframe.setVisible(true);
             popup_frame.dispose();
         }

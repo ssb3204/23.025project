@@ -68,7 +68,7 @@ public class Singleton {
     }
 
     /**위치의 ItemProduct 물품을 삭제*/
-    public void removeItem(int index){
+    public void deleteItem(int index){
         System.out.println(sell_item_list.get(index).getTitle() + "가 모두 팔려 삭제되었습니다.");
         sell_item_list.remove(index);
     }
