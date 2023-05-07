@@ -61,7 +61,7 @@ public class Singleton {
         return sell_item_list.get(index);
     }
 
-    /**index 위치의 ItemProduct 물품 개수 1개 삭제*/
+    /**index 위치의 ItemProduct 물품 개수 1개 감소*/
     public void decreaseItemCount(int index){
         sell_item_list.get(index).decreaseItemCount();
         System.out.println("남은 물품 개수" + sell_item_list.get(index).getCount());

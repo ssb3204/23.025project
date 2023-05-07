@@ -44,13 +44,13 @@ public class MainUI implements ActionListener {
     private final String password;
 
     //물품 검색 컴포넌트
-    JPanel search_panel;
-    JTextField search_field;
-    JButton search_button;
-    List<JPanel> search_item_list;
-    int search_page_number;
-    int search_total_page;
-    boolean search_mode;
+    JPanel search_panel;//검색창 패널
+    JTextField search_field;//검색창 텍스트 필드
+    JButton search_button;//검색버튼
+    List<JPanel> search_item_list;//검색된 물품의 패널을 관리할 리스트
+    int search_page_number;//검색 모드에서의 현재 페이지
+    int search_total_page;//검색된 물품의 총 페이지
+    boolean search_mode;//검색 모드 F: 일반, T: 검색 모드
     
     public MainUI (String id , String password) {
         //유저 정보를 저장한다.
@@ -82,6 +82,7 @@ public class MainUI implements ActionListener {
         logo_label.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                search_mode = false;
                 resetFrame();
             }
         });
@@ -172,13 +173,7 @@ public class MainUI implements ActionListener {
     public void resetFrame() {
         clearFrame();
         page_number = 1;
-        prev_page_button.setEnabled(false);
-        if(page_number == total_page){
-            next_page_button.setEnabled(false);
-        }
-        else {
-            next_page_button.setEnabled(true);
-        }
+        checkPage(page_number, total_page);
         loadUI(panel_list, page_number);
         updatePageNumber();
         reloadUI();
@@ -313,38 +308,52 @@ public class MainUI implements ActionListener {
         else if(e.getSource() == next_page_button){
             //다음 페이지 버튼
             clearFrame();
-            page_number++;
-            updatePageNumber();
-            prev_page_button.setEnabled(true);
-            if(page_number == total_page){
-                next_page_button.setEnabled(false);
+            if(search_mode == false) {
+                page_number++;
+                updatePageNumber();
+                checkPage(page_number, total_page);
+                loadUI(panel_list, page_number);
             }
-            loadUI(panel_list, page_number);
+            else{
+                search_page_number++;
+                updateSearchPageNumber();
+                checkPage(search_page_number, search_total_page);
+                loadUI(search_item_list, search_page_number);
+            }
             reloadUI();
         }
         else if(e.getSource() == prev_page_button){
             //이전 페이지 버튼
             clearFrame();
-            page_number--;
-            updatePageNumber();
-            next_page_button.setEnabled(true);
-            if(page_number == 1){
-                prev_page_button.setEnabled(false);
+            if(search_mode == false) {
+                page_number--;
+                updatePageNumber();
+                checkPage(page_number, total_page);
+                loadUI(panel_list, page_number);
             }
-            loadUI(panel_list, page_number);
+            else{
+                search_page_number--;
+                updateSearchPageNumber();
+                checkPage(search_page_number, search_total_page);
+                loadUI(search_item_list, search_page_number);
+            }
             reloadUI();
         }
         else if (e.getSource() == search_button){
             //검색버튼
             clearFrame();
             searchItem(search_field.getText());
+            search_mode = true;
             if(search_item_list.size() != 0){
-                System.out.println("검새된 물품 개수 : " + search_page_number);
+                System.out.println("검색된 물품 개수 : " + search_page_number);
                 loadUI(search_item_list, search_page_number);
+                updateSearchPageNumber();
+                checkPage(search_page_number, search_total_page);
                 reloadUI();
             }
             else{
-                System.out.println("검색된 물품이 없습니다.");
+                search_mode = false;
+                JOptionPane.showMessageDialog(null, "검색 결과가 없습니다.", "검색 실패", JOptionPane.WARNING_MESSAGE);
             }
         }
     }
@@ -397,6 +406,31 @@ public class MainUI implements ActionListener {
     public void updatePageNumber(){
         if(page_number_label != null) {
             page_number_label.setText(page_number + " / " + total_page);
+        }
+    }
+
+    /**검색후 페이지 번호로 업데이트한다*/
+    public void updateSearchPageNumber(){
+        page_number_label.setText(search_page_number + " / " + search_total_page);
+    }
+
+    /**페이지 번호를 검사 후 페이지 버튼의 활성화 여부를 결정*/
+    public void checkPage(int page, int total){
+        if(page == total && page != 1){//최대 페이지라면
+            prev_page_button.setEnabled(true);
+            next_page_button.setEnabled(false);
+        }
+        else if(page == 1 && total != 1){//최소 페이지이며 최대 페이지가 1이 아니라면
+            prev_page_button.setEnabled(false);
+            next_page_button.setEnabled(true);
+        }
+        else if(page == 1 && total == 1){//최소 페이지이며 최대 페이지가 1이라면
+            prev_page_button.setEnabled(false);
+            next_page_button.setEnabled(false);
+        }
+        else{//중간 페이지라면
+            prev_page_button.setEnabled(true);
+            next_page_button.setEnabled(true);
         }
     }
 
