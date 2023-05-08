@@ -48,4 +48,19 @@ public abstract class ItemProduct {
     public void decreaseItemCount(){
         item_count--;
     }
+    public void setItem_title(String item_title) {
+        this.item_title = item_title;
+    }
+    public void setItem_price(int item_price) {
+        this.item_price = item_price;
+    }
+    public void setItem_description(String item_description) {
+        this.item_description = item_description;
+    }
+    public void setItem_imageFile(File item_imageFile) {
+        this.item_imageFile = item_imageFile;
+    }
+    public void setItem_count(int item_count) {
+        this.item_count = item_count;
+    }
 }

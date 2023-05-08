@@ -96,7 +96,7 @@ public class PopupDialog implements ActionListener {
         try {
             BufferedImage image = ImageIO.read(TopUI.sell_item_list.getItemProduct(index).getImageFile());
             // 이미지의 크기를 150x150으로 변경
-            Image resizedImage = image.getScaledInstance(350, 350, Image.SCALE_SMOOTH);
+            Image resizedImage = image.getScaledInstance(250, 250, Image.SCALE_SMOOTH);
             ImageIcon icon = new ImageIcon(resizedImage);
             item_image.setIcon(icon);
         } catch (IOException ex) {
@@ -165,7 +165,7 @@ public class PopupDialog implements ActionListener {
         }
         else if (e.getSource() == item_info_button) {
             item_panel.setVisible(false);
-            popup_frame.add(new ItemInfoUI(TopUI.sell_item_list ,index).getItem_info_panel());
+            popup_frame.add(new ItemInfoUI(TopUI.sell_item_list ,index, this).getItem_info_panel());
         }
     }
 }
