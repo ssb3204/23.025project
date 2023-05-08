@@ -120,7 +120,7 @@ public class PopupDialog implements ActionListener {
         item_panel.add(item_buy_button);
 
 
-        //만약 등록 유저가 같거나 어드민이라면
+        //만약 등록 유저 혹은 어드민이라면
         if(TopUI.getId() == TopUI.sell_item_list.getItemProduct(index).getUserID() || TopUI.getId() == "admin") {
             //삭제버튼
             delete_button = new JButton("삭제");

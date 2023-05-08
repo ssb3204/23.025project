@@ -150,6 +150,7 @@ public class ItemInfoUI implements ActionListener {
         setButton.addActionListener(this);
 
     }
+
     /**입력값을 체크하고 저장하는 메서드*/
     public boolean checkInputData(){
         //입력되어야하는 값이 비어있을때 알림 후 함수를 빠져나간다.

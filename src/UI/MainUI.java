@@ -41,10 +41,6 @@ public class MainUI implements ActionListener {
     int page_number = 1;//현재 페이지 번호
     List<JPanel> panel_list;
 
-    //로그인한 유저의 아이디 및 비밀번호 정보
-    private final String id;
-    private final String password;
-
     //물품 검색 컴포넌트
     JPanel search_panel;//검색창 패널
     JTextField search_field;//검색창 텍스트 필드
@@ -57,7 +53,11 @@ public class MainUI implements ActionListener {
     //알림 기능
     JButton notice_button;
     Notice notice; //알림을 관리할 객체
-            
+
+    //로그인한 유저의 아이디 및 비밀번호 정보
+    private final String id;
+    private final String password;
+
     public MainUI (String id , String password) {
         //유저 정보를 저장한다.
         this.id = id;
@@ -65,7 +65,19 @@ public class MainUI implements ActionListener {
 
         //물품 리스트를 관리하기 위한 객체 생성
         sell_item_list = Singleton.getInstance();
+        sell_item_list.setUser(id);
+
+        //알림 버튼
+        notice_button = new JButton("\uD83D\uDD14");
+        mainframe.add(notice_button);
+        notice_button.setBounds(920,20, 50, 50);
+        //알림 저장 객체
+        notice_button.addActionListener(this);
+        notice = new Notice();
+        sell_item_list.subscribe(notice);
+
         /**DB 에서 물품 객체를 받아와 sell_item_list 에 추가하는 코드*/
+        initialize();
 
         //메인프레임 생성
         mainframe = new JFrame("메인화면");
@@ -96,16 +108,6 @@ public class MainUI implements ActionListener {
         });
         mainframe.add(logo_label);
         logo_label.setBounds(30,10,150,100);
-
-
-        //알림 버튼
-        notice_button = new JButton("\uD83D\uDD14");
-        mainframe.add(notice_button);
-        notice_button.setBounds(920,20, 50, 50);
-        //알림 저장 객체
-        notice_button.addActionListener(this);
-        notice = new Notice();
-        sell_item_list.subscribe(notice);
 
 
         //물품 검색
@@ -186,6 +188,12 @@ public class MainUI implements ActionListener {
         //메인프레임 중앙 및 보이기 설정
         mainframe.setResizable(false);
         mainframe.setVisible(true);
+    }
+
+    /**물품객체 알림 객체를 생성한다.*/
+    private void initialize() {
+        notice.db_get_notice(getId());
+        sell_item_list.db_get_item();
     }
 
     /**처음 화면으로 초기화한다.*/
@@ -375,8 +383,7 @@ public class MainUI implements ActionListener {
         }
         else if(e.getSource() == notice_button){
             //알림버튼
-            notice.showNotice();
-            new NoticeUI(mainframe, notice);
+            new NoticeUI(mainframe, notice, id);
         }
     }
 

@@ -8,13 +8,16 @@ public class NoticeUI {
     Notice notice;
     JDialog notice_frame;
     JList<String> notice_list;
-    public NoticeUI(JFrame Top, Notice notice) {
+    public NoticeUI(JFrame Top, Notice notice, String user) {
         this.notice = notice;
         notice_frame = new JDialog(Top,"알림창", true);
         notice_frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         DefaultListModel<String> model = new DefaultListModel<>();
-        for(String n : notice.getNotice_list()){
-            model.addElement(n);
+
+        for(NoticeObj o : notice.getNotice_list()){
+            if(user.equals(o.getUser())) {
+                model.addElement(o.getUser() + " : " + o.getMsg());
+            }
         }
         notice_list = new JList<>(model);
         notice_frame.add(notice_list);

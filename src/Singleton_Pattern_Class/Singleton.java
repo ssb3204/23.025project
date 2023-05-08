@@ -17,6 +17,9 @@ public class Singleton implements Subject {
         sell_item_list = new ArrayList<ItemProduct>();
     }
 
+    private String user;
+
+
     /**LazyHolder*/
     private static class LazyHolder{
         public static final Singleton instance = new Singleton();
@@ -68,18 +71,24 @@ public class Singleton implements Subject {
     /**index 위치의 ItemProduct 물품 개수 1개 감소*/
     public void decreaseItemCount(int index){
         sell_item_list.get(index).decreaseItemCount();
-        notifyObserver(sell_item_list.get(index).getTitle() + "가 1개 판매되었습니다.");
+        notifyObserver(sell_item_list.get(index).getUserID(), sell_item_list.get(index).getTitle() + "가 1개 판매되었습니다.");
+        notifyObserver(user, sell_item_list.get(index).getTitle() + "를 구입하셨습니다.");
         System.out.println("남은 물품 개수" + sell_item_list.get(index).getCount());
     }
 
     /**위치의 ItemProduct 물품을 삭제*/
     public void deleteItem(int index){
         System.out.println(sell_item_list.get(index).getTitle() + "가 모두 팔려 삭제되었습니다.");
-        notifyObserver(sell_item_list.get(index).getTitle() + "가 모두 팔려 삭제되었습니다.");
+        notifyObserver(sell_item_list.get(index).getUserID() ,sell_item_list.get(index).getTitle() + "가 모두 팔려 삭제되었습니다.");
         sell_item_list.remove(index);
     }
+    /**DB에 저장된 아이템을 받아오는 코드*/
+    public void db_get_item() {
 
-
+    }
+    public void setUser(String user) {
+        this.user = user;
+    }
     @Override
     public void subscribe(Observer observer) {
         observer_list.add(observer);
@@ -91,9 +100,9 @@ public class Singleton implements Subject {
     }
 
     @Override
-    public void notifyObserver(String msg) {
+    public void notifyObserver(String user, String msg) {
         for(Observer o: observer_list){
-            o.update(msg);
+            o.update(user ,msg);
         }
     }
 }
