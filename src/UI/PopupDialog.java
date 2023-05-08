@@ -33,6 +33,8 @@ public class PopupDialog implements ActionListener {
     JButton item_buy_button;
     //삭제 버튼
     JButton delete_button;
+    //수정 버튼
+    JButton item_info_button;
 
     public PopupDialog(MainUI TopUI, int index) {
         //값 초기화
@@ -117,14 +119,20 @@ public class PopupDialog implements ActionListener {
         item_buy_button.setBounds(300, 530, 100, 30);
         item_panel.add(item_buy_button);
 
-        
-        //삭제버튼
+
         //만약 등록 유저가 같거나 어드민이라면
         if(TopUI.getId() == TopUI.sell_item_list.getItemProduct(index).getUserID() || TopUI.getId() == "admin") {
+            //삭제버튼
             delete_button = new JButton("삭제");
             delete_button.addActionListener(this);
             delete_button.setBounds(410, 530, 100, 30);
             item_panel.add(delete_button);
+
+            //수정 버튼
+            item_info_button = new JButton("수정");
+            item_info_button.addActionListener(this);
+            item_info_button.setBounds(520, 530, 100, 30);
+            item_panel.add(item_info_button);
         }
         
         //패널을 메인프레임에 추가한다.
@@ -154,6 +162,10 @@ public class PopupDialog implements ActionListener {
             TopUI.deletePanel();
             TopUI.resetFrame();
             popup_frame.dispose();
+        }
+        else if (e.getSource() == item_info_button) {
+            item_panel.setVisible(false);
+            popup_frame.add(new ItemInfoUI(TopUI.sell_item_list ,index).getItem_info_panel());
         }
     }
 }
