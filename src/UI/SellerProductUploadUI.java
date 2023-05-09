@@ -69,7 +69,7 @@ public class SellerProductUploadUI implements ActionListener {
             //SellerProductUploadUI 객체를 생성한 이전 클래스 객체를 저장
             TopUI = TOP;
             //userID = TopUI.getId();
-            userID = "test";
+            userID = TopUI.getId();
 
             //메인 프레임을 생성
             sellerProductUploadUI = new JDialog(TopUI.mainframe, "물품 등록", true);
