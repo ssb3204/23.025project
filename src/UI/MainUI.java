@@ -63,6 +63,19 @@ public class MainUI implements ActionListener {
         this.id = id;
         this.password = password;
 
+        //메인프레임 생성
+        mainframe = new JFrame("메인화면");
+        mainframe.setSize(1000, 700);
+        mainframe.setLayout(null);
+        mainframe.setLocationRelativeTo(null);
+        mainframe.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                /**DB 에 sell_item_list 객체들을 저장하는 코드*/
+                System.exit(0);
+            }
+        });
+
         //물품 리스트를 관리하기 위한 객체 생성
         sell_item_list = Singleton.getInstance();
         sell_item_list.setUser(id);
@@ -78,19 +91,6 @@ public class MainUI implements ActionListener {
 
         /**DB 에서 물품 객체를 받아와 sell_item_list 에 추가하는 코드*/
         initialize();
-
-        //메인프레임 생성
-        mainframe = new JFrame("메인화면");
-        mainframe.setSize(1000, 700);
-        mainframe.setLayout(null);
-        mainframe.setLocationRelativeTo(null);
-        mainframe.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                /**DB 에 sell_item_list 객체들을 저장하는 코드*/
-                System.exit(0);
-            }
-        });
 
         //로고 추가
         // 이미지 아이콘 생성
