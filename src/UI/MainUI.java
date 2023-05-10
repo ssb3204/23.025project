@@ -89,7 +89,7 @@ public class MainUI implements ActionListener {
         notice = new Notice();
         sell_item_list.subscribe(notice);
 
-        /**DB 에서 물품 객체를 받아와 sell_item_list 에 추가하는 코드*/
+        /**DB 에서 물품 객체를 받아와 sell_item_list 에 추가하는 메서드 호출*/
         initialize();
 
         //로고 추가
