@@ -1,7 +1,6 @@
 package Singleton_Pattern_Class;
 
 import Factory_Pattern_Class.ItemProduct;
-import Observer_Pattern_class.Notice;
 import Observer_Pattern_class.Observer;
 import Observer_Pattern_class.Subject;
 
