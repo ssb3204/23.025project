@@ -1,13 +1,17 @@
 package example;
 
+import facade_patten.FacadePattern;
+
 import javax.swing.*;
 
 public class RegisterFrame extends JFrame {
     //회원가입 창
     //Register 버튼을 누르면 json 파일에 회원정보 저장하고
     //회원가입 창 닫기
+    FacadePattern facadePattern;
+    RegisterFrame(FacadePattern facadePattern){
+        this.facadePattern = facadePattern;
 
-    RegisterFrame(){
         setTitle("Register");
         setSize(400,300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -69,17 +73,16 @@ public class RegisterFrame extends JFrame {
             String name = nameText.getText();
             String email = emailText.getText();
             //회원정보 저장
-            Userinfocheck userinfocheck = new Userinfocheck(id,password,name,email);
             //입력한 정보와 기존 파일에 저장되어있는 정보 비교
             //비교해서 같은 정보가 있으면 회원가입 실패
             //없으면 회원가입 성공
-            if(userinfocheck.Userinfoexist()){
+            if(facadePattern.Userinfoexist(id)){
                 JOptionPane.showMessageDialog(null,"Register Failed");
             }
             else{
                 JOptionPane.showMessageDialog(null,"Register Success");
                 //성공하면 입력한 정보 파일에 저장
-                userinfocheck.addUserinfo();
+                facadePattern.addUserinfo(id, password, name, email);
                 //로그인 창 띄우기
                 new LoginFrame();
                 dispose();

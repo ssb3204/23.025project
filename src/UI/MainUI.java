@@ -5,6 +5,7 @@ import Observer_Pattern_class.Notice;
 import Observer_Pattern_class.NoticeUI;
 import Singleton_Pattern_Class.Singleton;
 import example.MypageFrame;
+import facade_patten.FacadePattern;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -21,7 +22,9 @@ public class MainUI implements ActionListener {
     Singleton sell_item_list;//물품 리스트 객체
     JFrame mainframe;//메인프레임
     JButton create_item;//물품 생성 버튼
-    
+
+    FacadePattern facadePattern;//퍼사드 패턴 객체
+
     JButton output_button;//현재 등록된 물품 출력 버튼
     JButton Mypage_button;//마이페이지 버튼
     JButton Logout_button;//로그아웃 버튼
@@ -58,10 +61,13 @@ public class MainUI implements ActionListener {
     private final String id;
     private final String password;
 
-    public MainUI (String id , String password) {
+    public MainUI (String id , String password, FacadePattern facadePattern) {
         //유저 정보를 저장한다.
         this.id = id;
         this.password = password;
+
+        //퍼사드 패턴 객체 저장
+        this.facadePattern = facadePattern;
 
         //메인프레임 생성
         mainframe = new JFrame("메인화면");
@@ -328,7 +334,7 @@ public class MainUI implements ActionListener {
         }
         else if(e.getSource() == Mypage_button) {
             //마이페이지 버튼
-            new MypageFrame(id, password);
+            new MypageFrame(id, password, facadePattern);
         }
         else if(e.getSource() == next_page_button){
             //다음 페이지 버튼

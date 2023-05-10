@@ -1,5 +1,7 @@
 package example;
 
+import facade_patten.FacadePattern;
+
 import javax.swing.*;
 
 public class ChangeUser extends JFrame {
@@ -7,7 +9,7 @@ public class ChangeUser extends JFrame {
     String password;
     String name;
     String email;
-
+    FacadePattern facadePattern;
 
     ChangeUser(String id, String password, String name, String email){
         this.id = id;
@@ -19,10 +21,10 @@ public class ChangeUser extends JFrame {
     //아이디 비밀번호 변경 후 확인 버튼 누르면
     //아이디 비밀번호 변경
 
-    ChangeUser(String id, String password){
+    ChangeUser(String id, String password, FacadePattern facadePattern){
         this.id = id;
         this.password = password;
-
+        this.facadePattern = facadePattern;
 
         setTitle("Change User");
         setSize(800,600);
@@ -81,9 +83,7 @@ public class ChangeUser extends JFrame {
             String pass = passwordText.getText();
             String name = nameText.getText();
             String email = emailText.getText();
-
-            Userinfocheck userinfocheck = new Userinfocheck(this.id,pass,name,email);
-            userinfocheck.saveUserinfo();
+            facadePattern.saveUserinfo(this.id,pass,name,email);
             dispose();
         });
 

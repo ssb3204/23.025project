@@ -1,6 +1,7 @@
 package example;
 
 import UI.MainUI;
+import facade_patten.FacadePattern;
 
 import javax.swing.*;
 
@@ -12,10 +13,12 @@ public class LoginFrame extends JFrame{
     JButton registerButton;
     JButton exitButton;
     JButton resetButton;
-
+    FacadePattern facadePattern;
 
 
     public LoginFrame(){
+        facadePattern = new FacadePattern();
+
         setTitle("Login");
         setSize(800,600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -78,21 +81,21 @@ public class LoginFrame extends JFrame{
                 passwordText.setText("");
                 return;
             }
-            Userinfocheck userinfocheck = new Userinfocheck(id,password);
-            if(userinfocheck.checkUserinfo()){
+
+            if(facadePattern.checkUserinfo(id, password)){
                 JOptionPane.showMessageDialog(null,"Login Success");
                 //로그인 성공하면 메인창 띄우기
                 //new MainFrame(id,password);
-                new MainUI(id,password);
+                new MainUI(id,password, facadePattern);
                 //메인창 띄우고 현재창 닫기
                 dispose();
-            } if(userinfocheck.checkUserinfo() == false){
+            } if(facadePattern.checkUserinfo(id, password) == false){
                 JOptionPane.showMessageDialog(null,"Login Failed");
             }
         });
 
         registerButton.addActionListener(e -> {
-            new RegisterFrame();
+            new RegisterFrame(facadePattern);
             dispose();
         });
 
