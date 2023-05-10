@@ -1,3 +1,4 @@
+import UI.MainUI;
 import example.LoginFrame;
 
 public class Main {

@@ -1,7 +1,5 @@
 package example;
 
-import facade_patten.FacadePattern;
-
 import javax.swing.*;
 
 public class MypageFrame extends JFrame {
@@ -9,12 +7,10 @@ public class MypageFrame extends JFrame {
     public static String password;
     public static String name;
     public static String email;
-    FacadePattern facadePattern;
 
-    public MypageFrame(String id, String password, FacadePattern facadePattern){
+    public MypageFrame(String id, String password){
         this.id = id;
         this.password = password;
-        this.facadePattern = facadePattern;
 
         setTitle("Mypage");
         setSize(500,400);
@@ -40,12 +36,12 @@ public class MypageFrame extends JFrame {
 
         changeButton.addActionListener(e -> {
             //아이디 비밀번호 변경 버튼 누르면 ChangeUserFrame 띄우기
-            new ChangeUser(id,password, facadePattern);
+            new ChangeUser(id,password);
         });
 
         deleteButton.addActionListener(e -> {
             //회원탈퇴 버튼 누르면 DeleteUserFrame 띄우기
-            new DeleteUse(id, facadePattern);
+            new DeleteUse();
         });
 
         backButton.addActionListener(e -> {
@@ -81,12 +77,12 @@ public class MypageFrame extends JFrame {
 
         changeButton.addActionListener(e -> {
             //아이디 비밀번호 변경 버튼 누르면 ChangeUserFrame 띄우기
-            new ChangeUser(id, password, facadePattern);
+            new ChangeUser(id,password);
         });
 
         deleteButton.addActionListener(e -> {
             //회원탈퇴 버튼 누르면 DeleteUserFrame 띄우기
-            new DeleteUse(id, facadePattern);
+            new DeleteUse();
         });
 
         backButton.addActionListener(e -> {
