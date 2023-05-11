@@ -1,5 +1,7 @@
 package example;
 
+import UI.MainUI;
+
 import javax.swing.*;
 
 public class ChangeUser extends JFrame {
@@ -8,6 +10,7 @@ public class ChangeUser extends JFrame {
     String name;
     String email;
 
+    String state;
 
     ChangeUser(String id, String password, String name, String email){
         this.id = id;
@@ -19,9 +22,10 @@ public class ChangeUser extends JFrame {
     //아이디 비밀번호 변경 후 확인 버튼 누르면
     //아이디 비밀번호 변경
 
-    ChangeUser(String id, String password){
+    ChangeUser(String id, String password,String state){
         this.id = id;
         this.password = password;
+        this.state=state;
 
 
         setTitle("Change User");
@@ -88,6 +92,7 @@ public class ChangeUser extends JFrame {
         });
 
         cancelButton.addActionListener(e -> {
+            new MainUI(this.id,this.password,this.state);
             //취소 버튼 누르면 마이페이지 프레임 출력
             dispose();
         });

@@ -8,6 +8,7 @@ public class MainFrame extends JFrame {
 
     public static String name;
     public static String email;
+    public String state;
 
     MainFrame(String id, String password){
         this.id = id;
@@ -40,7 +41,7 @@ public class MainFrame extends JFrame {
 
         mypageButton.addActionListener(e -> {
             //마이페이지 버튼 누르면 마이페이지 창 띄우기
-            new MypageFrame(id,password);
+            new MypageFrame(id,password,state);
         });
 
         logoutButton.addActionListener(e -> {
