@@ -8,9 +8,12 @@ public class MypageFrame extends JFrame {
     public static String name;
     public static String email;
 
-    public MypageFrame(String id, String password){
+    public static String state;
+
+    public MypageFrame(String id, String password,String state){
         this.id = id;
         this.password = password;
+        this.state=state;
 
         setTitle("Mypage");
         setSize(500,400);
@@ -36,7 +39,7 @@ public class MypageFrame extends JFrame {
 
         changeButton.addActionListener(e -> {
             //아이디 비밀번호 변경 버튼 누르면 ChangeUserFrame 띄우기
-            new ChangeUser(id,password);
+            new ChangeUser(id,password,state);
         });
 
         deleteButton.addActionListener(e -> {
@@ -77,7 +80,7 @@ public class MypageFrame extends JFrame {
 
         changeButton.addActionListener(e -> {
             //아이디 비밀번호 변경 버튼 누르면 ChangeUserFrame 띄우기
-            new ChangeUser(id,password);
+            new ChangeUser(id,password,state);
         });
 
         deleteButton.addActionListener(e -> {

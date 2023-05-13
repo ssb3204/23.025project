@@ -4,6 +4,7 @@ import Factory_Pattern_Class.ItemProduct;
 import Observer_Pattern_class.Notice;
 import Observer_Pattern_class.NoticeUI;
 import Singleton_Pattern_Class.Singleton;
+import example.LoginFrame;
 import example.MypageFrame;
 
 import javax.imageio.ImageIO;
@@ -58,10 +59,14 @@ public class MainUI implements ActionListener {
     private final String id;
     private final String password;
 
-    public MainUI (String id , String password) {
+
+    public static String state;
+
+    public MainUI (String id , String password,String state) {
         //유저 정보를 저장한다.
         this.id = id;
         this.password = password;
+        this.state=state;
 
         //메인프레임 생성
         mainframe = new JFrame("메인화면");
@@ -128,6 +133,12 @@ public class MainUI implements ActionListener {
         mainframe.add(create_item);
         create_item.setBounds(730, 600, 100,50);
         create_item.addActionListener(this);
+        if(state=="admin"|| state=="user"){
+            create_item.setEnabled(true);
+        }
+        else{
+            create_item.setEnabled(false);
+        }
 
         
         //현재 저장된 물품 목록을 보기 위한 버튼
@@ -142,6 +153,9 @@ public class MainUI implements ActionListener {
         Mypage_button.setBounds(850, 500, 100, 50);
         mainframe.add(Mypage_button);
         Mypage_button.addActionListener(this);
+        if(state=="admin"){
+            Mypage_button.setEnabled(false);
+        }
         
         
         //로그아웃 버튼
@@ -322,13 +336,20 @@ public class MainUI implements ActionListener {
             //물품 생성버튼
             new SellerProductUploadUI(this);
         }
-        else if (e.getSource() == output_button) {
+        else if(e.getSource()==Logout_button) {
+            mainframe.setVisible(false);
+            new LoginFrame();
+        }else if (e.getSource() == output_button) {
             //출력버튼
             showItemList();
         }
         else if(e.getSource() == Mypage_button) {
+            if(state=="plane"){
+                JOptionPane.showMessageDialog(null,"회원가입이 필요합니다");
+                return;
+            }
             //마이페이지 버튼
-            new MypageFrame(id, password);
+            new MypageFrame(id, password,state);
         }
         else if(e.getSource() == next_page_button){
             //다음 페이지 버튼

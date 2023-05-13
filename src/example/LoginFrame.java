@@ -55,6 +55,10 @@ public class LoginFrame extends JFrame{
         resetButton.setBounds(300,220,80,25);
         add(resetButton);
 
+        JButton PlaneButton = new JButton("Plane");
+        PlaneButton.setBounds(300,260,80,25);
+        add(PlaneButton);
+
         setVisible(true);
 
         loginButton.addActionListener(e -> {
@@ -79,15 +83,25 @@ public class LoginFrame extends JFrame{
                 return;
             }
             Userinfocheck userinfocheck = new Userinfocheck(id,password);
-            if(userinfocheck.checkUserinfo()){
-                JOptionPane.showMessageDialog(null,"Login Success");
+            if(userinfocheck.checkUserinfo()&&idText.getText().equals("admin")){
+                JOptionPane.showMessageDialog(null,"Admin Login Success");
                 //로그인 성공하면 메인창 띄우기
-                //new MainFrame(id,password);
-                new MainUI(id,password);
+                new MainUI(id,password,"admin");
                 //메인창 띄우고 현재창 닫기
                 dispose();
-            } if(userinfocheck.checkUserinfo() == false){
+            }
+            //사용자 로그인
+            else if(userinfocheck.checkUserinfo()){
+                JOptionPane.showMessageDialog(null, "User Login Success");
+                //로그인 성공하면 메인창 띄우기
+                new MainUI(id, password, "user");
+                //메인창 띄우고 현재창 닫기
+                dispose();
+            }
+            else{
                 JOptionPane.showMessageDialog(null,"Login Failed");
+                idText.setText("");
+                passwordText.setText("");
             }
         });
 
@@ -106,6 +120,11 @@ public class LoginFrame extends JFrame{
         //exit 버튼 누르면 모두 종료
         exitButton.addActionListener(e -> {
             System.exit(0);
+        });
+
+        PlaneButton.addActionListener(e -> {
+            new MainUI(null,null,"plane");
+            dispose();
         });
     }
 }
