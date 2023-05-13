@@ -6,6 +6,7 @@ import Facade_Pattern_Class.DatabaseFacade;
 import Factory_Pattern_Class.ItemProduct;
 import Observer_Pattern_class.Notice;
 import Observer_Pattern_class.NoticeUI;
+import Observer_Pattern_class.PushNotice;
 import Singleton_Pattern_Class.Singleton;
 import example.LoginFrame;
 import example.MypageFrame;
@@ -57,6 +58,7 @@ public class MainUI implements ActionListener {
     //알림 기능
     JButton notice_button;
     Notice notice; //알림을 관리할 객체
+    PushNotice pushNotice;//전송될 알림을 관리하는 객체
 
     //로그인한 유저의 아이디 및 비밀번호 정보
     private final String id;
@@ -86,6 +88,7 @@ public class MainUI implements ActionListener {
 
         //물품 리스트를 관리하기 위한 객체 생성
         sell_item_list = Singleton.getInstance();
+        sell_item_list.observer_list.clear();
         sell_item_list.setUser(id);
         sell_item_list.dbLoadItem();
 
@@ -93,13 +96,15 @@ public class MainUI implements ActionListener {
         notice_button = new JButton("\uD83D\uDD14");
         mainframe.add(notice_button);
         notice_button.setBounds(920,20, 50, 50);
+        
         //알림 저장 객체
         notice_button.addActionListener(this);
-        notice = new Notice();
+        notice = new Notice(id);
         sell_item_list.subscribe(notice);
 
-        /**DB 에서 물품 객체를 받아와 sell_item_list 에 추가하는 메서드 호출*/
-        initialize();
+        //보내질 알림을 관리하는 객체
+        pushNotice = new PushNotice(id);
+        sell_item_list.subscribe(pushNotice);
 
         //로고 추가
         // 이미지 아이콘 생성
@@ -213,12 +218,6 @@ public class MainUI implements ActionListener {
         mainframe.setVisible(true);
     }
 
-    /**물품객체 알림 객체를 생성한다.*/
-    private void initialize() {
-        notice.db_get_notice(getId());
-        //sell_item_list.db_get_item();
-    }
-
     /**처음 화면으로 초기화한다.*/
     public void resetFrame() {
         clearFrame();
@@ -237,12 +236,12 @@ public class MainUI implements ActionListener {
 
     /**패널 리스트를 다시 생성한다*/
     public void resetAndAddPanels(){
-        System.out.println("패널 리스트를 삭제 후 다시 추가 중 입니다." + sell_item_list.getSize());
+        //System.out.println("패널 리스트를 삭제 후 다시 추가 중 입니다." + sell_item_list.getSize());
         panel_list.clear();
         for(int i = 0; i < sell_item_list.getSize(); i++) {
             panel_list.add(createItemPanel(sell_item_list.getItemProduct(i), i));
         }
-        System.out.println("패널 리스트 개수 : " + panel_list.size());
+        //System.out.println("패널 리스트 개수 : " + panel_list.size());
     }
 
     /**메인프레임 화면에 있는 패널들을 모두 제거한다.*/
@@ -271,7 +270,7 @@ public class MainUI implements ActionListener {
 
     /**화면 리로드*/
     public void reloadUI(){
-        System.out.println("화면을 리로드합니다." + " 현재 등록된 물품 개수 : " + panel_list.size());
+       // System.out.println("화면을 리로드합니다." + " 현재 등록된 물품 개수 : " + panel_list.size());
         mainframe.validate();
         mainframe.repaint();
     }
@@ -346,7 +345,7 @@ public class MainUI implements ActionListener {
             new SellerProductUploadUI(this);
         }
         else if(e.getSource()==Logout_button) {
-            mainframe.setVisible(false);
+            mainframe.dispose();
             new LoginFrame();
         }else if (e.getSource() == output_button) {
             //출력버튼
@@ -400,7 +399,7 @@ public class MainUI implements ActionListener {
             searchItem(search_field.getText());
             search_mode = true;
             if(search_item_list.size() != 0){
-                System.out.println("검색된 물품 개수 : " + search_page_number);
+               // System.out.println("검색된 물품 개수 : " + search_page_number);
                 loadUI(search_item_list, search_page_number);
                 updateSearchPageNumber();
                 checkPage(search_page_number, search_total_page);
@@ -423,7 +422,7 @@ public class MainUI implements ActionListener {
         if(search_item_list.size() != 0){
             clearFrame();
             search_item_list.clear();
-            System.out.println("검색 리스트 초기화");
+            //System.out.println("검색 리스트 초기화");
         }
 
         //현재 등록된 물품을 순회하며

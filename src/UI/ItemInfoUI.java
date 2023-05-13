@@ -232,19 +232,11 @@ public class ItemInfoUI implements ActionListener {
             if(!checkInputData())   return;
             
             //정보 수정
-            setItem();
+            item_list.upDateItem(index, item_title, item_count, item_description, item_price, selectedFile);
             item_list.dbUpload(index);
             topUI.TopUI.deletePanel();
             topUI.TopUI.resetFrame();
             topUI.popup_frame.dispose();
         }
-    }
-
-    private void setItem() {
-        item_list.getItemProduct(index).setItem_title(item_title);
-        item_list.getItemProduct(index).setItem_count(item_count);
-        item_list.getItemProduct(index).setItem_description(item_description);
-        item_list.getItemProduct(index).setItem_price(item_price);
-        item_list.getItemProduct(index).setItem_imageFile(selectedFile);
     }
 }

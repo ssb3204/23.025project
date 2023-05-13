@@ -82,7 +82,6 @@ public class ItemDaoImpl implements ItemDao{
 
             while(rs.next()) {
                 String item_title = rs.getString("title");
-                System.out.println(item_title);
                 int item_price = rs.getInt("price");
                 String item_description = rs.getString("description");
                 String id = rs.getString("id");

@@ -7,6 +7,7 @@ import Factory_Pattern_Class.ItemProduct;
 import Observer_Pattern_class.Observer;
 import Observer_Pattern_class.Subject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +50,10 @@ public class Singleton implements Subject {
 
     /**물품객체를 리스트에 추가하는 메서드*/
     public void addItem(ItemProduct item){
+        int index = sell_item_list.size();
         sell_item_list.add(item);
+        notifyObserver(sell_item_list.get(index).getUserID() ,"생성", index);
+        System.out.println(item.getTitle() + " " + sell_item_list.get(index).getTitle());
     }
 
     /**현재 저장된 물품의 개수를 반환*/
@@ -75,15 +79,24 @@ public class Singleton implements Subject {
     /**index 위치의 ItemProduct 물품 개수 1개 감소*/
     public void decreaseItemCount(int index){
         sell_item_list.get(index).decreaseItemCount();
-        notifyObserver(sell_item_list.get(index).getUserID(), sell_item_list.get(index).getTitle() + "가 1개 판매되었습니다.");
-        notifyObserver(user, sell_item_list.get(index).getTitle() + "를 구입하셨습니다.");
-        System.out.println("남은 물품 개수" + sell_item_list.get(index).getCount());
+        /**물품 구매*/
+        if(sell_item_list.get(index).getCount() != 0){
+            notifyObserver(sell_item_list.get(index).getUserID(), "판매", index);
+            System.out.println("남은 물품 개수" + sell_item_list.get(index).getCount());
+        }
+        else {
+            /**물품 전부 팔림*/
+            itemDao.deleteItem(sell_item_list.get(index).getItemID());
+            notifyObserver(sell_item_list.get(index).getUserID() ,"매진", index);
+            sell_item_list.remove(index);
+        }
     }
 
     /**위치의 ItemProduct 물품을 삭제*/
     public void deleteItem(int index){
+        /**물품이 삭제됨*/
         itemDao.deleteItem(sell_item_list.get(index).getItemID());
-        notifyObserver(sell_item_list.get(index).getUserID() ,sell_item_list.get(index).getTitle() + "가 모두 팔려 삭제되었습니다.");
+        notifyObserver(sell_item_list.get(index).getUserID() ,"삭제", index);
         sell_item_list.remove(index);
     }
 
@@ -105,6 +118,16 @@ public class Singleton implements Subject {
     public void setUser(String user) {
         this.user = user;
     }
+
+    public void upDateItem(int index, String item, int count, String description, int price, File image){
+        sell_item_list.get(index).setItem_title(item);
+        sell_item_list.get(index).setItem_count(count);
+        sell_item_list.get(index).setItem_description(description);
+        sell_item_list.get(index).setItem_price(price);
+        sell_item_list.get(index).setItem_imageFile(image);
+        notifyObserver(sell_item_list.get(index).getUserID() ,"수정", index);
+    }
+
     @Override
     public void subscribe(Observer observer) {
         observer_list.add(observer);
@@ -116,9 +139,9 @@ public class Singleton implements Subject {
     }
 
     @Override
-    public void notifyObserver(String user, String msg) {
+    public void notifyObserver(String user, String action, int index) {
         for(Observer o: observer_list){
-            o.update(user ,msg);
+            o.update(user ,action, index);
         }
     }
 }
