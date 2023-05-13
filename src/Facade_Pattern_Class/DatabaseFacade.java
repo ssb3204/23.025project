@@ -1,32 +1,35 @@
 package Facade_Pattern_Class;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class DatabaseFacade {
-    private String url;
-    private String username;
-    private String password;
-    private Connection connection;
+    private String url = "jdbc:oracle:thin:@sedb.deu.ac.kr:1521/orcl";
+    private String username =  "a20193116";
+    private String password = "20193116";
+    private Connection conn = null;
+    private Statement stmt = null;
 
+    /**DB주소 및 아이디, 비밀번호 입력 후 연결*/
     public DatabaseFacade(String url, String username, String password) {
         this.url = url;
         this.username = username;
         this.password = password;
     }
+    /**기본값으로 DB연결*/
+    public DatabaseFacade() {}
 
-    public void connect() throws SQLException {
+    public void connect() throws SQLException, ClassNotFoundException {
         // 데이터베이스 연결 설정
-        connection = DriverManager.getConnection(url, username, password);
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        conn = DriverManager.getConnection(url, username, password);
+        stmt = conn.createStatement();
     }
 
-    public ResultSet executeQuery(String query) throws SQLException {
-        // 쿼리 실행 및 결과 반환
-        PreparedStatement statement = connection.prepareStatement(query);
-        ResultSet result = statement.executeQuery();
-        return result;
+    public Connection getConn() {
+        return conn;
+    }
+    public void closeConnect() throws SQLException {
+        stmt.close();
+        conn.close();
     }
 }

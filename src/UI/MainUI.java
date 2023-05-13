@@ -1,5 +1,8 @@
 package UI;
 
+import Dao_Pattern_Class.ItemDao;
+import Dao_Pattern_Class.ItemDaoImpl;
+import Facade_Pattern_Class.DatabaseFacade;
 import Factory_Pattern_Class.ItemProduct;
 import Observer_Pattern_class.Notice;
 import Observer_Pattern_class.NoticeUI;
@@ -84,6 +87,7 @@ public class MainUI implements ActionListener {
         //물품 리스트를 관리하기 위한 객체 생성
         sell_item_list = Singleton.getInstance();
         sell_item_list.setUser(id);
+        sell_item_list.dbLoadItem();
 
         //알림 버튼
         notice_button = new JButton("\uD83D\uDD14");
@@ -195,6 +199,7 @@ public class MainUI implements ActionListener {
         mainframe.add(page_number_panel);
         page_number_panel.setBounds(400, 640, 155, 20);
 
+        resetAndAddPanels();
         //화면에 물품을 로드 한다.
         loadUI(panel_list, page_number);
         reloadUI();
@@ -207,7 +212,7 @@ public class MainUI implements ActionListener {
     /**물품객체 알림 객체를 생성한다.*/
     private void initialize() {
         notice.db_get_notice(getId());
-        sell_item_list.db_get_item();
+        //sell_item_list.db_get_item();
     }
 
     /**처음 화면으로 초기화한다.*/

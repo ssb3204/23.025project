@@ -1,5 +1,8 @@
 package Singleton_Pattern_Class;
 
+import Dao_Pattern_Class.ItemDao;
+import Dao_Pattern_Class.ItemDaoImpl;
+import Facade_Pattern_Class.DatabaseFacade;
 import Factory_Pattern_Class.ItemProduct;
 import Observer_Pattern_class.Observer;
 import Observer_Pattern_class.Subject;
@@ -12,12 +15,14 @@ public class Singleton implements Subject {
     //private static  Singleton singleton_instance = new Singleton();
     //옵저버 관리를 위한 리스트
     public List<Observer> observer_list = new ArrayList<>();
+
     private Singleton(){
         sell_item_list = new ArrayList<ItemProduct>();
     }
 
     private String user;
 
+    ItemDao itemDao;
 
     /**LazyHolder*/
     private static class LazyHolder{
@@ -77,14 +82,26 @@ public class Singleton implements Subject {
 
     /**위치의 ItemProduct 물품을 삭제*/
     public void deleteItem(int index){
-        System.out.println(sell_item_list.get(index).getTitle() + "가 모두 팔려 삭제되었습니다.");
+        itemDao.deleteItem(sell_item_list.get(index).getItemID());
         notifyObserver(sell_item_list.get(index).getUserID() ,sell_item_list.get(index).getTitle() + "가 모두 팔려 삭제되었습니다.");
         sell_item_list.remove(index);
     }
-    /**DB에 저장된 아이템을 받아오는 코드*/
-    public void db_get_item() {
 
+    /**DB에 저장된 아이템을 받아오는 코드*/
+    public void dbLoadItem() {
+        itemDao = new ItemDaoImpl(new DatabaseFacade());
+
+        sell_item_list = itemDao.readItem();
+/*        for(ItemProduct i : sell_item_list){
+            System.out.println(i.getTitle());
+        }*/
     }
+
+    public void dbUpload(int index){
+        ItemDao itemDao = new ItemDaoImpl(new DatabaseFacade());
+        itemDao.updateItem(sell_item_list.get(index));
+    }
+
     public void setUser(String user) {
         this.user = user;
     }

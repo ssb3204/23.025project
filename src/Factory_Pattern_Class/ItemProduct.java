@@ -1,11 +1,6 @@
 package Factory_Pattern_Class;
 
-import Observer_Pattern_class.Observer;
-import Observer_Pattern_class.Subject;
-
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 public abstract class ItemProduct {
     protected String item_title;//물품 명
@@ -15,7 +10,12 @@ public abstract class ItemProduct {
     protected int item_count;//물품 개수
     protected  String userID;//판매자 명
     protected String item_type;//물품 타입
+    protected int itemID;//물품의 고유번호
 
+    /**물품의 고유번호를 반환*/
+    public int getItemID() {
+        return itemID;
+    }
     /**물품의 이름을 반환*/
     public String getTitle(){
         return  item_title;

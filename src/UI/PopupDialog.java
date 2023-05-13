@@ -64,7 +64,7 @@ public class PopupDialog implements ActionListener {
         Font boldFont = new Font(font.getFontName(), Font.BOLD, 20);
         item_title.setFont(boldFont);
         item_panel.add(item_title);
-        item_title.setBounds(350, 80, 200, 20);
+        item_title.setBounds(350, 80, 400, 20);
 
 
         //가격
@@ -119,9 +119,10 @@ public class PopupDialog implements ActionListener {
         item_buy_button.setBounds(300, 530, 100, 30);
         item_panel.add(item_buy_button);
 
-
+        System.out.println(TopUI.getId());
         //만약 등록 유저 혹은 어드민이라면
-        if(TopUI.getId() == TopUI.sell_item_list.getItemProduct(index).getUserID() || TopUI.getId() == "admin") {
+        if(TopUI.getId() == TopUI.sell_item_list.getItemProduct(index).getUserID() || TopUI.getId().equals("admin")) {
+            System.out.println("2");
             //삭제버튼
             delete_button = new JButton("삭제");
             delete_button.addActionListener(this);
@@ -165,7 +166,7 @@ public class PopupDialog implements ActionListener {
         }
         else if (e.getSource() == item_info_button) {
             item_panel.setVisible(false);
-            popup_frame.add(new ItemInfoUI(TopUI.sell_item_list ,index, this).getItem_info_panel());
+            popup_frame.add(new ItemInfoUI(index, this).getItem_info_panel());
         }
     }
 }

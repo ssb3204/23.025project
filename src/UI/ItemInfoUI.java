@@ -1,5 +1,8 @@
 package UI;
 
+import Dao_Pattern_Class.ItemDao;
+import Dao_Pattern_Class.ItemDaoImpl;
+import Facade_Pattern_Class.DatabaseFacade;
 import Factory_Pattern_Class.GeneralItemCreator;
 import Factory_Pattern_Class.ItemProduct;
 import Singleton_Pattern_Class.Singleton;
@@ -62,9 +65,9 @@ public class ItemInfoUI implements ActionListener {
     int item_count = -1;//상품의 개수
 
     PopupDialog topUI;
-    public ItemInfoUI(Singleton item_list, int index, PopupDialog topUI) {
+    public ItemInfoUI(int index, PopupDialog topUI) {
         this.topUI = topUI;
-        this.item_list = item_list;
+        this.item_list = Singleton.getInstance();
         this.index = index;
         item_info_panel = new JPanel(null);
         item_info_panel.setBounds(-70, 20, 700, 600);
@@ -224,13 +227,13 @@ public class ItemInfoUI implements ActionListener {
                 }
             }
         }
-        //등록버튼을 눌렀을때 팩토리 패턴을 이용하여 객체를 생성한다.
         else if(e.getSource() == setButton){
             //입력값을 체크한다.
             if(!checkInputData())   return;
             
             //정보 수정
             setItem();
+            item_list.dbUpload(index);
             topUI.TopUI.deletePanel();
             topUI.TopUI.resetFrame();
             topUI.popup_frame.dispose();
