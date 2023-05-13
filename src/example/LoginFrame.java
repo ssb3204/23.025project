@@ -3,6 +3,8 @@ package example;
 import UI.MainUI;
 
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class LoginFrame extends JFrame{
     JTextField idText;
@@ -24,7 +26,13 @@ public class LoginFrame extends JFrame{
         setLocationRelativeTo(null);
         JLabel idLabel = new JLabel("ID");
         idLabel.setBounds(300,100,80,25);
-
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                /**DB 에 sell_item_list 객체들을 저장하는 코드*/
+                System.exit(0);
+            }
+        });
         add(idLabel);
 
         idText = new JTextField(10);

@@ -172,9 +172,12 @@ public class MainUI implements ActionListener {
         //판매 물품 화면을 띄울 공간
         panel_list = new ArrayList<JPanel>();
 
+        for(int i = 0; i < sell_item_list.getSize(); i++) {
+            panel_list.add(createItemPanel(sell_item_list.getItemProduct(i), i));
+        }
         
         //페이지 번호 공간
-        calcTotalPage();
+
         if(total_page == 0) total_page = 1;
         page_number_panel = new JPanel(new BorderLayout());
         page_number_label = new JLabel(page_number + " / " + total_page);
@@ -183,6 +186,7 @@ public class MainUI implements ActionListener {
         //다음 페이지 버튼
         next_page_button = new JButton("다음");
         next_page_button.addActionListener(this);
+        next_page_button.setEnabled(false);
         page_number_panel.add(next_page_button, BorderLayout.EAST);
 
         //이전 페이지 버튼
@@ -190,6 +194,7 @@ public class MainUI implements ActionListener {
         prev_page_button.addActionListener(this);
         page_number_panel.add(prev_page_button, BorderLayout.WEST);
         prev_page_button.setEnabled(false);
+        calcTotalPage();
 
         //페이지의 개수가 1개가 넘지 않는다면 다음 페이지 버튼 작동X
         if(total_page == 1){
@@ -199,7 +204,6 @@ public class MainUI implements ActionListener {
         mainframe.add(page_number_panel);
         page_number_panel.setBounds(400, 640, 155, 20);
 
-        resetAndAddPanels();
         //화면에 물품을 로드 한다.
         loadUI(panel_list, page_number);
         reloadUI();
