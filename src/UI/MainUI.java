@@ -7,6 +7,7 @@ import Factory_Pattern_Class.ItemProduct;
 import Observer_Pattern_class.Notice;
 import Observer_Pattern_class.NoticeUI;
 import Observer_Pattern_class.PushNotice;
+import OrderHistory.OrderHistoryUI;
 import Singleton_Pattern_Class.Singleton;
 import Template_Method_Pattern_Class.*;
 import example.LoginFrame;
@@ -29,7 +30,7 @@ public class MainUI implements ActionListener {
     JFrame mainframe;//메인프레임
     JButton create_item;//물품 생성 버튼
     
-    JButton output_button;//현재 등록된 물품 출력 버튼
+    JButton orderHistory_button;//구매기록
     JButton Mypage_button;//마이페이지 버튼
     JButton Logout_button;//로그아웃 버튼
 
@@ -155,10 +156,10 @@ public class MainUI implements ActionListener {
 
         
         //현재 저장된 물품 목록을 보기 위한 버튼
-        output_button = new JButton("출력");
-        output_button.setBounds(850, 600, 100, 50);
-        mainframe.add(output_button);
-        output_button.addActionListener(this);
+        orderHistory_button = new JButton("구매기록");
+        orderHistory_button.setBounds(850, 600, 100, 50);
+        mainframe.add(orderHistory_button);
+        orderHistory_button.addActionListener(this);
 
         
         //마이페이지에 접속하기 위한 버튼
@@ -358,9 +359,9 @@ public class MainUI implements ActionListener {
         else if(e.getSource()==Logout_button) {
             mainframe.dispose();
             new LoginFrame();
-        }else if (e.getSource() == output_button) {
+        }else if (e.getSource() == orderHistory_button) {
             //출력버튼
-            showItemList();
+            new OrderHistoryUI(mainframe, getId());
         }
         else if(e.getSource() == Mypage_button) {
             if(state=="plane"){
@@ -485,12 +486,6 @@ public class MainUI implements ActionListener {
         //싱글톤 객체에 아이템을 추가하는 코드
         sell_item_list.addItem(item);
         addPanel();
-    }
-
-    /**상품 리스트의 내용물을 출력하는 메서드*/
-    public void showItemList(){
-        //싱글톤 객체의 내용을 보여주는 메서드
-        sell_item_list.showItem();
     }
 
     /**토탈 페이지 수를 계산*/

@@ -1,5 +1,11 @@
 package UI;
 
+import Facade_Pattern_Class.DatabaseFacade;
+import OrderHistory.OrderHistoryDao;
+import OrderHistory.OrderHistoryDaoImpl;
+import OrderHistory.OrderHistoryObj;
+import Singleton_Pattern_Class.Singleton;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -150,7 +156,11 @@ public class PopupDialog implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == item_buy_button){
             //System.out.println("물품을 구매하셨습니다.");
-            //만약 물품의 개수가 0이라면 물품을 제거한다.
+            OrderHistoryDao orderHistoryDao = new OrderHistoryDaoImpl(new DatabaseFacade());
+            String userID = TopUI.sell_item_list.getItemProduct(index).getUserID();
+            String title = TopUI.sell_item_list.getItemProduct(index).getTitle();
+            String price = String.valueOf(TopUI.sell_item_list.getItemProduct(index).getPrice());
+            orderHistoryDao.addHistory(new OrderHistoryObj(title, price, userID));
             TopUI.sell_item_list.decreaseItemCount(index);
             TopUI.deletePanel();
             TopUI.resetFrame();
