@@ -20,8 +20,10 @@ public class NoticeUI {
         });
         DefaultListModel<String> model = new DefaultListModel<>();
 
+        int index = notice.getNotice_list().size();
         for(NoticeObj o : notice.getNotice_list()){
-            model.addElement(o.getUser() + " : " + o.getMsg());
+            model.addElement("[" + index + "] " + o.getUser() + " : " + o.getMsg());
+            index--;
         }
         notice_list = new JList<>(model);
         notice_frame.add(notice_list);

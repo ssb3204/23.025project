@@ -16,4 +16,9 @@ public class GeneralItemProduct extends ItemProduct  {
         this.item_type = "일반";
         this.itemID = itemID;
     }
+
+    @Override
+    public String toString() {
+        return "물품 : " + getTitle() + ", " + "가격 : " + getPrice();
+    }
 }

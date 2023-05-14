@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Singleton implements Subject {
+
     private static List<ItemProduct> sell_item_list;
     //private static  Singleton singleton_instance = new Singleton();
     //옵저버 관리를 위한 리스트
@@ -60,16 +61,16 @@ public class Singleton implements Subject {
     public int getSize(){
         return sell_item_list.size();
     }
-    
+
     /**입력된 제목의 물품을 삭제한다*/
-    public void removeItem(String title){
+    /*public void removeItem(String title){
         for(int i = 0; i < sell_item_list.size(); i++){
             if(sell_item_list.get(i).getTitle().equals(title)){
                 sell_item_list.remove(i);
                 return;
             }
         }
-    }
+    }*/
 
     /**index 위치의 ItemProduct 반환*/
     public ItemProduct getItemProduct(int index){
@@ -128,6 +129,9 @@ public class Singleton implements Subject {
         notifyObserver(sell_item_list.get(index).getUserID() ,"수정", index);
     }
 
+    public static List<ItemProduct> getSell_item_list() {
+        return sell_item_list;
+    }
     @Override
     public void subscribe(Observer observer) {
         observer_list.add(observer);

@@ -8,11 +8,13 @@ import Observer_Pattern_class.Notice;
 import Observer_Pattern_class.NoticeUI;
 import Observer_Pattern_class.PushNotice;
 import Singleton_Pattern_Class.Singleton;
+import Template_Method_Pattern_Class.*;
 import example.LoginFrame;
 import example.MypageFrame;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
@@ -60,10 +62,12 @@ public class MainUI implements ActionListener {
     Notice notice; //알림을 관리할 객체
     PushNotice pushNotice;//전송될 알림을 관리하는 객체
 
+    //정렬선택 드롭다운리스트
+    JComboBox<String> sortComboBox;
+    
     //로그인한 유저의 아이디 및 비밀번호 정보
     private final String id;
     private final String password;
-
 
     public static String state;
 
@@ -205,9 +209,16 @@ public class MainUI implements ActionListener {
         if(total_page == 1){
             next_page_button.setEnabled(false);
         }
-
         mainframe.add(page_number_panel);
         page_number_panel.setBounds(400, 640, 155, 20);
+        
+        //정렬 방법 선택을 위한 드롭다운리스트
+        String sortList[] = {"이름순", "이름역순", "가격순", "가격역순"};
+        sortComboBox = new JComboBox<String>(sortList);
+        sortComboBox.addActionListener(this);
+        mainframe.add(sortComboBox);
+        sortComboBox.setBounds(800,20,100,20);
+
 
         //화면에 물품을 로드 한다.
         loadUI(panel_list, page_number);
@@ -413,6 +424,36 @@ public class MainUI implements ActionListener {
         else if(e.getSource() == notice_button){
             //알림버튼
             new NoticeUI(mainframe, notice, id);
+        }
+        else if(e.getSource() == sortComboBox){
+            AbstractItemSorter itemSorter;
+            int index = sortComboBox.getSelectedIndex();
+            switch (index){
+                case 0:{
+                    itemSorter = new TitleSorter(this);
+                    itemSorter.sort(Singleton.getSell_item_list());
+                    break;
+                }
+                case 1:{
+                    itemSorter = new TitleReversedSorter(this);
+                    itemSorter.sort(Singleton.getSell_item_list());
+                    break;
+                }
+                case 2:{
+                    itemSorter = new PriceSorter(this);
+                    itemSorter.sort(Singleton.getSell_item_list());
+                    break;
+                }
+                case 3:{
+                    itemSorter = new PriceReversedSorter(this);
+                    itemSorter.sort(Singleton.getSell_item_list());
+                    break;
+                }
+                default:{
+                    System.out.println("에러");
+                    break;
+                }
+            }
         }
     }
 
