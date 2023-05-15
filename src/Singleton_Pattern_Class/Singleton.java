@@ -84,6 +84,7 @@ public class Singleton implements Subject {
         if(sell_item_list.get(index).getCount() != 0){
             notifyObserver(sell_item_list.get(index).getUserID(), "판매", index);
             System.out.println("남은 물품 개수" + sell_item_list.get(index).getCount());
+            itemDao.updateItem(sell_item_list.get(index));
         }
         else {
             /**물품 전부 팔림*/
