@@ -56,15 +56,13 @@ public class OrderHistoryDaoImpl implements OrderHistoryDao{
                 String time = rs.getString("time");
                 order_list.add(new OrderHistoryObj(title, price, userID, time));
             }
-
+            rs.close();
             database.closeConnect();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-
-
         return order_list;
     }
 }

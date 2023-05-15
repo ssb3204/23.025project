@@ -118,6 +118,7 @@ public class ItemDaoImpl implements ItemDao{
             }
             //DB연결 해제
             database.closeConnect();
+            rs.close();
             System.out.println("아이템 리스트를 받아왔습니다.");
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -212,7 +213,7 @@ public class ItemDaoImpl implements ItemDao{
                 itemID = rs.getInt(1);
                 itemID++;
             }
-
+            rs.close();
             database.closeConnect();
         } catch (SQLException e) {
             throw new RuntimeException(e);

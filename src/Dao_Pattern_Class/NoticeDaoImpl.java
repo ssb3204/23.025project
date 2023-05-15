@@ -34,7 +34,7 @@ public class NoticeDaoImpl implements NoticeDao{
                 String msg = rs.getString("msg");
                 objList.add(new NoticeObj(ID, msg));
             }
-
+            rs.close();
             databaseFacade.closeConnect();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -52,7 +52,7 @@ public class NoticeDaoImpl implements NoticeDao{
             PreparedStatement pstmt = databaseFacade.getConn().prepareStatement(query);
             pstmt.setString(1, notice.getUser());
             pstmt.setString(2, notice.getMsg());
-            ResultSet rs = pstmt.executeQuery();
+            pstmt.executeQuery();
 
             databaseFacade.closeConnect();
         } catch (SQLException e) {
@@ -69,7 +69,7 @@ public class NoticeDaoImpl implements NoticeDao{
             String query = "DELETE FROM notice WHERE id = ?";
             PreparedStatement pstmt = databaseFacade.getConn().prepareStatement(query);
             pstmt.setString(1, id);
-            ResultSet rs = pstmt.executeQuery();
+            pstmt.executeQuery();
             databaseFacade.closeConnect();
         } catch (SQLException e) {
             throw new RuntimeException(e);
