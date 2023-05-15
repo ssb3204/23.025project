@@ -1,42 +1,92 @@
 package Observer_Pattern_class;
 
+import Singleton_Pattern_Class.Singleton;
+import UI.MainUI;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class NoticeUI {
-    Notice notice;
-    JDialog notice_frame;
-    JList<String> notice_list;
-    public NoticeUI(JFrame Top, Notice notice, String user) {
+public class NoticeUI implements ActionListener {
+    private Notice notice;
+    private JDialog notice_frame;
+    private JTable notice_list;
+    JButton turnOffButton;
+    MainUI TOP;
+
+    public NoticeUI(MainUI Top, Notice notice, String user) {
+        TOP = Top;
         this.notice = notice;
-        notice_frame = new JDialog(Top,"알림창", true);
+        notice_frame = new JDialog(Top.mainframe,"알림창", true);
         notice_frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        notice_frame.setSize(500, 600);
+        notice_frame.setLayout(new BorderLayout());
+        turnOffButton = new JButton();
+
+        if(TOP.isTurnedOff()){
+            turnOffButton.setText("알림 켜기");
+        }
+        else {
+            turnOffButton.setText("알림 끄기");
+        }
+
+        turnOffButton.addActionListener(this);
+        notice_frame.add(turnOffButton, BorderLayout.SOUTH);
+
         notice_frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 notice_frame.dispose();
             }
         });
-        DefaultListModel<String> model = new DefaultListModel<>();
 
-        int index = notice.getNotice_list().size();
+        DefaultTableModel model = new DefaultTableModel(new String[]{"순서", "수신자", "메세지"}, 0);
+
+        int index = 1;
         for(NoticeObj o : notice.getNotice_list()){
-            model.addElement("[" + index + "] " + o.getUser() + " : " + o.getMsg());
-            index--;
+             String id = o.getUser();
+             String msg = o.getMsg();
+             String i = "["+ String.valueOf(index) +"]";
+             index++;
+             model.addRow(new Object[]{i, user, msg});
         }
-        notice_list = new JList<>(model);
-        notice_frame.add(notice_list);
 
-        notice_frame.setSize(500, 800);
-        notice_frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                super.windowClosing(e);
-            }
-        });
+        notice_list = new JTable(model);
+        TableColumnModel columnModel = notice_list.getColumnModel();
+        columnModel.getColumn(0).setPreferredWidth(-10);
+        columnModel.getColumn(1).setPreferredWidth(50);
+        columnModel.getColumn(2).setPreferredWidth(300);
+        JScrollPane scrollPane = new JScrollPane(notice_list);
+        //notice_list.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        notice_frame.add(scrollPane, BorderLayout.CENTER);
+
+
         notice_frame.setLocationRelativeTo(null);
         notice_frame.setResizable(false);
         notice_frame.setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == turnOffButton){
+            if (TOP.isTurnedOff()) {
+                System.out.println("알림이 켜집니다.");
+                turnOffButton.setText("알림 끄기"); // 버튼 이름 변경
+                TOP.setTurnedOff(false);
+                TOP.sell_item_list.subscribe(notice);
+                // 알림을 켜는 동작 처리
+            } else {
+                System.out.println("알림이 꺼집니다.");
+                turnOffButton.setText("알림 켜기"); // 버튼 이름 변경
+                TOP.setTurnedOff(true);
+                TOP.sell_item_list.unsubscribe(notice);
+                // 알림을 끄는 동작 처리
+            }
+        }
     }
 }

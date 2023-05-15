@@ -4,6 +4,8 @@ import Facade_Pattern_Class.DatabaseFacade;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,12 @@ public class OrderHistoryUI {
         orderHistoryFrame = new JDialog(TOP, "구매기록", true);
         orderHistoryFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         orderHistoryFrame.setSize(500, 500);
+        orderHistoryFrame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                orderHistoryFrame.dispose();
+            }
+        });
         DefaultTableModel model = new DefaultTableModel(new String[]{"판매자", "물품", "가격", "구매일자"}, 0);
 
         List<OrderHistoryObj> list = new ArrayList<OrderHistoryObj>();

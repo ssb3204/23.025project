@@ -26,8 +26,8 @@ import java.util.List;
 
 public class MainUI implements ActionListener {
 
-    Singleton sell_item_list;//물품 리스트 객체
-    JFrame mainframe;//메인프레임
+    public Singleton sell_item_list;//물품 리스트 객체
+    public JFrame mainframe;//메인프레임
     JButton create_item;//물품 생성 버튼
     
     JButton orderHistory_button;//구매기록
@@ -71,6 +71,8 @@ public class MainUI implements ActionListener {
     private final String password;
 
     public static String state;
+
+    boolean isTurnedOff = false; // 알림 상태 변수
 
     public MainUI (String id , String password,String state) {
         //유저 정보를 저장한다.
@@ -424,7 +426,7 @@ public class MainUI implements ActionListener {
         }
         else if(e.getSource() == notice_button){
             //알림버튼
-            new NoticeUI(mainframe, notice, id);
+            new NoticeUI(this, notice, id);
         }
         else if(e.getSource() == sortComboBox){
             AbstractItemSorter itemSorter;
@@ -536,4 +538,11 @@ public class MainUI implements ActionListener {
         return password;
     }
 
+    public boolean isTurnedOff() {
+        return isTurnedOff;
+    }
+
+    public void setTurnedOff(boolean turnedOff) {
+        isTurnedOff = turnedOff;
+    }
 }
