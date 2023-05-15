@@ -179,7 +179,8 @@ public class SellerProductUploadUI implements ActionListener {
             //입력되어야하는 값이 비어있을때 알림 후 함수를 빠져나간다.
             if("".equals(item_title_field.getText())){
                 //제목칸이 공백이라면
-                System.out.println("제목을 입력해주세요!");
+                //System.out.println("가격을 제대로 입력해주세요!");
+                JOptionPane.showMessageDialog(null, "가격을 제대로 입력해주세요!", "경고", JOptionPane.WARNING_MESSAGE);
                 return false;
             }
             try {//가격이 공백, 문자, 음수나 0이 아니라면
@@ -189,26 +190,31 @@ public class SellerProductUploadUI implements ActionListener {
                     return false;
                 }
             } catch (NumberFormatException er) {
-                System.out.println("가격을 제대로 입력해주세요!");
+                //System.out.println("가격을 제대로 입력해주세요!");
+                JOptionPane.showMessageDialog(null, "가격을 제대로 입력해주세요!", "경고", JOptionPane.WARNING_MESSAGE);
                 return false;
             }
             try {//물품의 개수가 공백, 문자, 음수나 0이 아니라면
                 //물픔의 개수를 저장
                 item_count = Integer.parseInt(item_count_field.getText());
                 if(item_count < 1){
-                    System.out.println("물품의 개수를 제대로 입력해주세요!");
+                    //System.out.println("물품의 개수를 제대로 입력해주세요!");
+                    JOptionPane.showMessageDialog(null, "물품의 개수를 제대로 입력해주세요!", "경고", JOptionPane.WARNING_MESSAGE);
                     return false;
                 }
             } catch (NumberFormatException er) {
-                System.out.println("물품의 개수를 제대로 입력해주세요!");
+                //System.out.println("물품의 개수를 제대로 입력해주세요!");
+                JOptionPane.showMessageDialog(null, "물품의 개수를 제대로 입력해주세요!", "경고", JOptionPane.WARNING_MESSAGE);
                 return false;
             }
             if(selectedFile == null){
-                System.out.println("파일을 등록해주세요!");
+                //System.out.println("파일을 등록해주세요!");
+                JOptionPane.showMessageDialog(null, "상품 이미지를 등록해주세요!", "경고", JOptionPane.WARNING_MESSAGE);
                 return false;
             }
             else if(item_description_textarea.getText().equals("")){
-                System.out.println("설명을 입력해주세요!");
+                //System.out.println("설명을 입력해주세요!");
+                JOptionPane.showMessageDialog(null, "설명을 입력해주세요!", "경고", JOptionPane.WARNING_MESSAGE);
                 return false;
             }
 

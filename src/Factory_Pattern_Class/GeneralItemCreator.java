@@ -21,6 +21,6 @@ public class GeneralItemCreator extends ItemCreator {
         // 이 예제에서는 간단히 콘솔에 출력만 함
         ItemDao itemDao = new ItemDaoImpl(new DatabaseFacade());
         itemDao.createItem(item);
-        System.out.println("DB에 상품을 저장하였습니다.  저장된 상품명 : " + item.getTitle() + "\n");
+        //System.out.println("DB에 상품을 저장하였습니다.  저장된 상품명 : " + item.getTitle() + "\n");
     }
 }

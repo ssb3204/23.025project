@@ -18,7 +18,7 @@ public class OrderHistoryDaoImpl implements OrderHistoryDao{
 
     @Override
     public void addHistory(OrderHistoryObj obj) {
-        System.out.println("기록 추가");
+        //System.out.println("기록 추가");
         try {
             database.connect();
 

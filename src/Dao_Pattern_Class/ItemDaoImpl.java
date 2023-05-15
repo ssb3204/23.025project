@@ -62,7 +62,7 @@ public class ItemDaoImpl implements ItemDao{
 
             //DB연결 해제
             database.closeConnect();
-            System.out.println("새로운 아이템 업로드!");
+            //System.out.println("새로운 아이템 업로드!");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -181,7 +181,7 @@ public class ItemDaoImpl implements ItemDao{
     /**아이템 삭제*/
     @Override
     public void deleteItem(int id) {
-        System.out.println("삭제 아이디 " + id);
+        //System.out.println("삭제 아이디 " + id);
         try {
             //DB연결
             database.connect();
