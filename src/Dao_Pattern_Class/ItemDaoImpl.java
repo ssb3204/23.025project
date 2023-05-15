@@ -60,6 +60,7 @@ public class ItemDaoImpl implements ItemDao{
             pstmt.setString(8, item_type);
             pstmt.executeUpdate();
 
+            pstmt.close();
             //DB연결 해제
             database.closeConnect();
             //System.out.println("새로운 아이템 업로드!");
@@ -118,8 +119,9 @@ public class ItemDaoImpl implements ItemDao{
 
             }
             //DB연결 해제
-            database.closeConnect();
+            pstmt.close();
             rs.close();
+            database.closeConnect();
             //System.out.println("아이템 리스트를 받아왔습니다.");
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -169,6 +171,7 @@ public class ItemDaoImpl implements ItemDao{
             pstmt.executeUpdate();
 
             //DB연결 해제
+            pstmt.close();
             database.closeConnect();
             //System.out.println("아이템 정보 수정");
         } catch (SQLException e) {
@@ -190,6 +193,7 @@ public class ItemDaoImpl implements ItemDao{
             pstmt.setString(1, String.valueOf(id));
             pstmt.executeUpdate();
             //DB연결 해제
+            pstmt.close();
             database.closeConnect();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -213,6 +217,7 @@ public class ItemDaoImpl implements ItemDao{
                 itemID = rs.getInt(1);
                 itemID++;
             }
+            pstmt.close();
             rs.close();
             database.closeConnect();
         } catch (SQLException e) {

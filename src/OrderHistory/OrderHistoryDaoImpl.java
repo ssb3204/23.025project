@@ -31,6 +31,7 @@ public class OrderHistoryDaoImpl implements OrderHistoryDao{
             pstmt.setString(5, obj.getCustomer());
             pstmt.executeQuery();
 
+            pstmt.close();
             database.closeConnect();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -60,6 +61,7 @@ public class OrderHistoryDaoImpl implements OrderHistoryDao{
                 String customer = rs.getString("customerID");
                 order_list.add(new OrderHistoryObj(title, price, userID, time, customer));
             }
+            pstmt.close();
             rs.close();
             database.closeConnect();
         } catch (SQLException e) {

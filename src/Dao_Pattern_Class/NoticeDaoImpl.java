@@ -34,6 +34,7 @@ public class NoticeDaoImpl implements NoticeDao{
                 String msg = rs.getString("msg");
                 objList.add(new NoticeObj(ID, msg));
             }
+            pstmt.close();
             rs.close();
             databaseFacade.closeConnect();
         } catch (SQLException e) {
@@ -54,6 +55,7 @@ public class NoticeDaoImpl implements NoticeDao{
             pstmt.setString(2, notice.getMsg());
             pstmt.executeQuery();
 
+            pstmt.close();
             databaseFacade.closeConnect();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -70,6 +72,7 @@ public class NoticeDaoImpl implements NoticeDao{
             PreparedStatement pstmt = databaseFacade.getConn().prepareStatement(query);
             pstmt.setString(1, id);
             pstmt.executeQuery();
+            pstmt.close();
             databaseFacade.closeConnect();
         } catch (SQLException e) {
             throw new RuntimeException(e);

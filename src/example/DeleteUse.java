@@ -1,6 +1,9 @@
 package example;
 
+import Facade_Pattern_Class.DatabaseFacade;
+
 import javax.swing.*;
+import javax.xml.crypto.Data;
 import java.awt.*;
 
 public class DeleteUse extends JFrame{
@@ -28,8 +31,10 @@ public class DeleteUse extends JFrame{
         setVisible(true);
 
         deleteButton.addActionListener(e -> {
-            Userinfocheck userinfocheck = new Userinfocheck(MypageFrame.id,MypageFrame.password);
-            userinfocheck.deleteUserinfo();
+            //Userinfocheck userinfocheck = new Userinfocheck(MypageFrame.id,MypageFrame.password);
+            //userinfocheck.deleteUserinfo();
+            DeleteUser deleteUse = new DeleteUser(new DatabaseFacade());
+            deleteUse.deleteStart(MypageFrame.id);
         });
 
         cancelButton.addActionListener(e -> {

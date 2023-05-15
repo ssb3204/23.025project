@@ -1,5 +1,7 @@
 package example;
 
+import Facade_Pattern_Class.DatabaseFacade;
+
 import java.io.*;
 import java.sql.*;
 
