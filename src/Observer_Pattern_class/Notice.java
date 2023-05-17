@@ -69,9 +69,9 @@ public class Notice implements Observer {
         }
 
 
-        String seletedValue = (lastName - 0xAC00) % 28 > 0 ? firstValue : secondValue;
+        String selectedValue = (lastName - 0xAC00) % 28 > 0 ? firstValue : secondValue;
 
-        return name+seletedValue;
+        return name+selectedValue;
     }
 
 }

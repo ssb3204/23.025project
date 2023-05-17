@@ -54,7 +54,7 @@ public class Singleton implements Subject {
         int index = sell_item_list.size();
         sell_item_list.add(item);
         notifyObserver(sell_item_list.get(index).getUserID() ,"생성", index);
-        System.out.println(item.getTitle() + " " + sell_item_list.get(index).getTitle());
+        //System.out.println(item.getTitle() + " " + sell_item_list.get(index).getTitle());
     }
 
     /**현재 저장된 물품의 개수를 반환*/
@@ -83,7 +83,8 @@ public class Singleton implements Subject {
         /**물품 구매*/
         if(sell_item_list.get(index).getCount() != 0){
             notifyObserver(sell_item_list.get(index).getUserID(), "판매", index);
-            System.out.println("남은 물품 개수" + sell_item_list.get(index).getCount());
+            //System.out.println("남은 물품 개수" + sell_item_list.get(index).getCount());
+            itemDao.updateItem(sell_item_list.get(index));
         }
         else {
             /**물품 전부 팔림*/
@@ -145,6 +146,7 @@ public class Singleton implements Subject {
     @Override
     public void notifyObserver(String user, String action, int index) {
         for(Observer o: observer_list){
+            System.out.println(o);
             o.update(user ,action, index);
         }
     }

@@ -157,13 +157,17 @@ public class PopupDialog implements ActionListener {
         if(e.getSource() == item_buy_button){
             //System.out.println("물품을 구매하셨습니다.");
             OrderHistoryDao orderHistoryDao = new OrderHistoryDaoImpl(new DatabaseFacade());
+
             String userID = TopUI.sell_item_list.getItemProduct(index).getUserID();
             String title = TopUI.sell_item_list.getItemProduct(index).getTitle();
             String price = String.valueOf(TopUI.sell_item_list.getItemProduct(index).getPrice());
-            orderHistoryDao.addHistory(new OrderHistoryObj(title, price, userID));
+            String customer = TopUI.getId();
+
+            orderHistoryDao.addHistory(new OrderHistoryObj(title, price, userID, customer));
             TopUI.sell_item_list.decreaseItemCount(index);
             TopUI.deletePanel();
             TopUI.resetFrame();
+            JOptionPane.showMessageDialog(null, "구매되었습니다!", "알림", JOptionPane.INFORMATION_MESSAGE);
             popup_frame.dispose();
         }
         else if(e.getSource() == delete_button){
@@ -171,6 +175,7 @@ public class PopupDialog implements ActionListener {
             TopUI.sell_item_list.deleteItem(index);
             TopUI.deletePanel();
             TopUI.resetFrame();
+            JOptionPane.showMessageDialog(null, "삭제되었습니다!", "알림", JOptionPane.INFORMATION_MESSAGE);
             popup_frame.dispose();
         }
         else if (e.getSource() == item_info_button) {

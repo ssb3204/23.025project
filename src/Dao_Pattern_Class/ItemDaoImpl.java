@@ -23,13 +23,13 @@ public class ItemDaoImpl implements ItemDao{
     /**아이템 추가*/
     @Override
     public void createItem(ItemProduct item) {
+        int item_id = item.getItemID();
         String item_title = item.getTitle();
         int item_price = item.getPrice();
         String item_description = item.getDescription();
         int item_count = item.getCount();
         String userID = item.getUserID();
         String item_type = item.getItemType();
-
         File item_imageFile = item.getImageFile();
         Blob image = null;
         try {
@@ -48,20 +48,22 @@ public class ItemDaoImpl implements ItemDao{
         try {
             //DB연결
             database.connect();
-            String query = "INSERT INTO item (ID, title, price, description, imagefile, count, userid, type) VALUES (item_seq.NEXTVAL, ?, ?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO item (ID, title, price, description, imagefile, count, userid, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement pstmt = database.getConn().prepareStatement(query);
-            pstmt.setString(1, item_title);
-            pstmt.setInt(2, item_price);
-            pstmt.setString(3, item_description);
-            pstmt.setBinaryStream(4, image.getBinaryStream());
-            pstmt.setInt(5, item_count);
-            pstmt.setString(6, userID);
-            pstmt.setString(7, item_type);
+            pstmt.setInt(1, item_id);
+            pstmt.setString(2, item_title);
+            pstmt.setInt(3, item_price);
+            pstmt.setString(4, item_description);
+            pstmt.setBinaryStream(5, image.getBinaryStream());
+            pstmt.setInt(6, item_count);
+            pstmt.setString(7, userID);
+            pstmt.setString(8, item_type);
             pstmt.executeUpdate();
 
+            pstmt.close();
             //DB연결 해제
             database.closeConnect();
-            System.out.println("새로운 아이템 업로드!");
+            //System.out.println("새로운 아이템 업로드!");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -117,8 +119,10 @@ public class ItemDaoImpl implements ItemDao{
 
             }
             //DB연결 해제
+            pstmt.close();
+            rs.close();
             database.closeConnect();
-            System.out.println("아이템 리스트를 받아왔습니다.");
+            //System.out.println("아이템 리스트를 받아왔습니다.");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -167,8 +171,9 @@ public class ItemDaoImpl implements ItemDao{
             pstmt.executeUpdate();
 
             //DB연결 해제
+            pstmt.close();
             database.closeConnect();
-            System.out.println("아이템 정보 수정");
+            //System.out.println("아이템 정보 수정");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -179,6 +184,7 @@ public class ItemDaoImpl implements ItemDao{
     /**아이템 삭제*/
     @Override
     public void deleteItem(int id) {
+        //System.out.println("삭제 아이디 " + id);
         try {
             //DB연결
             database.connect();
@@ -186,10 +192,9 @@ public class ItemDaoImpl implements ItemDao{
             PreparedStatement pstmt = database.getConn().prepareStatement(query);
             pstmt.setString(1, String.valueOf(id));
             pstmt.executeUpdate();
-
             //DB연결 해제
+            pstmt.close();
             database.closeConnect();
-            System.out.println("아이템 삭제!");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -212,7 +217,8 @@ public class ItemDaoImpl implements ItemDao{
                 itemID = rs.getInt(1);
                 itemID++;
             }
-
+            pstmt.close();
+            rs.close();
             database.closeConnect();
         } catch (SQLException e) {
             throw new RuntimeException(e);

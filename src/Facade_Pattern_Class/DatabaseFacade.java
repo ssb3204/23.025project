@@ -28,6 +28,7 @@ public class DatabaseFacade {
     public Connection getConn() {
         return conn;
     }
+
     public void closeConnect() throws SQLException {
         stmt.close();
         conn.close();
