@@ -1,5 +1,6 @@
 package Command_Pattern;
 
+import Facade_Pattern.ItemFacade;
 import Factory_Pattern.ItemProduct;
 import Singleton_Pattern.Singleton;
 
@@ -248,8 +249,8 @@ public class ItemUpdateUI implements ActionListener {
             //입력값을 체크한다.
             if(!checkInputData())   return;
             //정보 수정
-            singleton.upDateItem(index, item_title, item_count, item_description, item_price, selectedFile);
-            singleton.dbUpload(index);
+            ItemFacade itemFacade = ItemFacade.getItemFacade();
+            itemFacade.updateItem(index, item_title, item_count, item_description, item_price, selectedFile);
             item_frame.dispose();
         }
     }

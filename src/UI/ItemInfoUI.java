@@ -1,5 +1,6 @@
 package UI;
 
+import Facade_Pattern.ItemFacade;
 import Singleton_Pattern.Singleton;
 
 import javax.imageio.ImageIO;
@@ -231,12 +232,10 @@ public class ItemInfoUI implements ActionListener {
         else if(e.getSource() == setButton){
             //입력값을 체크한다.
             if(!checkInputData())   return;
-            
-            //정보 수정
-            item_list.upDateItem(index, item_title, item_count, item_description, item_price, selectedFile);
-            item_list.dbUpload(index);
-            topUI.TopUI.deletePanel();
-            topUI.TopUI.resetFrame();
+
+            ItemFacade itemFacade = ItemFacade.getItemFacade();
+            itemFacade.updateItem(index, item_title, item_count, item_description, item_price, selectedFile);
+
             topUI.popup_frame.dispose();
         }
     }

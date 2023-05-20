@@ -1,5 +1,6 @@
 package UI;
 
+import Facade_Pattern.ItemFacade;
 import Factory_Pattern.GeneralItemCreator;
 import Factory_Pattern.ItemProduct;
 
@@ -260,17 +261,12 @@ public class SellerProductUploadUI implements ActionListener {
 
                 //입력된 정보를 바탕으로 객체생성
                 GeneralItemCreator creator = new GeneralItemCreator();
-                ItemProduct product = creator.createItem(item_title, item_price, item_count, item_description, selectedFile, userID);
+                ItemProduct item = creator.createItem(item_title, item_price, item_count, item_description, selectedFile, userID);
+                
+                //퍼사드패턴으로 아이템 저장 및 화면 리로드
+                ItemFacade itemFacade = ItemFacade.getItemFacade();
+                itemFacade.createItem(item);
 
-                //메인UI에 객체를 저장한다.
-                //for(int i = 0; i < 8; i++) {
-                    TopUI.add_item_list(product);
-                //}
-
-                //물품을 추가한 후 총 페이지 수를 구한다
-                TopUI.calcTotalPage();
-
-                TopUI.resetFrame();
                 sellerProductUploadUI.dispose();
             }
         }

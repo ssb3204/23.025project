@@ -26,7 +26,7 @@ public abstract class AbstractItemSorter {
     }
 
     private void display() {
-        UI.deletePanel();
+        UI.resetFrame();
         UI.resetFrame();
         UI.reloadUI();
     }

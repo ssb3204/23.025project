@@ -1,15 +1,18 @@
 package Command_Pattern;
 
+import Facade_Pattern.ItemFacade;
 import Singleton_Pattern.Singleton;
 
+import javax.swing.*;
+
 public class DeleteCommand implements Command {
-    Singleton singleton;
+    ItemFacade itemFacade;
     DeleteCommand(){
-       singleton = Singleton.getInstance();
+       this.itemFacade = ItemFacade.getItemFacade();
     }
     @Override
     public void execute(int index) {
-        singleton.deleteItem(index);
-        //System.out.println(singleton.getItemProduct(index).getTitle() + "를 삭제합니다");
+        itemFacade.deleteItem(index);
+        JOptionPane.showMessageDialog(null, "삭제되었습니다!", "알림", JOptionPane.INFORMATION_MESSAGE);
     }
 }

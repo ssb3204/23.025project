@@ -1,6 +1,7 @@
 package UI;
 
 import DatabaseConnect.DatabaseConect;
+import Facade_Pattern.ItemFacade;
 import OrderHistory.OrderHistoryDao;
 import OrderHistory.OrderHistoryDaoImpl;
 import OrderHistory.OrderHistoryObj;
@@ -41,11 +42,13 @@ public class PopupDialog implements ActionListener {
     JButton delete_button;
     //수정 버튼
     JButton item_info_button;
+    ItemFacade itemFacade;
 
     public PopupDialog(MainUI TopUI, int index) {
         //값 초기화
         this.TopUI = TopUI;
         this.index = index;
+        itemFacade = ItemFacade.getItemFacade();
 
         //팝업화면 설정
         popup_frame = new JDialog(TopUI.mainframe, "물품 상세정보", true);
@@ -163,26 +166,14 @@ public class PopupDialog implements ActionListener {
                 return;
             }
             else {
-                String userID = TopUI.sell_item_list.getItemProduct(index).getUserID();
-                String title = TopUI.sell_item_list.getItemProduct(index).getTitle();
-                //String price = String.valueOf(TopUI.sell_item_list.getItemProduct(index).getPrice());
-                String price = String.valueOf(purchase.getResultValue());
-                String customer = TopUI.getId();
-                int count = purchase.getCount();
-
-                orderHistoryDao.addHistory(new OrderHistoryObj(title, price, userID, customer, count));
-                TopUI.sell_item_list.decreaseItemCount(index, count);
-                TopUI.deletePanel();
-                TopUI.resetFrame();
+                //물품의 인덱스 위치, 계산된 가격, 구매하는 물품의 개수
+                itemFacade.buyItem(index, purchase.getResultValue(), purchase.getCount(), TopUI.getId());
                 JOptionPane.showMessageDialog(null, "구매되었습니다!", "알림", JOptionPane.INFORMATION_MESSAGE);
                 popup_frame.dispose();
             }
         }
         else if(e.getSource() == delete_button){
-            //System.out.println("물품을 제거합니다.");
-            TopUI.sell_item_list.deleteItem(index);
-            TopUI.deletePanel();
-            TopUI.resetFrame();
+            itemFacade.deleteItem(index);
             JOptionPane.showMessageDialog(null, "삭제되었습니다!", "알림", JOptionPane.INFORMATION_MESSAGE);
             popup_frame.dispose();
         }

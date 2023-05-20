@@ -1,6 +1,7 @@
 package UI;
 
 import Command_Pattern.AdminUI;
+import Facade_Pattern.ItemFacade;
 import Factory_Pattern.ItemProduct;
 import Observer_Pattern.Notice;
 import Observer_Pattern.NoticeUI;
@@ -71,6 +72,7 @@ public class MainUI implements ActionListener {
 
     boolean isTurnedOff = false; // 알림 상태 변수
 
+    ItemFacade itemFacade;
     public MainUI (String id , String password,String state) {
         //유저 정보를 저장한다.
         this.id = id;
@@ -91,9 +93,11 @@ public class MainUI implements ActionListener {
 
         //물품 리스트를 관리하기 위한 객체 생성
         sell_item_list = Singleton.getInstance();
-        sell_item_list.observer_list.clear();
-        sell_item_list.setUser(id);
         sell_item_list.dbLoadItem();
+        itemFacade = ItemFacade.getItemFacade();
+        itemFacade.observer_list.clear();
+        itemFacade.setMainUI(this);
+
 
         //알림 버튼
         notice_button = new JButton("\uD83D\uDD14");
@@ -103,11 +107,13 @@ public class MainUI implements ActionListener {
         //알림 저장 객체
         notice_button.addActionListener(this);
         notice = new Notice(id);
-        sell_item_list.subscribe(notice);
+        //sell_item_list.subscribe(notice);
+        itemFacade.subscribe(notice);
 
         //보내질 알림을 관리하는 객체
         pushNotice = new PushNotice(id);
-        sell_item_list.subscribe(pushNotice);
+        itemFacade.subscribe(pushNotice);
+
 
         //로고 추가
         // 이미지 아이콘 생성
@@ -231,17 +237,12 @@ public class MainUI implements ActionListener {
     /**처음 화면으로 초기화한다.*/
     public void resetFrame() {
         clearFrame();
+        calcTotalPage();
         page_number = 1;
         checkPage(page_number, total_page);
         loadUI(panel_list, page_number);
         updatePageNumber();
         reloadUI();
-    }
-
-    /**인덱스 위치의 패널을 제거한다.*/
-    public void deletePanel(){
-        clearFrame();
-        resetAndAddPanels();
     }
 
     /**패널 리스트를 다시 생성한다*/
@@ -287,10 +288,9 @@ public class MainUI implements ActionListener {
 
 
     /**panel_list 에 물품 패널을 추가한다*/
-    public void addPanel(){
-        int i = sell_item_list.getSize() - 1;
+    public void addPanel(ItemProduct item, int index){
         //패널로 만들 물품을 보낸 후 패널을 반환 받는다
-        panel_list.add(createItemPanel(sell_item_list.getItemProduct(i), i));
+        panel_list.add(createItemPanel(item, index));
     }
 
     /**매개변수로 전달받은 ItemProduct 와 Singleton 에서의 index 를 전달받아 물품 패널로 만들어 반환한다.*/
@@ -367,7 +367,8 @@ public class MainUI implements ActionListener {
                 return;
             }
             else if(state.equals("admin")){
-                new AdminUI(this);
+                AdminUI adminUI = new AdminUI(this);
+                itemFacade.subscribe(adminUI);
             }
             else {
                 //마이페이지 버튼
@@ -484,12 +485,6 @@ public class MainUI implements ActionListener {
         }
     }
 
-    /**상품 리스트에 새로운 상품을 추가하는 메서드*/
-    public void add_item_list(ItemProduct item){
-        //싱글톤 객체에 아이템을 추가하는 코드
-        sell_item_list.addItem(item);
-        addPanel();
-    }
 
     /**토탈 페이지 수를 계산*/
     public void calcTotalPage(){

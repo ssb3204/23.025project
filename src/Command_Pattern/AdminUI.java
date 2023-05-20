@@ -1,18 +1,19 @@
 package Command_Pattern;
 
+import Facade_Pattern.ItemFacade;
 import Factory_Pattern.GeneralItemCreator;
 import Factory_Pattern.ItemCreator;
 import Factory_Pattern.ItemProduct;
+import Observer_Pattern.Observer;
 import Singleton_Pattern.Singleton;
 import UI.MainUI;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
-public class AdminUI implements ActionListener {
+public class AdminUI implements ActionListener, Observer, WindowListener {
     JFrame mainframe;
     Button button;
     JButton read;
@@ -22,7 +23,7 @@ public class AdminUI implements ActionListener {
     ItemProduct item;
     DefaultTableModel model;
     MainUI TOP;
-    public AdminUI(MainUI TOP)  {
+    public AdminUI(MainUI TOP) {
         this.TOP = TOP;
         ItemCreator itemCreator = new GeneralItemCreator();
         item = itemCreator.createItemProduct("테스트", 10000, 100, "테스트설명", null, "tester", 100);
@@ -33,7 +34,7 @@ public class AdminUI implements ActionListener {
         mainframe.setLocationRelativeTo(null);
         //메인프레임 중앙 및 보이기 설정
         mainframe.setResizable(false);
-
+        mainframe.addWindowListener(this);
 
         read = new JButton("읽기");
         read.addActionListener(this);
@@ -99,5 +100,39 @@ public class AdminUI implements ActionListener {
         else if(e.getSource() == update){
             button.click(2, item_table.getSelectedRow());
         }
+    }
+
+    @Override
+    public void update(String user, String action, ItemProduct item) {
+        updateData();
+    }
+    @Override
+    public void windowClosing(WindowEvent e) {
+        ItemFacade itemFacade = ItemFacade.getItemFacade();
+        itemFacade.unsubscribe(this);
+    }
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+    @Override
+    public void windowClosed(WindowEvent e) {
+
+    }
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
     }
 }
