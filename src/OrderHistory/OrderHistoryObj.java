@@ -9,8 +9,9 @@ public class OrderHistoryObj {
     String user;
     String time;
     String customer;
+    int count;
 
-    public OrderHistoryObj(String title, String price, String user, String customer) {
+    public OrderHistoryObj(String title, String price, String user, String customer, int count) {
         this.title = title;
         this.price = price;
         this.user = user;
@@ -18,14 +19,16 @@ public class OrderHistoryObj {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"); // 출력할 형식을 지정
         this.time =  now.format(formatter); // 형식에 맞게 시간을 문자열로 변환
         this.customer = customer;
+        this.count = count;
     }
 
-    public OrderHistoryObj(String title, String price, String user, String time, String customer) {
+    public OrderHistoryObj(String title, String price, String user, String time, String customer, int count) {
         this.title = title;
         this.price = price;
         this.user = user;
         this.time = time;
         this.customer =customer;
+        this.count = count;
     }
 
     public String getUser() {
@@ -42,5 +45,8 @@ public class OrderHistoryObj {
     }
     public String getCustomer() {
         return customer;
+    }
+    public int getCount() {
+        return count;
     }
 }

@@ -210,7 +210,6 @@ public class ItemDaoImpl implements ItemDao{
 
             String query = "SELECT MAX(id) FROM item";
             PreparedStatement pstmt = database.getConn().prepareStatement(query);
-            pstmt.executeUpdate();
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {

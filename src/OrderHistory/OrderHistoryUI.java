@@ -4,6 +4,7 @@ import Facade_Pattern_Class.DatabaseFacade;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,7 +21,6 @@ public class OrderHistoryUI implements ActionListener{
     DefaultTableModel model2;
     JButton changeButton;
     boolean mode;
-    private String user;
     OrderHistoryDao orderDao;
     public OrderHistoryUI(JFrame TOP, String user) {
 
@@ -39,14 +39,14 @@ public class OrderHistoryUI implements ActionListener{
         orderDao = new OrderHistoryDaoImpl(new DatabaseFacade());
 
         //구매기록
-        model = new DefaultTableModel(new String[]{"판매자", "물품", "가격", "구매일자"}, 0) {
+        model = new DefaultTableModel(new String[]{"판매자", "물품", "가격", "개수", "구매일자"}, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false; // 편집 불가능하도록 설정
             }
         };
         //판매기록
-        model2 = new DefaultTableModel(new String[]{"구매자", "물품", "가격", "판매일자"}, 0) {
+        model2 = new DefaultTableModel(new String[]{"구매자", "물품", "가격", "개수", "판매일자"}, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false; // 편집 불가능하도록 설정
@@ -60,7 +60,8 @@ public class OrderHistoryUI implements ActionListener{
             String title = obj.getTitle();
             String price = obj.getPrice();
             String time = obj.getTime();
-            model.addRow(new Object[]{userID, title, price, time});
+            int count = obj.getCount();
+            model.addRow(new Object[]{userID, title, price, count, time});
         }
 
         //판매기록
@@ -70,10 +71,13 @@ public class OrderHistoryUI implements ActionListener{
             String title = obj.getTitle();
             String price = obj.getPrice();
             String time = obj.getTime();
-            model2.addRow(new Object[]{customer, title, price, time});
+            int count = obj.getCount();
+            model2.addRow(new Object[]{customer, title, price, count, time});
         }
 
         orderHistoryTable = new JTable(model);
+        TableColumnModel columnModel = orderHistoryTable.getColumnModel();
+        columnModel.getColumn(4).setPreferredWidth(110);
 
         JScrollPane scrollPane = new JScrollPane(orderHistoryTable);
         orderHistoryFrame.add(scrollPane, BorderLayout.CENTER);
@@ -95,12 +99,16 @@ public class OrderHistoryUI implements ActionListener{
                 mode = false;
                 orderHistoryTable.setModel(model);
                 orderHistoryFrame.setTitle("구매기록");
+                TableColumnModel columnModel = orderHistoryTable.getColumnModel();
+                columnModel.getColumn(4).setPreferredWidth(110);
             }
             else{
                 changeButton.setText("구매기록");
                 mode = true;
                 orderHistoryTable.setModel(model2);
                 orderHistoryFrame.setTitle("판매기록");
+                TableColumnModel columnModel = orderHistoryTable.getColumnModel();
+                columnModel.getColumn(4).setPreferredWidth(110);
             }
         }
     }

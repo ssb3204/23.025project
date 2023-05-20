@@ -62,24 +62,18 @@ public class Singleton implements Subject {
         return sell_item_list.size();
     }
 
-    /**입력된 제목의 물품을 삭제한다*/
-    /*public void removeItem(String title){
-        for(int i = 0; i < sell_item_list.size(); i++){
-            if(sell_item_list.get(i).getTitle().equals(title)){
-                sell_item_list.remove(i);
-                return;
-            }
-        }
-    }*/
-
     /**index 위치의 ItemProduct 반환*/
     public ItemProduct getItemProduct(int index){
         return sell_item_list.get(index);
     }
 
     /**index 위치의 ItemProduct 물품 개수 1개 감소*/
-    public void decreaseItemCount(int index){
-        sell_item_list.get(index).decreaseItemCount();
+    public void decreaseItemCount(int index, int count){
+        if(sell_item_list.get(index).getCount() < count){
+            System.out.println("물품보다 구매 개수가 더 많습니다.");
+            return;
+        }
+        sell_item_list.get(index).decreaseItemCount(count);
         /**물품 구매*/
         if(sell_item_list.get(index).getCount() != 0){
             notifyObserver(sell_item_list.get(index).getUserID(), "판매", index);

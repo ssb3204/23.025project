@@ -1,9 +1,6 @@
 package UI;
 
 import Command_Pattern_Class.AdminUI;
-import Dao_Pattern_Class.ItemDao;
-import Dao_Pattern_Class.ItemDaoImpl;
-import Facade_Pattern_Class.DatabaseFacade;
 import Factory_Pattern_Class.ItemProduct;
 import Observer_Pattern_class.Notice;
 import Observer_Pattern_class.NoticeUI;

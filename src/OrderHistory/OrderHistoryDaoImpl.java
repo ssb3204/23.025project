@@ -22,13 +22,14 @@ public class OrderHistoryDaoImpl implements OrderHistoryDao{
         try {
             database.connect();
 
-            String query = "insert into OrderHistory (no, userID, title, price, time, customerID) values ((SELECT MAX(no) + 1 FROM OrderHistory), ?, ?, ?, ?, ?)";
+            String query = "insert into OrderHistory (no, userID, title, price, time, customerID,count) values ((SELECT MAX(no) + 1 FROM OrderHistory), ?, ?, ?, ?, ?, ?)";
             PreparedStatement pstmt = database.getConn().prepareStatement(query);
             pstmt.setString(1, obj.getUser());
             pstmt.setString(2, obj.getTitle());
             pstmt.setString(3, String.valueOf(obj.getPrice()));
             pstmt.setString(4, obj.getTime());
             pstmt.setString(5, obj.getCustomer());
+            pstmt.setInt(6, obj.getCount());
             pstmt.executeQuery();
 
             pstmt.close();
@@ -48,7 +49,7 @@ public class OrderHistoryDaoImpl implements OrderHistoryDao{
         try {
             database.connect();
 
-            String query = "SELECT userID, title, price, time, customerID FROM OrderHistory WHERE customerID = ? ORDER BY no DESC";
+            String query = "SELECT userID, title, price, time, customerID, count FROM OrderHistory WHERE customerID = ? ORDER BY no DESC";
             PreparedStatement pstmt = database.getConn().prepareStatement(query);
             pstmt.setString(1, user);
             ResultSet rs = pstmt.executeQuery();
@@ -59,7 +60,8 @@ public class OrderHistoryDaoImpl implements OrderHistoryDao{
                 String userID = rs.getString("userID");
                 String time = rs.getString("time");
                 String customer = rs.getString("customerID");
-                order_list.add(new OrderHistoryObj(title, price, userID, time, customer));
+                int count = rs.getInt("count");
+                order_list.add(new OrderHistoryObj(title, price, userID, time, customer, count));
             }
             pstmt.close();
             rs.close();
@@ -79,7 +81,7 @@ public class OrderHistoryDaoImpl implements OrderHistoryDao{
         try {
             database.connect();
 
-            String query = "SELECT customerID, title, price, time, customerID FROM OrderHistory WHERE userID = ? ORDER BY no DESC";
+            String query = "SELECT customerID, title, price, time, customerID, count FROM OrderHistory WHERE userID = ? ORDER BY no DESC";
             PreparedStatement pstmt = database.getConn().prepareStatement(query);
             pstmt.setString(1, user);
             ResultSet rs = pstmt.executeQuery();
@@ -90,7 +92,8 @@ public class OrderHistoryDaoImpl implements OrderHistoryDao{
                 String userID = rs.getString("customerID");
                 String time = rs.getString("time");
                 String customer = rs.getString("customerID");
-                sales_list.add(new OrderHistoryObj(title, price, userID, time, customer));
+                int count = rs.getInt("count");
+                sales_list.add(new OrderHistoryObj(title, price, userID, time, customer, count));
             }
             pstmt.close();
             rs.close();

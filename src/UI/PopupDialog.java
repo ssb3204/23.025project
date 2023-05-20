@@ -5,6 +5,7 @@ import OrderHistory.OrderHistoryDao;
 import OrderHistory.OrderHistoryDaoImpl;
 import OrderHistory.OrderHistoryObj;
 import Singleton_Pattern_Class.Singleton;
+import Strategy_Pattern.PurchaseUI;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -158,17 +159,25 @@ public class PopupDialog implements ActionListener {
             //System.out.println("물품을 구매하셨습니다.");
             OrderHistoryDao orderHistoryDao = new OrderHistoryDaoImpl(new DatabaseFacade());
 
-            String userID = TopUI.sell_item_list.getItemProduct(index).getUserID();
-            String title = TopUI.sell_item_list.getItemProduct(index).getTitle();
-            String price = String.valueOf(TopUI.sell_item_list.getItemProduct(index).getPrice());
-            String customer = TopUI.getId();
+            PurchaseUI purchase = new PurchaseUI(popup_frame, TopUI.sell_item_list.getItemProduct(index), TopUI.getId());
+            if(purchase.getResultValue() == 0){
+                return;
+            }
+            else {
+                String userID = TopUI.sell_item_list.getItemProduct(index).getUserID();
+                String title = TopUI.sell_item_list.getItemProduct(index).getTitle();
+                //String price = String.valueOf(TopUI.sell_item_list.getItemProduct(index).getPrice());
+                String price = String.valueOf(purchase.getResultValue());
+                String customer = TopUI.getId();
+                int count = purchase.getCount();
 
-            orderHistoryDao.addHistory(new OrderHistoryObj(title, price, userID, customer));
-            TopUI.sell_item_list.decreaseItemCount(index);
-            TopUI.deletePanel();
-            TopUI.resetFrame();
-            JOptionPane.showMessageDialog(null, "구매되었습니다!", "알림", JOptionPane.INFORMATION_MESSAGE);
-            popup_frame.dispose();
+                orderHistoryDao.addHistory(new OrderHistoryObj(title, price, userID, customer, count));
+                TopUI.sell_item_list.decreaseItemCount(index, count);
+                TopUI.deletePanel();
+                TopUI.resetFrame();
+                JOptionPane.showMessageDialog(null, "구매되었습니다!", "알림", JOptionPane.INFORMATION_MESSAGE);
+                popup_frame.dispose();
+            }
         }
         else if(e.getSource() == delete_button){
             //System.out.println("물품을 제거합니다.");

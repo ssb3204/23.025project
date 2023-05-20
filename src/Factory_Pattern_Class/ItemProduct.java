@@ -45,8 +45,8 @@ public abstract class ItemProduct {
         return item_type;
     }
     /**물품의 갯수를 1줄인다*/
-    public void decreaseItemCount(){
-        item_count--;
+    public void decreaseItemCount(int count){
+        item_count = item_count - count;
     }
     public void setItem_title(String item_title) {
         this.item_title = item_title;

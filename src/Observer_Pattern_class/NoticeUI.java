@@ -45,22 +45,25 @@ public class NoticeUI implements ActionListener {
             }
         });
 
-        DefaultTableModel model = new DefaultTableModel(new String[]{"순서", "수신자", "메세지"}, 0);
+        DefaultTableModel model = new DefaultTableModel(new String[]{"순서", "메세지"}, 0){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // 편집 불가능하도록 설정
+            }
+        };
 
         int index = 1;
         for(NoticeObj o : notice.getNotice_list()){
-             String id = o.getUser();
              String msg = o.getMsg();
              String i = "["+ String.valueOf(index) +"]";
              index++;
-             model.addRow(new Object[]{i, user, msg});
+             model.addRow(new Object[]{i, msg});
         }
 
         notice_list = new JTable(model);
         TableColumnModel columnModel = notice_list.getColumnModel();
         columnModel.getColumn(0).setPreferredWidth(-10);
-        columnModel.getColumn(1).setPreferredWidth(50);
-        columnModel.getColumn(2).setPreferredWidth(300);
+        columnModel.getColumn(1).setPreferredWidth(380);
         JScrollPane scrollPane = new JScrollPane(notice_list);
         //notice_list.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         notice_frame.add(scrollPane, BorderLayout.CENTER);
