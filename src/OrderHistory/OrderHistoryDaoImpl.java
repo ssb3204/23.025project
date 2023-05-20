@@ -43,7 +43,7 @@ public class OrderHistoryDaoImpl implements OrderHistoryDao{
 
     @Override
     public List<OrderHistoryObj> readHistory(String user) {
-        System.out.println("목록 불러옴");
+        //System.out.println("목록 불러옴");
         List<OrderHistoryObj> order_list = new ArrayList<OrderHistoryObj>();
         try {
             database.connect();
@@ -70,5 +70,36 @@ public class OrderHistoryDaoImpl implements OrderHistoryDao{
             throw new RuntimeException(e);
         }
         return order_list;
+    }
+
+    @Override
+    public List<OrderHistoryObj> readSalesRecord(String user) {
+        //System.out.println("판매기록 불러옴");
+        List<OrderHistoryObj> sales_list = new ArrayList<OrderHistoryObj>();
+        try {
+            database.connect();
+
+            String query = "SELECT customerID, title, price, time, customerID FROM OrderHistory WHERE userID = ? ORDER BY no DESC";
+            PreparedStatement pstmt = database.getConn().prepareStatement(query);
+            pstmt.setString(1, user);
+            ResultSet rs = pstmt.executeQuery();
+
+            while(rs.next()){
+                String title = rs.getString("title");
+                String price = rs.getString("price");
+                String userID = rs.getString("customerID");
+                String time = rs.getString("time");
+                String customer = rs.getString("customerID");
+                sales_list.add(new OrderHistoryObj(title, price, userID, time, customer));
+            }
+            pstmt.close();
+            rs.close();
+            database.closeConnect();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return sales_list;
     }
 }

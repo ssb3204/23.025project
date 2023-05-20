@@ -1,4 +1,4 @@
-package Strategy_Pattern;
+package sort2;
 
 import Factory_Pattern_Class.ItemProduct;
 import Singleton_Pattern_Class.Singleton;
