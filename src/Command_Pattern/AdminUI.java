@@ -103,7 +103,7 @@ public class AdminUI implements ActionListener, Observer, WindowListener {
     }
 
     @Override
-    public void update(String user, String action, ItemProduct item) {
+    public void update(String action, ItemProduct item) {
         updateData();
     }
     @Override

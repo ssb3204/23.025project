@@ -46,7 +46,7 @@ public class ItemFacade implements Subject {
     public void createItem(ItemProduct item){
         singleton.addItem(item);
         int index = singleton.getSize() - 1;
-        notifyObserver(singleton.getItemProduct(index).getUserID() ,"생성", singleton.getItemProduct(index));
+        notifyObserver("생성", singleton.getItemProduct(index));
         mainUI.addPanel(item, index);
         mainUI.resetFrame();
     }
@@ -58,13 +58,13 @@ public class ItemFacade implements Subject {
 
         if(singleton.decreaseItemCount(index, count) != 0){
             /**물품 구매*/
-            notifyObserver(singleton.getItemProduct(index).getUserID(), "판매", singleton.getItemProduct(index));
+            notifyObserver("판매", singleton.getItemProduct(index));
             itemDao.updateItem(singleton.getItemProduct(index));
         }
         else{
             /**물품 전부 팔림*/
             itemDao.deleteItem(singleton.getItemProduct(index).getItemID());
-            notifyObserver(singleton.getItemProduct(index).getUserID() ,"매진", singleton.getItemProduct(index));
+            notifyObserver("매진", singleton.getItemProduct(index));
             singleton.remove(index);
         }
         mainUI.clearFrame();
@@ -79,7 +79,7 @@ public class ItemFacade implements Subject {
         mainUI.clearFrame();
         mainUI.resetAndAddPanels();
         mainUI.resetFrame();
-        notifyObserver(singleton.getItemProduct(index).getUserID() ,"수정", singleton.getItemProduct(index));
+        notifyObserver("수정", singleton.getItemProduct(index));
     }
 
     public void deleteItem(int index){
@@ -87,7 +87,7 @@ public class ItemFacade implements Subject {
         ItemProduct temp = singleton.getItemProduct(index);
         mainUI.clearFrame();
         singleton.deleteItem(index);
-        notifyObserver(temp.getUserID() ,"삭제", temp);
+        notifyObserver("삭제", temp);
         mainUI.resetAndAddPanels();
         mainUI.resetFrame();
     }
@@ -102,9 +102,9 @@ public class ItemFacade implements Subject {
     }
 
     @Override
-    public void notifyObserver(String user, String action, ItemProduct item) {
+    public void notifyObserver(String action, ItemProduct item) {
         for(Observer o: observer_list){
-            o.update(user ,action, item);
+            o.update(action, item);
         }
     }
 }
