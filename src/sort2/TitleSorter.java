@@ -1,6 +1,6 @@
 package sort2;
 
-import Factory_Pattern_Class.ItemProduct;
+import Factory_Pattern.ItemProduct;
 
 import java.util.Comparator;
 import java.util.List;

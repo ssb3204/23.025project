@@ -1,44 +1,38 @@
-package sort2;
+package Template_Method_Pattern;
 
 import Factory_Pattern.ItemProduct;
-import Singleton_Pattern.Singleton;
 
 import java.util.List;
 
-public class StrategySorterTestDriver {
+public class Template_TestDriver {
     public static void main(String[] args) {
-        //초기화
-        Singleton singleton = Singleton.getInstance();
+       /* Singleton singleton = Singleton.getInstance();
         singleton.dbLoadItem();
-        ItemSorter itemSorter;
+        AbstractItemSorter itemSorter;
 
-        System.out.println("정렬전");
-        display(singleton.getSell_item_list());
+        System.out.println("정렬 전");
+        display(Singleton.getSell_item_list());
         System.out.println();
 
-        System.out.println("이름순 정렬");
+        System.out.println("이름 정렬");
         itemSorter = new TitleSorter();
         itemSorter.sort(Singleton.getSell_item_list());
-        display(singleton.getSell_item_list());
         System.out.println();
 
-        System.out.println("이름순 역정렬");
+        System.out.println("이름 역정렬");
         itemSorter = new TitleReversedSorter();
         itemSorter.sort(Singleton.getSell_item_list());
-        display(singleton.getSell_item_list());
         System.out.println();
 
-        System.out.println("가격순 정렬");
+        System.out.println("가격 정렬");
         itemSorter = new PriceSorter();
         itemSorter.sort(Singleton.getSell_item_list());
-        display(singleton.getSell_item_list());
         System.out.println();
 
-        System.out.println("가격순 역정렬");
+        System.out.println("가격 역정렬");
         itemSorter = new PriceReversedSorter();
         itemSorter.sort(Singleton.getSell_item_list());
-        display(singleton.getSell_item_list());
-        System.out.println();
+        System.out.println();*/
     }
 
     public static void display(List<ItemProduct> items){

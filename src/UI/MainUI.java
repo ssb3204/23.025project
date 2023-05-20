@@ -1,19 +1,18 @@
 package UI;
 
-import Command_Pattern_Class.AdminUI;
-import Factory_Pattern_Class.ItemProduct;
-import Observer_Pattern_class.Notice;
-import Observer_Pattern_class.NoticeUI;
-import Observer_Pattern_class.PushNotice;
+import Command_Pattern.AdminUI;
+import Factory_Pattern.ItemProduct;
+import Observer_Pattern.Notice;
+import Observer_Pattern.NoticeUI;
+import Observer_Pattern.PushNotice;
 import OrderHistory.OrderHistoryUI;
-import Singleton_Pattern_Class.Singleton;
-import Template_Method_Pattern_Class.*;
+import Singleton_Pattern.Singleton;
+import Template_Method_Pattern.*;
 import example.LoginFrame;
 import example.MypageFrame;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;

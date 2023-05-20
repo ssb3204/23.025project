@@ -1,8 +1,8 @@
 package Strategy_Pattern;
 
-import Factory_Pattern_Class.GeneralItemCreator;
-import Factory_Pattern_Class.ItemCreator;
-import Factory_Pattern_Class.ItemProduct;
+import Factory_Pattern.GeneralItemCreator;
+import Factory_Pattern.ItemCreator;
+import Factory_Pattern.ItemProduct;
 
 import javax.swing.*;
 import java.awt.event.WindowAdapter;

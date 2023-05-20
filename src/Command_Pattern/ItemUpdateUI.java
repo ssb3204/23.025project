@@ -1,5 +1,6 @@
-package UI;
+package Command_Pattern;
 
+import Factory_Pattern.ItemProduct;
 import Singleton_Pattern.Singleton;
 
 import javax.imageio.ImageIO;
@@ -8,28 +9,29 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class ItemInfoUI implements ActionListener {
+public class ItemUpdateUI implements ActionListener {
     private JPanel item_info_panel;
     private int index;
-    private Singleton item_list;
+    private Singleton singleton;
+
+    JFrame item_frame;
 
     JButton setButton;//상품 등록 버튼
-
     //상품의 제목 컴포넌트
     JPanel item_title_panel;
     JTextField item_title_field;
     JLabel item_title_label;
 
-
     //상품의 가격을 입력받을 객체
     JPanel item_price_panel;
     JTextField item_price_field;
     JLabel item_price_label;
-
 
     //상품의 개수를 입력받을 객체
     JPanel item_count_panel;
@@ -59,11 +61,20 @@ public class ItemInfoUI implements ActionListener {
     int item_price = -1;//상품의 가격
     int item_count = -1;//상품의 개수
 
-    PopupDialog topUI;
-    public ItemInfoUI(int index, PopupDialog topUI) {
-        this.topUI = topUI;
-        this.item_list = Singleton.getInstance();
+    public ItemUpdateUI(ItemProduct item, int index) {
         this.index = index;
+        singleton = Singleton.getInstance();
+        item_frame = new JFrame("물품 상세정보");
+        item_frame.setSize(700, 600);
+        item_frame.setLayout(null);
+        item_frame.setLocationRelativeTo(null);
+        item_frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                item_frame.dispose();
+            }
+        });
+
+
         item_info_panel = new JPanel(null);
         item_info_panel.setBounds(-70, 20, 700, 600);
 
@@ -73,7 +84,7 @@ public class ItemInfoUI implements ActionListener {
         item_title_panel = new JPanel(new BorderLayout());
         item_title_panel.add(item_title_field, BorderLayout.CENTER);
         item_title_panel.add(item_title_label, BorderLayout.WEST);
-        item_title_field.setText(item_list.getItemProduct(index).getTitle());
+        item_title_field.setText(item.getTitle());
         item_title_panel.setBounds(250, 20, 300, 25);
         item_info_panel.add(item_title_panel);
 
@@ -84,7 +95,7 @@ public class ItemInfoUI implements ActionListener {
         item_price_label = new JLabel("가격");
         item_price_panel.add(item_price_label, BorderLayout.WEST);
         item_price_panel.add(item_price_field, BorderLayout.CENTER);
-        item_price_field.setText(String.valueOf(item_list.getItemProduct(index).getPrice()));
+        item_price_field.setText(String.valueOf(item.getPrice()));
         item_price_panel.setBounds(250, 50, 300, 25);
         item_info_panel.add(item_price_panel);
 
@@ -96,7 +107,7 @@ public class ItemInfoUI implements ActionListener {
         item_count_panel.add(item_count_label, BorderLayout.WEST);
         item_count_panel.add(item_count_field, BorderLayout.CENTER);
         item_count_panel.setBounds(223,80,327,25);
-        item_count_field.setText(String.valueOf(item_list.getItemProduct(index).getCount()));
+        item_count_field.setText(String.valueOf(item.getCount()));
         item_info_panel.add(item_count_panel);
 
 
@@ -107,7 +118,7 @@ public class ItemInfoUI implements ActionListener {
         item_image_button = new JButton("상품 이미지 등록");
 
         try {
-            BufferedImage image = ImageIO.read(item_list.getItemProduct(index).getImageFile());
+            BufferedImage image = ImageIO.read(item.getImageFile());
             // 이미지의 크기를 150x150으로 변경
             Image resizedImage = image.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
             ImageIcon icon = new ImageIcon(resizedImage);
@@ -128,7 +139,7 @@ public class ItemInfoUI implements ActionListener {
         item_image_panel.setBounds(190,270, 480, 25);
         item_image_button.addActionListener(this);
 
-        selectedFile = item_list.getItemProduct(index).getImageFile();
+        selectedFile = item.getImageFile();
 
         //상품 정보를 입력받을 공간
         item_description_panel = new JPanel(new BorderLayout());
@@ -137,7 +148,7 @@ public class ItemInfoUI implements ActionListener {
         item_description_panel.add(item_description_label, BorderLayout.WEST);
         item_description_panel.add(item_description_textarea, BorderLayout.CENTER);
         item_info_panel.add(item_description_panel);
-        item_description_textarea.setText(item_list.getItemProduct(index).getDescription());
+        item_description_textarea.setText(item.getDescription());
         item_description_panel.setBounds(200, 300, 350, 150);
 
 
@@ -147,6 +158,11 @@ public class ItemInfoUI implements ActionListener {
         setButton.setBounds(350, 460, 100, 30);
         setButton.addActionListener(this);
 
+        //패널을 메인프레임에 추가한다.
+        item_frame.add(item_info_panel);
+
+        item_frame.setResizable(false);
+        item_frame.setVisible(true);
     }
 
     /**입력값을 체크하고 저장하는 메서드*/
@@ -231,13 +247,10 @@ public class ItemInfoUI implements ActionListener {
         else if(e.getSource() == setButton){
             //입력값을 체크한다.
             if(!checkInputData())   return;
-            
             //정보 수정
-            item_list.upDateItem(index, item_title, item_count, item_description, item_price, selectedFile);
-            item_list.dbUpload(index);
-            topUI.TopUI.deletePanel();
-            topUI.TopUI.resetFrame();
-            topUI.popup_frame.dispose();
+            singleton.upDateItem(index, item_title, item_count, item_description, item_price, selectedFile);
+            singleton.dbUpload(index);
+            item_frame.dispose();
         }
     }
 }

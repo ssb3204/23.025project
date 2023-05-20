@@ -1,8 +1,8 @@
 package Strategy_Pattern;
 
-import Dao_Pattern_Class.UserDAOImpl;
+import Dao.UserDAOImpl;
 import DatabaseConnect.DatabaseFacade;
-import Factory_Pattern_Class.ItemProduct;
+import Factory_Pattern.ItemProduct;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,7 +1,7 @@
 package UI;
 
-import Factory_Pattern_Class.GeneralItemCreator;
-import Factory_Pattern_Class.ItemProduct;
+import Factory_Pattern.GeneralItemCreator;
+import Factory_Pattern.ItemProduct;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

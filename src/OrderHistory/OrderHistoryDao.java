@@ -1,8 +1,5 @@
 package OrderHistory;
 
-import Factory_Pattern_Class.ItemProduct;
-import Observer_Pattern_class.NoticeObj;
-
 import java.util.List;
 
 public interface OrderHistoryDao {
