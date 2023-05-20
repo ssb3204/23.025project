@@ -2,7 +2,7 @@ package Observer_Pattern_class;
 
 import Dao_Pattern_Class.NoticeDao;
 import Dao_Pattern_Class.NoticeDaoImpl;
-import Facade_Pattern_Class.DatabaseFacade;
+import DatabaseConnect.DatabaseFacade;
 import Singleton_Pattern_Class.Singleton;
 
 public class PushNotice implements Observer {

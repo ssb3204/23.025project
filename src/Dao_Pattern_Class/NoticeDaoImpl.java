@@ -1,14 +1,8 @@
 package Dao_Pattern_Class;
 
-import Facade_Pattern_Class.DatabaseFacade;
-import Factory_Pattern_Class.GeneralItemCreator;
-import Factory_Pattern_Class.ItemCreator;
-import Factory_Pattern_Class.ItemProduct;
+import DatabaseConnect.DatabaseFacade;
 import Observer_Pattern_class.NoticeObj;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

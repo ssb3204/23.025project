@@ -1,12 +1,10 @@
 package OrderHistory;
 
-import Facade_Pattern_Class.DatabaseFacade;
+import DatabaseConnect.DatabaseFacade;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 

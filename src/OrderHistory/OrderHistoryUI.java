@@ -1,6 +1,6 @@
 package OrderHistory;
 
-import Facade_Pattern_Class.DatabaseFacade;
+import DatabaseConnect.DatabaseFacade;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

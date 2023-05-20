@@ -1,6 +1,6 @@
 package Dao_Pattern_Class;
 
-import Facade_Pattern_Class.DatabaseFacade;
+import DatabaseConnect.DatabaseFacade;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

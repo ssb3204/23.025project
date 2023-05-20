@@ -1,10 +1,8 @@
 package example;
 
-import Facade_Pattern_Class.DatabaseFacade;
+import DatabaseConnect.DatabaseFacade;
 
 import javax.swing.*;
-import javax.xml.crypto.Data;
-import java.awt.*;
 
 public class DeleteUse extends JFrame{
     //회원탈퇴 버튼을 누르면 회원탈퇴하시겠습니까 문구 출력후 확인 버튼 누르면

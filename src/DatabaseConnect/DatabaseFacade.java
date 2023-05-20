@@ -1,4 +1,4 @@
-package Facade_Pattern_Class;
+package DatabaseConnect;
 
 import java.sql.*;
 

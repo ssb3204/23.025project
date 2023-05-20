@@ -1,6 +1,6 @@
 package example;
 
-import Facade_Pattern_Class.DatabaseFacade;
+import DatabaseConnect.DatabaseFacade;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

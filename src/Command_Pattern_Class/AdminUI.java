@@ -102,6 +102,5 @@ public class AdminUI implements ActionListener {
         else if(e.getSource() == update){
             button.click(2, item_table.getSelectedRow());
         }
-
     }
 }

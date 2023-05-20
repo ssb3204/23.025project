@@ -2,7 +2,7 @@ package Factory_Pattern_Class;
 
 import Dao_Pattern_Class.ItemDao;
 import Dao_Pattern_Class.ItemDaoImpl;
-import Facade_Pattern_Class.DatabaseFacade;
+import DatabaseConnect.DatabaseFacade;
 
 import java.io.File;
 

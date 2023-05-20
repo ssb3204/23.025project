@@ -1,10 +1,9 @@
 package UI;
 
-import Facade_Pattern_Class.DatabaseFacade;
+import DatabaseConnect.DatabaseFacade;
 import OrderHistory.OrderHistoryDao;
 import OrderHistory.OrderHistoryDaoImpl;
 import OrderHistory.OrderHistoryObj;
-import Singleton_Pattern_Class.Singleton;
 import Strategy_Pattern.PurchaseUI;
 
 import javax.imageio.ImageIO;

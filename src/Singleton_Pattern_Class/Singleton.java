@@ -2,7 +2,7 @@ package Singleton_Pattern_Class;
 
 import Dao_Pattern_Class.ItemDao;
 import Dao_Pattern_Class.ItemDaoImpl;
-import Facade_Pattern_Class.DatabaseFacade;
+import DatabaseConnect.DatabaseFacade;
 import Factory_Pattern_Class.ItemProduct;
 import Observer_Pattern_class.Observer;
 import Observer_Pattern_class.Subject;
@@ -101,9 +101,6 @@ public class Singleton implements Subject {
         itemDao = new ItemDaoImpl(new DatabaseFacade());
 
         sell_item_list = itemDao.readItem();
-/*        for(ItemProduct i : sell_item_list){
-            System.out.println(i.getTitle());
-        }*/
     }
 
     public void dbUpload(int index){

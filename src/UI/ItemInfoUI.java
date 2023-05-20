@@ -1,10 +1,5 @@
 package UI;
 
-import Dao_Pattern_Class.ItemDao;
-import Dao_Pattern_Class.ItemDaoImpl;
-import Facade_Pattern_Class.DatabaseFacade;
-import Factory_Pattern_Class.GeneralItemCreator;
-import Factory_Pattern_Class.ItemProduct;
 import Singleton_Pattern_Class.Singleton;
 
 import javax.imageio.ImageIO;
