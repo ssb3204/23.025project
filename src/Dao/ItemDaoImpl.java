@@ -1,6 +1,6 @@
 package Dao;
 
-import DatabaseConnect.DatabaseFacade;
+import DatabaseConnect.DatabaseConect;
 import Factory_Pattern.GeneralItemCreator;
 import Factory_Pattern.ItemCreator;
 import Factory_Pattern.ItemProduct;
@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemDaoImpl implements ItemDao{
-    private DatabaseFacade database;
-    public ItemDaoImpl(DatabaseFacade database) {
+    private DatabaseConect database;
+    public ItemDaoImpl(DatabaseConect database) {
          this.database = database;
     }
     

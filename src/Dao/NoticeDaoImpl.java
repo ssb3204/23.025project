@@ -1,6 +1,6 @@
 package Dao;
 
-import DatabaseConnect.DatabaseFacade;
+import DatabaseConnect.DatabaseConect;
 import Observer_Pattern.NoticeObj;
 
 import java.sql.*;
@@ -8,18 +8,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NoticeDaoImpl implements NoticeDao{
-    private DatabaseFacade databaseFacade;
-    public NoticeDaoImpl(DatabaseFacade databaseFacade) {
-        this.databaseFacade = databaseFacade;
+    private DatabaseConect databaseConect;
+    public NoticeDaoImpl(DatabaseConect databaseConect) {
+        this.databaseConect = databaseConect;
     }
 
     @Override
     public List<NoticeObj> getAllNotices(String user) {
         List<NoticeObj> objList = new ArrayList<>();
         try {
-            databaseFacade.connect();
+            databaseConect.connect();
             String query = "select * from notice where userid = ? order by no desc";
-            PreparedStatement pstmt = databaseFacade.getConn().prepareStatement(query);
+            PreparedStatement pstmt = databaseConect.getConn().prepareStatement(query);
             pstmt.setString(1, user);
             ResultSet rs = pstmt.executeQuery();
 
@@ -30,7 +30,7 @@ public class NoticeDaoImpl implements NoticeDao{
             }
             pstmt.close();
             rs.close();
-            databaseFacade.closeConnect();
+            databaseConect.closeConnect();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -42,15 +42,15 @@ public class NoticeDaoImpl implements NoticeDao{
     @Override
     public void addNotice(NoticeObj notice) {
         try {
-            databaseFacade.connect();
+            databaseConect.connect();
             String query = "INSERT INTO notice (userid, msg, no) VALUES (?, ?, (SELECT MAX(no) + 1 FROM notice))";
-            PreparedStatement pstmt = databaseFacade.getConn().prepareStatement(query);
+            PreparedStatement pstmt = databaseConect.getConn().prepareStatement(query);
             pstmt.setString(1, notice.getUser());
             pstmt.setString(2, notice.getMsg());
             pstmt.executeQuery();
 
             pstmt.close();
-            databaseFacade.closeConnect();
+            databaseConect.closeConnect();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -61,13 +61,13 @@ public class NoticeDaoImpl implements NoticeDao{
     @Override
     public void deleteNotice(String id) {
         try {
-            databaseFacade.connect();
+            databaseConect.connect();
             String query = "DELETE FROM notice WHERE id = ?";
-            PreparedStatement pstmt = databaseFacade.getConn().prepareStatement(query);
+            PreparedStatement pstmt = databaseConect.getConn().prepareStatement(query);
             pstmt.setString(1, id);
             pstmt.executeQuery();
             pstmt.close();
-            databaseFacade.closeConnect();
+            databaseConect.closeConnect();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {

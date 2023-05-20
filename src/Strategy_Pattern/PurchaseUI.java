@@ -1,7 +1,7 @@
 package Strategy_Pattern;
 
 import Dao.UserDAOImpl;
-import DatabaseConnect.DatabaseFacade;
+import DatabaseConnect.DatabaseConect;
 import Factory_Pattern.ItemProduct;
 
 import javax.swing.*;
@@ -121,7 +121,7 @@ public class PurchaseUI implements ActionListener {
                     break;
                 }
                 case 2:{
-                    UserDAOImpl dao = new UserDAOImpl(new DatabaseFacade());
+                    UserDAOImpl dao = new UserDAOImpl(new DatabaseConect());
                     if(dao.isFirstPayment(id)){
                         result = 0;
                         result_label.setText("총 결제액 : ");

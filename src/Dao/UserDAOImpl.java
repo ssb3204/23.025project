@@ -1,6 +1,6 @@
 package Dao;
 
-import DatabaseConnect.DatabaseFacade;
+import DatabaseConnect.DatabaseConect;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,9 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserDAOImpl implements UserDAO {
-    private DatabaseFacade database;
+    private DatabaseConect database;
 
-    public UserDAOImpl(DatabaseFacade database) {
+    public UserDAOImpl(DatabaseConect database) {
         this.database = database;
     }
     @Override

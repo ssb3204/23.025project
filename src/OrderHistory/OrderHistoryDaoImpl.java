@@ -1,6 +1,6 @@
 package OrderHistory;
 
-import DatabaseConnect.DatabaseFacade;
+import DatabaseConnect.DatabaseConect;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderHistoryDaoImpl implements OrderHistoryDao{
-    DatabaseFacade database;
-    public OrderHistoryDaoImpl(DatabaseFacade database) {
+    DatabaseConect database;
+    public OrderHistoryDaoImpl(DatabaseConect database) {
         this.database = database;
     }
 

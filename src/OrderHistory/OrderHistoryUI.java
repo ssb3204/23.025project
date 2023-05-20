@@ -1,6 +1,6 @@
 package OrderHistory;
 
-import DatabaseConnect.DatabaseFacade;
+import DatabaseConnect.DatabaseConect;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -36,7 +36,7 @@ public class OrderHistoryUI implements ActionListener{
             }
         });
 
-        orderDao = new OrderHistoryDaoImpl(new DatabaseFacade());
+        orderDao = new OrderHistoryDaoImpl(new DatabaseConect());
 
         //구매기록
         model = new DefaultTableModel(new String[]{"판매자", "물품", "가격", "개수", "구매일자"}, 0) {

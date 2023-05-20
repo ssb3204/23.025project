@@ -2,7 +2,7 @@ package Singleton_Pattern;
 
 import Dao.ItemDao;
 import Dao.ItemDaoImpl;
-import DatabaseConnect.DatabaseFacade;
+import DatabaseConnect.DatabaseConect;
 import Factory_Pattern.ItemProduct;
 import Observer_Pattern.Observer;
 import Observer_Pattern.Subject;
@@ -98,13 +98,13 @@ public class Singleton implements Subject {
 
     /**DB에 저장된 아이템을 받아오는 코드*/
     public void dbLoadItem() {
-        itemDao = new ItemDaoImpl(new DatabaseFacade());
+        itemDao = new ItemDaoImpl(new DatabaseConect());
 
         sell_item_list = itemDao.readItem();
     }
 
     public void dbUpload(int index){
-        ItemDao itemDao = new ItemDaoImpl(new DatabaseFacade());
+        ItemDao itemDao = new ItemDaoImpl(new DatabaseConect());
         itemDao.updateItem(sell_item_list.get(index));
     }
 

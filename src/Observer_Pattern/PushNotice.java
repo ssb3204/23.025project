@@ -2,7 +2,7 @@ package Observer_Pattern;
 
 import Dao.NoticeDao;
 import Dao.NoticeDaoImpl;
-import DatabaseConnect.DatabaseFacade;
+import DatabaseConnect.DatabaseConect;
 import Singleton_Pattern.Singleton;
 
 public class PushNotice implements Observer {
@@ -12,7 +12,7 @@ public class PushNotice implements Observer {
 
     public PushNotice(String ID) {
         this.ID = ID;
-        this.noticeDao = new NoticeDaoImpl(new DatabaseFacade());
+        this.noticeDao = new NoticeDaoImpl(new DatabaseConect());
         singleton = Singleton.getInstance();
     }
 

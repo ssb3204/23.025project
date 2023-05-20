@@ -1,14 +1,14 @@
 package example;
 
-import DatabaseConnect.DatabaseFacade;
+import DatabaseConnect.DatabaseConect;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class DeleteUser {
-    DatabaseFacade database;
+    DatabaseConect database;
     String user;
-    public DeleteUser(DatabaseFacade database) {
+    public DeleteUser(DatabaseConect database) {
         this.database = database;
     }
 

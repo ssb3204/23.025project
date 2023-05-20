@@ -2,7 +2,7 @@ package Factory_Pattern;
 
 import Dao.ItemDao;
 import Dao.ItemDaoImpl;
-import DatabaseConnect.DatabaseFacade;
+import DatabaseConnect.DatabaseConect;
 
 import java.io.File;
 
@@ -19,7 +19,7 @@ public class GeneralItemCreator extends ItemCreator {
     public void registerItem(ItemProduct item) {
         // 아이템을 데이터베이스나 다른 저장소에 등록하는 로직을 구현
         // 이 예제에서는 간단히 콘솔에 출력만 함
-        ItemDao itemDao = new ItemDaoImpl(new DatabaseFacade());
+        ItemDao itemDao = new ItemDaoImpl(new DatabaseConect());
         itemDao.createItem(item);
         //System.out.println("DB에 상품을 저장하였습니다.  저장된 상품명 : " + item.getTitle() + "\n");
     }

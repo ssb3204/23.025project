@@ -1,6 +1,6 @@
 package UI;
 
-import DatabaseConnect.DatabaseFacade;
+import DatabaseConnect.DatabaseConect;
 import OrderHistory.OrderHistoryDao;
 import OrderHistory.OrderHistoryDaoImpl;
 import OrderHistory.OrderHistoryObj;
@@ -156,7 +156,7 @@ public class PopupDialog implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == item_buy_button){
             //System.out.println("물품을 구매하셨습니다.");
-            OrderHistoryDao orderHistoryDao = new OrderHistoryDaoImpl(new DatabaseFacade());
+            OrderHistoryDao orderHistoryDao = new OrderHistoryDaoImpl(new DatabaseConect());
 
             PurchaseUI purchase = new PurchaseUI(popup_frame, TopUI.sell_item_list.getItemProduct(index), TopUI.getId());
             if(purchase.getResultValue() == 0){

@@ -2,7 +2,7 @@ package Observer_Pattern;
 
 import Dao.NoticeDao;
 import Dao.NoticeDaoImpl;
-import DatabaseConnect.DatabaseFacade;
+import DatabaseConnect.DatabaseConect;
 import Singleton_Pattern.Singleton;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public class Notice implements Observer {
     public Notice(String ID) {
         this.ID = ID;
         singleton = Singleton.getInstance();
-        noticeDao = new NoticeDaoImpl(new DatabaseFacade());
+        noticeDao = new NoticeDaoImpl(new DatabaseConect());
         db_get_notice(ID);
     }
 

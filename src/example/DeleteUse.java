@@ -1,6 +1,6 @@
 package example;
 
-import DatabaseConnect.DatabaseFacade;
+import DatabaseConnect.DatabaseConect;
 
 import javax.swing.*;
 
@@ -31,7 +31,7 @@ public class DeleteUse extends JFrame{
         deleteButton.addActionListener(e -> {
             //Userinfocheck userinfocheck = new Userinfocheck(MypageFrame.id,MypageFrame.password);
             //userinfocheck.deleteUserinfo();
-            DeleteUser deleteUse = new DeleteUser(new DatabaseFacade());
+            DeleteUser deleteUse = new DeleteUser(new DatabaseConect());
             deleteUse.deleteStart(MypageFrame.id);
         });
 
