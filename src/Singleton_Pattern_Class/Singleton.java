@@ -146,7 +146,6 @@ public class Singleton implements Subject {
     @Override
     public void notifyObserver(String user, String action, int index) {
         for(Observer o: observer_list){
-            System.out.println(o);
             o.update(user ,action, index);
         }
     }

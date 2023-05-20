@@ -1,5 +1,6 @@
 package UI;
 
+import Command_Pattern_Class.AdminUI;
 import Dao_Pattern_Class.ItemDao;
 import Dao_Pattern_Class.ItemDaoImpl;
 import Facade_Pattern_Class.DatabaseFacade;
@@ -88,7 +89,6 @@ public class MainUI implements ActionListener {
         mainframe.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                /**DB 에 sell_item_list 객체들을 저장하는 코드*/
                 System.exit(0);
             }
         });
@@ -170,7 +170,8 @@ public class MainUI implements ActionListener {
         mainframe.add(Mypage_button);
         Mypage_button.addActionListener(this);
         if(state=="admin"){
-            Mypage_button.setEnabled(false);
+            //Mypage_button.setEnabled(false);
+            Mypage_button.setText("관리자화면");
         }
         
         
@@ -189,7 +190,6 @@ public class MainUI implements ActionListener {
         }
         
         //페이지 번호 공간
-
         if(total_page == 0) total_page = 1;
         page_number_panel = new JPanel(new BorderLayout());
         page_number_label = new JLabel(page_number + " / " + total_page);
@@ -370,8 +370,13 @@ public class MainUI implements ActionListener {
                 JOptionPane.showMessageDialog(null,"회원가입이 필요합니다");
                 return;
             }
-            //마이페이지 버튼
-            new MypageFrame(id, password,state);
+            else if(state.equals("admin")){
+                new AdminUI(this);
+            }
+            else {
+                //마이페이지 버튼
+                new MypageFrame(id, password, state);
+            }
         }
         else if(e.getSource() == next_page_button){
             //다음 페이지 버튼
