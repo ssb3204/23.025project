@@ -14,6 +14,7 @@ public class DeleteUse extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
 
+        setLocationRelativeTo(null);
         JLabel deleteLabel = new JLabel("Are you sure you want to delete your account?");
         deleteLabel.setBounds(10,10,280,25);
         add(deleteLabel);
@@ -33,6 +34,8 @@ public class DeleteUse extends JFrame{
             //userinfocheck.deleteUserinfo();
             DeleteUser deleteUse = new DeleteUser(new DatabaseConect());
             deleteUse.deleteStart(MypageFrame.id);
+            new LoginFrame();
+            dispose();
         });
 
         cancelButton.addActionListener(e -> {

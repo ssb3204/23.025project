@@ -100,6 +100,7 @@ public class LoginFrame extends JFrame{
             }
             //사용자 로그인
             else if(userinfocheck.checkUserinfo()){
+
                 JOptionPane.showMessageDialog(null, "User Login Success");
                 //로그인 성공하면 메인창 띄우기
                 new MainUI(id, password, "user");

@@ -373,6 +373,7 @@ public class MainUI implements ActionListener {
             else {
                 //마이페이지 버튼
                 new MypageFrame(id, password, state);
+                mainframe.dispose();
             }
         }
         else if(e.getSource() == next_page_button){

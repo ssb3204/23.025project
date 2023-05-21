@@ -8,15 +8,15 @@ public class ChangeUser extends JFrame {
     String id;
     String password;
     String name;
-    String email;
+    String address;
 
     String state;
 
-    ChangeUser(String id, String password, String name, String email){
+    ChangeUser(String id, String password, String name, String address){
         this.id = id;
         this.password = password;
         this.name = name;
-        this.email = email;
+        this.address = address;
     }
     //아이디 비밀번호 변경 버튼 누르면 아이디 비밀번호 변경할 수 있는 창 띄우기
     //아이디 비밀번호 변경 후 확인 버튼 누르면
@@ -29,53 +29,53 @@ public class ChangeUser extends JFrame {
 
 
         setTitle("Change User");
-        setSize(800,600);
+        setSize(600,400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
 
         setLocationRelativeTo(null);
         JLabel changeLabel = new JLabel("Change your ID and password");
-        changeLabel.setBounds(100,10,280,25);
+        changeLabel.setBounds(10,160,280,25);
         add(changeLabel);
 
         JLabel idLabel = new JLabel("ID");
-        idLabel.setBounds(100,40,80,25);
+        idLabel.setBounds(10,10,100,25);
         add(idLabel);
 
         JLabel idText = new JLabel(this.id);
-        idText.setBounds(150,40,165,25);
+        idText.setBounds(100,10,80,25);
         add(idText);
 
         JLabel passwordLabel = new JLabel("PW");
-        passwordLabel.setBounds(100,70,80,25);
+        passwordLabel.setBounds(10,40,100,25);
         add(passwordLabel);
 
-        JTextField passwordText = new JTextField(20);
-        passwordText.setBounds(150,70,165,25);
+        JTextField passwordText = new JTextField(30);
+        passwordText.setBounds(100,40,80,25);
         add(passwordText);
 
         JLabel nameLabel = new JLabel("Name");
-        nameLabel.setBounds(100,100,80,25);
+        nameLabel.setBounds(10,70,80,25);
         add(nameLabel);
 
-        JTextField nameText = new JTextField(20);
-        nameText.setBounds(150,100,165,25);
+        JTextField nameText = new JTextField(30);
+        nameText.setBounds(100,70,80,25);
         add(nameText);
 
-        JLabel emailLabel = new JLabel("Email");
-        emailLabel.setBounds(100,130,80,25);
-        add(emailLabel);
+        JLabel AddressLabel = new JLabel("Address");
+        AddressLabel.setBounds(10,100,80,25);
+        add(AddressLabel);
 
-        JTextField emailText = new JTextField(20);
-        emailText.setBounds(150,130,165,25);
-        add(emailText);
+        JTextField addressText = new JTextField(30);
+        addressText.setBounds(100,100,80,25);
+        add( addressText);
 
         JButton changeButton = new JButton("Change");
-        changeButton.setBounds(10,100,80,25);
+        changeButton.setBounds(10,180,80,25);
         add(changeButton);
 
         JButton cancelButton = new JButton("Cancel");
-        cancelButton.setBounds(180,100,80,25);
+        cancelButton.setBounds(180,180,80,25);
         add(cancelButton);
 
         setVisible(true);
@@ -84,15 +84,25 @@ public class ChangeUser extends JFrame {
 
             String pass = passwordText.getText();
             String name = nameText.getText();
-            String email = emailText.getText();
+            String  address =  addressText.getText();
 
-            Userinfocheck userinfocheck = new Userinfocheck(this.id,pass,name,email);
+            if(pass.equals("")||name.equals("")||address.equals("")){
+                JOptionPane.showMessageDialog(null,"Please fill in all fields");
+                return;
+
+            }else if( pass.length()<8||pass.length()>20){
+                JOptionPane.showMessageDialog(null,"Password must be at least 8 characters or less than 20 characters");
+                return;
+            }
+            Userinfocheck userinfocheck = new Userinfocheck(this.id,pass,name,address);
             userinfocheck.saveUserinfo();
+            JOptionPane.showMessageDialog(null,"Change complete");
+            new MainUI(this.id,pass,this.state);
             dispose();
         });
 
         cancelButton.addActionListener(e -> {
-            new MainUI(this.id,this.password,this.state);
+            //new MainUI(this.id,this.password,this.state);
             //취소 버튼 누르면 마이페이지 프레임 출력
             dispose();
         });

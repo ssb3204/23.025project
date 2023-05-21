@@ -1,5 +1,6 @@
 package example;
 
+import javax.swing.*;
 import java.sql.*;
 
 public class Userinfocheck {
@@ -12,7 +13,7 @@ public class Userinfocheck {
 
     private String name;
 
-    private String email;
+    private String address;
     private String idFile;
     private String passwordFile;
     private String[] userinfo;
@@ -24,11 +25,11 @@ public class Userinfocheck {
         check = false;
     }
 
-    Userinfocheck(String id, String password, String name, String email){
+    Userinfocheck(String id, String password, String name, String address){
         this.id = id;
         this.password = password;
         this.name = name;
-        this.email = email;
+        this.address = address;
         check = false;
     }
     
@@ -37,7 +38,7 @@ public class Userinfocheck {
         String id="";
         String pass="";
         String name="";
-        String email="";
+        String address="";
         Connection conn=null;
         Statement stmt=null;
         ResultSet rs=null;
@@ -46,7 +47,7 @@ public class Userinfocheck {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             conn= DriverManager.getConnection("jdbc:oracle:thin:@sedb.deu.ac.kr:1521/orcl","a20193116","20193116");
             stmt = conn.createStatement();
-            String query = "INSERT INTO USERINFO VALUES('"+this.id+"','"+this.password+"','"+this.name+"','"+this.email+"')";
+            String query = "INSERT INTO USERINFO VALUES('"+this.id+"','"+this.password+"','"+this.name+"','"+this.address+"','"+0+"')";
             stmt.executeUpdate(query);
             stmt.close();
             conn.close();
@@ -94,7 +95,7 @@ public class Userinfocheck {
             conn= DriverManager.getConnection("jdbc:oracle:thin:@sedb.deu.ac.kr:1521/orcl","a20193116","20193116");
             stmt = conn.createStatement();
 
-            String sql_query= String.format("UPDATE USERINFO SET PW='"+this.password+"', NAME='"+this.name+"', EMAIL='"+this.email+"' WHERE ID='"+this.id+"'");
+            String sql_query= String.format("UPDATE USERINFO SET PW='"+this.password+"', NAME='"+this.name+"', ADDRESS='"+this.address+"' WHERE ID='"+this.id+"'");
             stmt.executeUpdate(sql_query);
 
 
@@ -135,6 +136,7 @@ public class Userinfocheck {
             stmt.close();
             conn.close();
         }catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"Login Failed");
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
