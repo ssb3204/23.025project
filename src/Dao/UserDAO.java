@@ -12,4 +12,6 @@ public interface UserDAO {
     /**첫결제 유무*/
     boolean isFirstPayment(String id);
     void firstPayment(String id);
+
+    String getAddress(String id);
 }

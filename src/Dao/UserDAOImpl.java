@@ -131,4 +131,31 @@ public class UserDAOImpl implements UserDAO {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public String getAddress(String id) {
+        String address = null;
+        try {
+            database.connect();
+            String query = "SELECT address FROM userinfo WHERE ID = ?";
+            PreparedStatement pstmt = database.getConn().prepareStatement(query);
+            pstmt.setString(1, id);
+            ResultSet rs = pstmt.executeQuery();
+
+            if(rs.next()){
+                address = rs.getString("address");
+            }
+
+            pstmt.close();
+            rs.close();
+            database.closeConnect();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return  address;
+    }
+
+
 }

@@ -1,8 +1,10 @@
 package Strategy_Pattern;
 
+import Dao.UserDAO;
 import Dao.UserDAOImpl;
 import DatabaseConnect.DatabaseConect;
 import Factory_Pattern.ItemProduct;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -66,7 +68,8 @@ public class PurchaseUI implements ActionListener {
         frame.add(panel);
         panel.setBounds(50,160,250,20);
 
-        String address = "테스트 주소입니다";
+        UserDAO userDAO = new UserDAOImpl(new DatabaseConect());
+        String address = userDAO.getAddress(id);
         JLabel address_label  = new JLabel("주소              " + address);
         frame.add(address_label);
         address_label.setBounds(50, 80, 300, 20);

@@ -73,7 +73,7 @@ public class MainUI implements ActionListener {
     boolean isTurnedOff = false; // 알림 상태 변수
 
     ItemFacade itemFacade;
-    public MainUI (String id , String password,String state) {
+    public MainUI (String id , String password, String state) {
         //유저 정보를 저장한다.
         this.id = id;
         this.password = password;
