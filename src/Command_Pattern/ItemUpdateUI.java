@@ -251,6 +251,7 @@ public class ItemUpdateUI implements ActionListener {
             //정보 수정
             ItemFacade itemFacade = ItemFacade.getItemFacade();
             itemFacade.updateItem(index, item_title, item_count, item_description, item_price, selectedFile);
+            JOptionPane.showMessageDialog(null, "수정되었습니다!", "알림", JOptionPane.INFORMATION_MESSAGE);
             item_frame.dispose();
         }
     }

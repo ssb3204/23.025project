@@ -19,7 +19,7 @@ public class PushNotice implements Observer {
 
     @Override
     public void update(String action, ItemProduct item) {
-        if(!ID.equals(item.getUserID())) {
+        if(!ID.equals(item.getUserID()) && action != null) {
             String target = item.getUserID();
             NoticeObj noticeObj = null;
 

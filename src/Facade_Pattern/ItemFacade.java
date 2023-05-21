@@ -3,6 +3,8 @@ package Facade_Pattern;
 import Dao.ItemDao;
 import Dao.ItemDaoImpl;
 import DatabaseConnect.DatabaseConect;
+import Factory_Pattern.GeneralItemCreator;
+import Factory_Pattern.ItemCreator;
 import Factory_Pattern.ItemProduct;
 import Observer_Pattern.Observer;
 import Observer_Pattern.Subject;
@@ -90,6 +92,28 @@ public class ItemFacade implements Subject {
         notifyObserver("삭제", temp);
         mainUI.resetAndAddPanels();
         mainUI.resetFrame();
+    }
+
+    public ItemProduct copyItem(int index){
+        ItemCreator itemCreator = new GeneralItemCreator();
+        String title = singleton.getItemProduct(index).getTitle();
+        int price = singleton.getItemProduct(index).getPrice();
+        int count = singleton.getItemProduct(index).getCount();
+        String description = singleton.getItemProduct(index).getDescription();
+        File image = singleton.getItemProduct(index).getImageFile();
+        String userID = singleton.getItemProduct(index).getUserID();
+        int itemID = singleton.getItemProduct(index).getItemID();
+
+        return  itemCreator.createItemProduct(title, price, count, description, image, userID, itemID);
+    }
+
+    public void undoDelete(ItemProduct item){
+        itemDao.createItem(item);
+        singleton.addItem(item);
+        int index = singleton.getSize() - 1;
+        mainUI.addPanel(item, index);
+        mainUI.resetFrame();
+        notifyObserver(null, item);
     }
     @Override
     public void subscribe(Observer observer) {

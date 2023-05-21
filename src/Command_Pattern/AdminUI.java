@@ -19,6 +19,7 @@ public class AdminUI implements ActionListener, Observer, WindowListener {
     JButton read;
     JButton delete;
     JButton update;
+    JButton undo;
     JTable item_table;
     ItemProduct item;
     DefaultTableModel model;
@@ -42,11 +43,14 @@ public class AdminUI implements ActionListener, Observer, WindowListener {
         delete.addActionListener(this);
         update = new JButton("수정");
         update.addActionListener(this);
+        undo = new JButton("작업 취소");
+        undo.addActionListener(this);
         JPanel button_panel= new JPanel(new FlowLayout());
 
         button_panel.add(read);
         button_panel.add(delete);
         button_panel.add(update);
+        button_panel.add(undo);
 
         mainframe.add(button_panel, BorderLayout.SOUTH);
 
@@ -88,7 +92,10 @@ public class AdminUI implements ActionListener, Observer, WindowListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(item_table.getSelectedRow() == -1){
+        if(e.getSource() == undo){
+            button.undoButtonWasPushed();
+        }
+        else if(item_table.getSelectedRow() == -1){
             JOptionPane.showMessageDialog(mainframe, "항목이 선택되지 않았습니다.", "Warning", JOptionPane.WARNING_MESSAGE);
         }
         else if(e.getSource() == read){
@@ -100,6 +107,7 @@ public class AdminUI implements ActionListener, Observer, WindowListener {
         else if(e.getSource() == update){
             button.click(2, item_table.getSelectedRow());
         }
+
     }
 
     @Override

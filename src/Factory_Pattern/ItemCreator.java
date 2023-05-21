@@ -16,6 +16,7 @@ public abstract class ItemCreator {
         return item;
     }
 
+    /**생성된 아이템 객체를 반환합니다.*/
     public abstract ItemProduct createItemProduct(String title, int price, int count, String description, File imageFile, String userID, int itemID);
 
     public abstract void registerItem(ItemProduct item);
