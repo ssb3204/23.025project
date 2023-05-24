@@ -136,6 +136,7 @@ public class PopupDialog implements ActionListener {
 
         if(TopUI.sell_item_list.getItemProduct(index).getUserID().equals(TopUI.getId())){
             item_buy_button.setEnabled(false);
+            item_store_button.setEnabled(false);
         }
 
         //System.out.println(TopUI.getId());
@@ -152,6 +153,8 @@ public class PopupDialog implements ActionListener {
             item_info_button.addActionListener(this);
             item_info_button.setBounds(520, 530, 100, 30);
             item_panel.add(item_info_button);
+
+
         }
         
         //패널을 메인프레임에 추가한다.
