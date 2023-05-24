@@ -472,6 +472,7 @@ public class MainUI implements ActionListener {
                     break;
                 }
             }
+            itemFacade.displayNotifyObserver();
         }
     }
 
