@@ -1,13 +1,11 @@
 package CartHistory;
 
 public class CartHistoryObj {
-
     String title;
     String price;
     String user;
     String custumer;
     int count;
-
     public CartHistoryObj(String title, String price, String user, String custumer, int count) {
         this.title = title;
         this.price = price;
@@ -15,7 +13,6 @@ public class CartHistoryObj {
         this.custumer = custumer;
         this.count = count;
     }
-
 
     public String getUser() {
         return user;

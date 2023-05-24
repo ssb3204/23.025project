@@ -1,7 +1,5 @@
 package Facade_Pattern;
 
-
-import CartState.Protuct;
 import Dao.ItemDao;
 import Dao.ItemDaoImpl;
 import DatabaseConnect.DatabaseConect;
@@ -17,7 +15,6 @@ import OrderHistory.OrderHistoryDaoImpl;
 import OrderHistory.OrderHistoryObj;
 import Singleton_Pattern.Singleton;
 import UI.MainUI;
-import CartState.NotInCart;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;

@@ -68,7 +68,6 @@ public class NoticeUI implements ActionListener {
         //notice_list.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         notice_frame.add(scrollPane, BorderLayout.CENTER);
 
-
         notice_frame.setLocationRelativeTo(null);
         notice_frame.setResizable(false);
         notice_frame.setVisible(true);

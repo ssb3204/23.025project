@@ -171,16 +171,15 @@ public class MainUI implements ActionListener {
         
         //마이페이지에 접속하기 위한 버튼
         Mypage_button = new JButton("마이페이지");
-        Mypage_button.setBounds(850, 500, 100, 50);
+        Mypage_button.setBounds(850, 530, 100, 50);
         mainframe.add(Mypage_button);
         Mypage_button.addActionListener(this);
         if(state=="admin"){
-            //Mypage_button.setEnabled(false);
             Mypage_button.setText("관리자화면");
         }
 
         Cart_button = new JButton("일괄구매");
-        Cart_button.setBounds(610, 500, 100, 50);
+        Cart_button.setBounds(610, 600, 100, 50);
         mainframe.add(Cart_button);
         Cart_button.addActionListener(this);
         if(state.equals("admin")||state.equals("plane")){
@@ -190,7 +189,7 @@ public class MainUI implements ActionListener {
         
         //로그아웃 버튼
         Logout_button = new JButton("로그아웃");
-        Logout_button.setBounds(730, 500, 100, 50);
+        Logout_button.setBounds(730, 530, 100, 50);
         mainframe.add(Logout_button);
         Logout_button.addActionListener(this);
 

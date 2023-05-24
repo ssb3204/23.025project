@@ -16,30 +16,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CartHistoryUI implements ActionListener {
-
     private JDialog cartHistoryFrame;
-
     private JTable cartHistoryTable;
-
     List<ItemProduct>  list;
-
     DefaultTableModel model;
-
     JButton buyAll;
-
     public String user;
-
     Singleton singleton;
-
     ItemFacade itemFacade;
-
     boolean mode;
 
-
     public CartHistoryUI(JFrame TOP, String user) {
-
         this.user=user;
-
         mode = false;
         cartHistoryFrame = new JDialog(TOP, "장바구니", true);
         cartHistoryFrame.addWindowListener(new WindowAdapter() {

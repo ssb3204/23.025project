@@ -12,7 +12,6 @@ public abstract class AbstractItemSorter {
         items.sort(this :: compare);
         display();
     }
-
     protected  abstract  int compare(ItemProduct a, ItemProduct b);
 
     private void display() {

@@ -109,12 +109,10 @@ public class AdminUI implements ActionListener, DisplayObserver, WindowListener 
             button.click(2, item_table.getSelectedRow());
         }
     }
-
     @Override
     public void DisplayUpdate() {
         updateData();
     }
-
     @Override
     public void windowClosing(WindowEvent e) {
         ItemFacade itemFacade = ItemFacade.getItemFacade();
@@ -123,27 +121,21 @@ public class AdminUI implements ActionListener, DisplayObserver, WindowListener 
     }
     @Override
     public void windowOpened(WindowEvent e) {
-
     }
     @Override
     public void windowClosed(WindowEvent e) {
-
     }
     @Override
     public void windowIconified(WindowEvent e) {
-
     }
     @Override
     public void windowDeiconified(WindowEvent e) {
-
     }
     @Override
     public void windowActivated(WindowEvent e) {
-
     }
     @Override
     public void windowDeactivated(WindowEvent e) {
 
     }
-
 }

@@ -4,7 +4,6 @@ import DatabaseConnect.DatabaseConect;
 import Facade_Pattern.ItemFacade;
 import OrderHistory.OrderHistoryDao;
 import OrderHistory.OrderHistoryDaoImpl;
-import OrderHistory.OrderHistoryObj;
 import Strategy_Pattern.PurchaseUI;
 
 import javax.imageio.ImageIO;

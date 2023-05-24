@@ -7,10 +7,9 @@ import javax.swing.*;
 public class MypageFrame extends JFrame {
     public static String id;
     public static String password;
-    public static String name;
-    public static String address;
     public static String state;
 
+    //마이페이지 UI
     public MypageFrame(String id, String password,String state){
         this.id = id;
         this.password = password;

@@ -6,7 +6,6 @@ public class RegisterFrame extends JFrame {
     //회원가입 창
     //Register 버튼을 누르면 json 파일에 회원정보 저장하고
     //회원가입 창 닫기
-
     RegisterFrame(){
         setTitle("Register");
         setSize(400,300);

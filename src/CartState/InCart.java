@@ -9,16 +9,12 @@ public class InCart extends Cart{
         JOptionPane.showMessageDialog(null,"장바구니에서 삭제했습니다");
         return new NotInCart();
     }
-
     @Override
     public String getCart() {
         return "포함";
     }
-
     @Override
     public CartState changeCartState() {
         return new NotInCart();
     }
-
-
 }

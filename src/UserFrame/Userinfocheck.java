@@ -7,7 +7,6 @@ public class Userinfocheck {
     //입력 받은 아이디와 비밀번호가 파일에 있는지 확인
     //파일에 저장된 정보와 입력받은 정보가 같으면 true
     //다르면 false
-
     private String id;
     private String password;
 

@@ -8,6 +8,7 @@ import java.sql.SQLException;
 public class DeleteUser {
     DatabaseConect database;
     String user;
+
     public DeleteUser(DatabaseConect database) {
         this.database = database;
     }
