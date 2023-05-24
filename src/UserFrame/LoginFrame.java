@@ -132,7 +132,7 @@ public class LoginFrame extends JFrame{
         });
 
         PlaneButton.addActionListener(e -> {
-            new MainUI("viewonly ",null,"plane");
+            new MainUI("viewonly",null,"plane");
             dispose();
         });
     }

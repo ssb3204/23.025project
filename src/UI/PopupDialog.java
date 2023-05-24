@@ -134,7 +134,7 @@ public class PopupDialog implements ActionListener {
         item_store_button.setBounds(190, 530, 100, 30);
         item_panel.add(item_store_button);
 
-        if(TopUI.sell_item_list.getItemProduct(index).getUserID().equals(TopUI.getId())){
+        if(TopUI.sell_item_list.getItemProduct(index).getUserID().equals(TopUI.getId()) || TopUI.getId().equals("viewonly")){
             item_buy_button.setEnabled(false);
             item_store_button.setEnabled(false);
         }
