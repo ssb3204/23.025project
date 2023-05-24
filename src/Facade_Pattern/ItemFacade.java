@@ -157,7 +157,6 @@ public class ItemFacade implements Subject, DisplaySubject {
     @Override
     public void displayNotifyObserver() {
         for(DisplayObserver o: display_list){
-            System.out.println("화면 옵저버 작동");
             o.DisplayUpdate();
         }
     }

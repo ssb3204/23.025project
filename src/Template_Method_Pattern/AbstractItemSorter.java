@@ -16,8 +16,8 @@ public abstract class AbstractItemSorter {
     protected  abstract  int compare(ItemProduct a, ItemProduct b);
 
     private void display() {
+        UI.clearFrame();
+        UI.resetAndAddPanels();
         UI.resetFrame();
-        UI.resetFrame();
-        UI.reloadUI();
     }
 }

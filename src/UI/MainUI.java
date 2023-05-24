@@ -258,12 +258,10 @@ public class MainUI implements ActionListener {
 
     /**패널 리스트를 다시 생성한다*/
     public void resetAndAddPanels(){
-        //System.out.println("패널 리스트를 삭제 후 다시 추가 중 입니다." + sell_item_list.getSize());
         panel_list.clear();
         for(int i = 0; i < sell_item_list.getSize(); i++) {
             panel_list.add(createItemPanel(sell_item_list.getItemProduct(i), i));
         }
-        //System.out.println("패널 리스트 개수 : " + panel_list.size());
     }
 
     /**메인프레임 화면에 있는 패널들을 모두 제거한다.*/
