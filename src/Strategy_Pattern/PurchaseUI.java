@@ -26,6 +26,7 @@ public class PurchaseUI implements ActionListener {
     JLabel result_label;
 
     public PurchaseUI(JDialog TOP, ItemProduct item, String id) {
+        button = new PurchaseButton();
         this.item = item;
         result = 0;
         this.id = id;
@@ -104,14 +105,14 @@ public class PurchaseUI implements ActionListener {
         if(e.getSource() == comboBox){
             switch (comboBox.getSelectedIndex()){
                 case 0:{
-                    button = new PurchaseButton(new DefaultPricingStrategy());
+                    button.setStrategy(new DefaultPricingStrategy());
                     result = button.click(item.getPrice(), Integer.parseInt(textField.getText()));
                     result_label.setText("총 결제액 : " + result);
                     break;
                 }
                 case 1:{
                     if(Integer.parseInt(textField.getText()) >= 10) {
-                        button = new PurchaseButton(new VolumeDiscountPricingStrategy());
+                        button.setStrategy(new VolumeDiscountPricingStrategy());
                         result = button.click(item.getPrice(), Integer.parseInt(textField.getText()));
                         result_label.setText("총 결제액 : " + result);
                     }
@@ -132,7 +133,7 @@ public class PurchaseUI implements ActionListener {
                         JOptionPane.showMessageDialog(null, "이미 첫 결제할인을 사용하셨습니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
                     }
                     else{
-                        button = new PurchaseButton(new FirstPaymentPricingStrategy());
+                        button.setStrategy(new FirstPaymentPricingStrategy());
                         result = button.click(item.getPrice(), Integer.parseInt(textField.getText()));
                         result_label.setText("총 결제액 : " + result);
                         dao.firstPayment(id);

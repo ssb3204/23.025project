@@ -183,7 +183,7 @@ public class MainUI implements ActionListener {
         Cart_button.setBounds(610, 500, 100, 50);
         mainframe.add(Cart_button);
         Cart_button.addActionListener(this);
-        if(state=="admin"||state=="plane"){
+        if(state.equals("admin")||state.equals("plane")){
             Cart_button.setEnabled(false);
         }
         
@@ -373,13 +373,13 @@ public class MainUI implements ActionListener {
             new OrderHistoryUI(mainframe, getId());
         }
         else if(e.getSource() == Mypage_button) {
-            if(state=="plane"){
+            if(state.equals("plane")){
                 JOptionPane.showMessageDialog(null,"회원가입이 필요합니다");
                 return;
             }
             else if(state.equals("admin")){
                 AdminUI adminUI = new AdminUI(this);
-                itemFacade.subscribe(adminUI);
+                itemFacade.displaySubscribe(adminUI);
             }
             else {
                 //마이페이지 버튼
