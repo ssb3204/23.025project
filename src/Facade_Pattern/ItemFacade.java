@@ -1,5 +1,7 @@
 package Facade_Pattern;
 
+
+import CartState.Protuct;
 import Dao.ItemDao;
 import Dao.ItemDaoImpl;
 import DatabaseConnect.DatabaseConect;
@@ -13,7 +15,7 @@ import OrderHistory.OrderHistoryDaoImpl;
 import OrderHistory.OrderHistoryObj;
 import Singleton_Pattern.Singleton;
 import UI.MainUI;
-
+import CartState.NotInCart;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,8 @@ public class ItemFacade implements Subject {
     ItemDao itemDao;
     OrderHistoryDao orderHistoryDao;
     MainUI mainUI;
+
+    Protuct protuct;
     public List<Observer> observer_list = new ArrayList<>();
 
 
@@ -114,6 +118,10 @@ public class ItemFacade implements Subject {
         mainUI.addPanel(item, index);
         mainUI.resetFrame();
         notifyObserver(null, item);
+    }
+
+    public void check(int index){
+        singleton.getItemProduct(index).changeCartState();
     }
     @Override
     public void subscribe(Observer observer) {

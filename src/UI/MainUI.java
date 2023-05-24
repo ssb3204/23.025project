@@ -1,5 +1,6 @@
 package UI;
 
+import CartHistory.CartHistoryUI;
 import Command_Pattern.AdminUI;
 import Facade_Pattern.ItemFacade;
 import Factory_Pattern.ItemProduct;
@@ -9,8 +10,8 @@ import Observer_Pattern.PushNotice;
 import OrderHistory.OrderHistoryUI;
 import Singleton_Pattern.Singleton;
 import Template_Method_Pattern.*;
-import example.LoginFrame;
-import example.MypageFrame;
+import UserFrame.LoginFrame;
+import UserFrame.MypageFrame;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -30,6 +31,8 @@ public class MainUI implements ActionListener {
     
     JButton orderHistory_button;//구매기록
     JButton Mypage_button;//마이페이지 버튼
+
+    JButton Cart_button;//장바구니 버튼
     JButton Logout_button;//로그아웃 버튼
 
     //페이지 번호
@@ -174,6 +177,14 @@ public class MainUI implements ActionListener {
         if(state=="admin"){
             //Mypage_button.setEnabled(false);
             Mypage_button.setText("관리자화면");
+        }
+
+        Cart_button = new JButton("일괄구매");
+        Cart_button.setBounds(610, 500, 100, 50);
+        mainframe.add(Cart_button);
+        Cart_button.addActionListener(this);
+        if(state=="admin"||state=="plane"){
+            Cart_button.setEnabled(false);
         }
         
         
@@ -430,6 +441,9 @@ public class MainUI implements ActionListener {
         else if(e.getSource() == notice_button){
             //알림버튼
             new NoticeUI(this, notice, id);
+        }
+        else if(e.getSource()==Cart_button){
+            new CartHistoryUI(mainframe, getId());
         }
         else if(e.getSource() == sortComboBox){
             AbstractItemSorter itemSorter;

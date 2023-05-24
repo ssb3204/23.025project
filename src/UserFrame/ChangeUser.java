@@ -1,4 +1,4 @@
-package example;
+package UserFrame;
 
 import UI.MainUI;
 
@@ -12,12 +12,7 @@ public class ChangeUser extends JFrame {
 
     String state;
 
-    ChangeUser(String id, String password, String name, String address){
-        this.id = id;
-        this.password = password;
-        this.name = name;
-        this.address = address;
-    }
+
     //아이디 비밀번호 변경 버튼 누르면 아이디 비밀번호 변경할 수 있는 창 띄우기
     //아이디 비밀번호 변경 후 확인 버튼 누르면
     //아이디 비밀번호 변경

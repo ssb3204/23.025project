@@ -1,7 +1,4 @@
-import UI.MainUI;
-import example.LoginFrame;
-
-import javax.swing.*;
+import UserFrame.LoginFrame;
 
 public class Main {
     public static void main(String[] args) {

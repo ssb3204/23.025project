@@ -12,6 +12,7 @@ public class GeneralItemCreator extends ItemCreator {
     @Override
     public ItemProduct createItemProduct(String title, int price, int count, String description, File imageFile, String userID, int itemID) {
         return new GeneralItemProduct(title, price, count, description, imageFile, userID, itemID);
+
     }
 
     /**생성한 객체를 DB에 등록하는 메서드*/

@@ -40,6 +40,7 @@ public class PopupDialog implements ActionListener {
     JButton item_buy_button;
     //삭제 버튼
     JButton delete_button;
+    JButton item_store_button;
     //수정 버튼
     JButton item_info_button;
     ItemFacade itemFacade;
@@ -128,6 +129,11 @@ public class PopupDialog implements ActionListener {
         item_buy_button.setBounds(300, 530, 100, 30);
         item_panel.add(item_buy_button);
 
+        item_store_button = new JButton("찜하기");
+        item_store_button.addActionListener(this);
+        item_store_button.setBounds(190, 530, 100, 30);
+        item_panel.add(item_store_button);
+
         if(TopUI.sell_item_list.getItemProduct(index).getUserID().equals(TopUI.getId())){
             item_buy_button.setEnabled(false);
         }
@@ -180,6 +186,9 @@ public class PopupDialog implements ActionListener {
         else if (e.getSource() == item_info_button) {
             item_panel.setVisible(false);
             popup_frame.add(new ItemInfoUI(index, this).getItem_info_panel());
+        }else if(e.getSource() == item_store_button){
+            itemFacade.check(index);
+            //popup_frame.dispose();
         }
     }
 }

@@ -1,6 +1,7 @@
 package Factory_Pattern;
 
 import java.io.File;
+import CartState.CartState;
 
 public abstract class ItemProduct {
     protected String item_title;//물품 명
@@ -8,9 +9,12 @@ public abstract class ItemProduct {
     protected String item_description;//물품 설명
     protected File item_imageFile;//물품 파일
     protected int item_count;//물품 개수
+
     protected  String userID;//판매자 명
     protected String item_type;//물품 타입
     protected int itemID;//물품의 고유번호
+    //protected boolean isStored = false;//물품이 장바구니에 들어있는지 아닌지를 나타내는 변수
+    protected  CartState cartState;
 
     /**물품의 고유번호를 반환*/
     public int getItemID() {
@@ -62,5 +66,15 @@ public abstract class ItemProduct {
     }
     public void setItem_count(int item_count) {
         this.item_count = item_count;
+    }
+    public void changeCartState() {
+        this.cartState= cartState.storeToCart();
+    }
+    public String getCartState() {
+        return cartState.getCart();
+    }
+
+    public void ChangeCartState() {
+        this.cartState = cartState.changeCartState();
     }
 }

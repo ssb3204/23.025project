@@ -1,4 +1,4 @@
-package example;
+package UserFrame;
 
 import DatabaseConnect.DatabaseConect;
 
@@ -30,8 +30,7 @@ public class DeleteUse extends JFrame{
         setVisible(true);
 
         deleteButton.addActionListener(e -> {
-            //Userinfocheck userinfocheck = new Userinfocheck(MypageFrame.id,MypageFrame.password);
-            //userinfocheck.deleteUserinfo();
+
             DeleteUser deleteUse = new DeleteUser(new DatabaseConect());
             deleteUse.deleteStart(MypageFrame.id);
             new LoginFrame();

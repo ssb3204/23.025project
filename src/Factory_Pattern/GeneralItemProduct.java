@@ -1,5 +1,7 @@
 package Factory_Pattern;
 
+import CartState.NotInCart;
+
 import java.io.File;
 
 public class GeneralItemProduct extends ItemProduct  {
@@ -12,6 +14,7 @@ public class GeneralItemProduct extends ItemProduct  {
         this.userID = userID;
         this.item_type = "일반";
         this.itemID = itemID;
+        this.cartState = new NotInCart();
     }
 
     @Override
