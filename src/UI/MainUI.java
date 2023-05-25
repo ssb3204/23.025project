@@ -167,6 +167,9 @@ public class MainUI implements ActionListener {
         orderHistory_button.setBounds(850, 600, 100, 50);
         mainframe.add(orderHistory_button);
         orderHistory_button.addActionListener(this);
+        if(state.equals("plane")){
+            orderHistory_button.setEnabled(false);
+        }
 
         
         //마이페이지에 접속하기 위한 버튼
