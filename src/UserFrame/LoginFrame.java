@@ -72,6 +72,7 @@ public class LoginFrame extends JFrame{
         loginButton.addActionListener(e -> {
             String id = idText.getText();
             String password = passwordText.getText();
+
             if(id.equals("") || password.equals("")){
                 JOptionPane.showMessageDialog(null,"ID or Password is empty");
                 idText.setText("");
@@ -90,6 +91,7 @@ public class LoginFrame extends JFrame{
                 passwordText.setText("");
                 return;
             }
+
             Userinfocheck userinfocheck = new Userinfocheck(id,password);
             if(userinfocheck.checkUserinfo()&&idText.getText().equals("admin")){
                 JOptionPane.showMessageDialog(null,"Admin Login Success");

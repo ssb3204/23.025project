@@ -75,9 +75,18 @@ public class RegisterFrame extends JFrame {
             //없으면 회원가입 성공
             if(userinfocheck.Userinfoexist()){
                 JOptionPane.showMessageDialog(null,"Register Failed,your imformation is already exist");
+            }else if(id.equals("")||password.equals("")||name.equals("")||address.equals("")){
+                JOptionPane.showMessageDialog(null,"Register Failed,please fill in the blank");
             }
-            else{
-                JOptionPane.showMessageDialog(null,"Register Success");
+            else if(id.contains(" ")||password.contains(" ")||name.contains(" ")||address.contains(" ")){
+                JOptionPane.showMessageDialog(null,"Register Failed,please don't use space");
+            } else if (id.contains("!") || id.contains("@") || id.contains("#") || id.contains("$")||id.contains("%") || id.contains("^") || id.contains("&") || id.contains("*")||id.contains("(") || id.contains(")") || id.contains("_") || id.contains("-")||id.contains("+")|id.contains("=")) {
+                JOptionPane.showMessageDialog(null, "Register Failed,please don't use special character");
+            }else if(id.contains("{")||id.contains("}")||id.contains("[")||id.contains("]")||id.contains(":")||id.contains(";")||id.contains("'")||id.contains("\"")||id.contains("<")||id.contains(">")||id.contains(",")||id.contains(".")||id.contains("?")||id.contains("/")){
+                JOptionPane.showMessageDialog(null, "Register Failed,please don't use special character");
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "Register Success");
                 //성공하면 입력한 정보 파일에 저장
                 userinfocheck.addUserinfo();
                 //로그인 창 띄우기
