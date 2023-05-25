@@ -4,6 +4,7 @@ import Facade_Pattern.ItemFacade;
 import Factory_Pattern.GeneralItemCreator;
 import Factory_Pattern.ItemCreator;
 import Factory_Pattern.ItemProduct;
+import Observer_Pattern.DisplayObserver;
 import Observer_Pattern.Observer;
 import Singleton_Pattern.Singleton;
 import UI.MainUI;
@@ -13,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 
-public class AdminUI implements ActionListener, Observer, WindowListener {
+public class AdminUI implements ActionListener, DisplayObserver, WindowListener {
     JFrame mainframe;
     Button button;
     JButton read;
@@ -107,37 +108,31 @@ public class AdminUI implements ActionListener, Observer, WindowListener {
         else if(e.getSource() == update){
             button.click(2, item_table.getSelectedRow());
         }
-
     }
-
     @Override
-    public void update(String action, ItemProduct item) {
+    public void DisplayUpdate() {
         updateData();
     }
     @Override
     public void windowClosing(WindowEvent e) {
         ItemFacade itemFacade = ItemFacade.getItemFacade();
-        itemFacade.unsubscribe(this);
+        itemFacade.displayUnsubscribe(this);
+        mainframe.dispose();
     }
     @Override
     public void windowOpened(WindowEvent e) {
-
     }
     @Override
     public void windowClosed(WindowEvent e) {
-
     }
     @Override
     public void windowIconified(WindowEvent e) {
-
     }
     @Override
     public void windowDeiconified(WindowEvent e) {
-
     }
     @Override
     public void windowActivated(WindowEvent e) {
-
     }
     @Override
     public void windowDeactivated(WindowEvent e) {

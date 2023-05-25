@@ -10,7 +10,6 @@ import javax.swing.*;
 public class DeleteCommand implements Command {
     ItemFacade itemFacade;
     ItemProduct backupItem;
-
     DeleteCommand(){
        this.itemFacade = ItemFacade.getItemFacade();
     }

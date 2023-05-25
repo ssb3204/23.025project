@@ -4,7 +4,6 @@ import DatabaseConnect.DatabaseConect;
 import Facade_Pattern.ItemFacade;
 import OrderHistory.OrderHistoryDao;
 import OrderHistory.OrderHistoryDaoImpl;
-import OrderHistory.OrderHistoryObj;
 import Strategy_Pattern.PurchaseUI;
 
 import javax.imageio.ImageIO;
@@ -134,8 +133,9 @@ public class PopupDialog implements ActionListener {
         item_store_button.setBounds(190, 530, 100, 30);
         item_panel.add(item_store_button);
 
-        if(TopUI.sell_item_list.getItemProduct(index).getUserID().equals(TopUI.getId())){
+        if(TopUI.sell_item_list.getItemProduct(index).getUserID().equals(TopUI.getId()) || TopUI.getId().equals("viewonly")){
             item_buy_button.setEnabled(false);
+            item_store_button.setEnabled(false);
         }
 
         //System.out.println(TopUI.getId());
@@ -152,6 +152,8 @@ public class PopupDialog implements ActionListener {
             item_info_button.addActionListener(this);
             item_info_button.setBounds(520, 530, 100, 30);
             item_panel.add(item_info_button);
+
+
         }
         
         //패널을 메인프레임에 추가한다.

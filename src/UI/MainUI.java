@@ -171,26 +171,25 @@ public class MainUI implements ActionListener {
         
         //마이페이지에 접속하기 위한 버튼
         Mypage_button = new JButton("마이페이지");
-        Mypage_button.setBounds(850, 500, 100, 50);
+        Mypage_button.setBounds(850, 530, 100, 50);
         mainframe.add(Mypage_button);
         Mypage_button.addActionListener(this);
         if(state=="admin"){
-            //Mypage_button.setEnabled(false);
             Mypage_button.setText("관리자화면");
         }
 
         Cart_button = new JButton("일괄구매");
-        Cart_button.setBounds(610, 500, 100, 50);
+        Cart_button.setBounds(610, 600, 100, 50);
         mainframe.add(Cart_button);
         Cart_button.addActionListener(this);
-        if(state=="admin"||state=="plane"){
+        if(state.equals("admin")||state.equals("plane")){
             Cart_button.setEnabled(false);
         }
         
         
         //로그아웃 버튼
         Logout_button = new JButton("로그아웃");
-        Logout_button.setBounds(730, 500, 100, 50);
+        Logout_button.setBounds(730, 530, 100, 50);
         mainframe.add(Logout_button);
         Logout_button.addActionListener(this);
 
@@ -258,12 +257,10 @@ public class MainUI implements ActionListener {
 
     /**패널 리스트를 다시 생성한다*/
     public void resetAndAddPanels(){
-        //System.out.println("패널 리스트를 삭제 후 다시 추가 중 입니다." + sell_item_list.getSize());
         panel_list.clear();
         for(int i = 0; i < sell_item_list.getSize(); i++) {
             panel_list.add(createItemPanel(sell_item_list.getItemProduct(i), i));
         }
-        //System.out.println("패널 리스트 개수 : " + panel_list.size());
     }
 
     /**메인프레임 화면에 있는 패널들을 모두 제거한다.*/
@@ -373,13 +370,13 @@ public class MainUI implements ActionListener {
             new OrderHistoryUI(mainframe, getId());
         }
         else if(e.getSource() == Mypage_button) {
-            if(state=="plane"){
+            if(state.equals("plane")){
                 JOptionPane.showMessageDialog(null,"회원가입이 필요합니다");
                 return;
             }
             else if(state.equals("admin")){
                 AdminUI adminUI = new AdminUI(this);
-                itemFacade.subscribe(adminUI);
+                itemFacade.displaySubscribe(adminUI);
             }
             else {
                 //마이페이지 버튼
@@ -474,6 +471,7 @@ public class MainUI implements ActionListener {
                     break;
                 }
             }
+            itemFacade.displayNotifyObserver();
         }
     }
 

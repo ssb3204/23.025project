@@ -22,9 +22,6 @@ public class PushNotice implements Observer {
         if(!ID.equals(item.getUserID()) && action != null) {
             String target = item.getUserID();
             NoticeObj noticeObj = null;
-
-            /*System.out.println("상대 알림 작동");
-            System.out.println("접속 계정 : " + ID + "   대상 계정 : " + userID);*/
             if (action.equals("판매")) {//접속자 대상이 아니라서 무조건 판매된것
                 noticeObj = new NoticeObj(target, getComleteWordByJongsung(item.getTitle(), "이", "가") + " 판매되었습니다.");
             } 
@@ -37,8 +34,6 @@ public class PushNotice implements Observer {
             else if (action.equals("수정")){
                 noticeObj = new NoticeObj(target, getComleteWordByJongsung(item.getTitle(), "이", "가") + " 관리자에게 수정되었습니다.");
             }
-            /*System.out.println(noticeObj.getUser() + "  " + noticeObj.getMsg());
-            System.out.println();*/
             noticeDao.addNotice(noticeObj);
         }
     }
@@ -51,7 +46,6 @@ public class PushNotice implements Observer {
         if (lastName < 0xAC00 || lastName > 0xD7A3) {
             return name;
         }
-
 
         String seletedValue = (lastName - 0xAC00) % 28 > 0 ? firstValue : secondValue;
 

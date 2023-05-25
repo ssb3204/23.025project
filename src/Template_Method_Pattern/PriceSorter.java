@@ -7,7 +7,6 @@ public class PriceSorter extends AbstractItemSorter {
     public PriceSorter(MainUI UI) {
         this.UI =  UI;
     }
-
     @Override
     protected int compare(ItemProduct a, ItemProduct b) {
         return Integer.compare(a.getPrice(), b.getPrice());

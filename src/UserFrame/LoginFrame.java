@@ -15,8 +15,8 @@ public class LoginFrame extends JFrame{
     JButton exitButton;
     JButton resetButton;
 
-
-
+    
+    //로그인 화면
     public LoginFrame(){
         setTitle("Login");
         setSize(800,600);
@@ -134,7 +134,7 @@ public class LoginFrame extends JFrame{
         });
 
         PlaneButton.addActionListener(e -> {
-            new MainUI(null,null,"plane");
+            new MainUI("viewonly",null,"plane");
             dispose();
         });
     }
