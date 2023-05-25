@@ -81,12 +81,33 @@ public class ChangeUser extends JFrame {
             String name = nameText.getText();
             String  address =  addressText.getText();
 
-            if(pass.equals("")||name.equals("")||address.equals("")){
-                JOptionPane.showMessageDialog(null,"Please fill in all fields");
+            if(pass.equals("")||name.equals("")||address.equals("")) {
+                JOptionPane.showMessageDialog(null, "Please fill in all fields");
                 return;
+            }else if(pass.equals(this.password)){
+                JOptionPane.showMessageDialog(null,"Please enter a different password with the current password");
+                passwordText.setText("");
+                return;
+            }
+            else if(pass.contains(" ")){
+                JOptionPane.showMessageDialog(null,"Please don't enter space in password");
+                passwordText.setText("");
+                return;
+            }else if(name.contains(" ")){
+                JOptionPane.showMessageDialog(null,"Please don't enter space in name");
 
-            }else if( pass.length()<8||pass.length()>20){
-                JOptionPane.showMessageDialog(null,"Password must be at least 8 characters or less than 20 characters");
+                nameText.setText("");
+                return;
+            }else if(address.contains(" ")){
+                JOptionPane.showMessageDialog(null,"Please don't enter space in address");
+                addressText.setText("");
+                return;
+            }
+            else if( pass.length()<4||pass.length()>10){
+                JOptionPane.showMessageDialog(null,"Password must be at least 4 characters or less than 10 characters");
+                passwordText.setText("");
+                nameText.setText("");
+                addressText.setText("");
                 return;
             }
             Userinfocheck userinfocheck = new Userinfocheck(this.id,pass,name,address);
