@@ -1,4 +1,4 @@
-package CartState;
+package CartState_Pattern;
 
 public interface CartState {
     CartState storeToCart();
