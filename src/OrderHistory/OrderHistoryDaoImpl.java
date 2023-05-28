@@ -19,26 +19,15 @@ public class OrderHistoryDaoImpl implements OrderHistoryDao{
         int no = -1;
         try {
             database.connect();
-            String query = "SELECT MAX(no) FROM OrderHistory";
+            String query = "INSERT INTO OrderHistory (no, userID, title, price, time, customerID, count) SELECT (SELECT MAX(no) + 1 FROM OrderHistory), ?, ?, ?, ?, ?, ?";
             PreparedStatement pstmt = database.getConn().prepareStatement(query);
-            ResultSet rs = pstmt.executeQuery();
 
-            while (rs.next()) {
-                no = rs.getInt("MAX(no)");
-            }
-            no++;
-            pstmt.close();
-            rs.close();
-
-            query = "INSERT INTO OrderHistory (no, userID, title, price, time, customerID, count) VALUES (?, ?, ?, ?, ?, ?, ?)";
-            pstmt = database.getConn().prepareStatement(query);
-            pstmt.setInt(1, no);
-            pstmt.setString(2, obj.getUser());
-            pstmt.setString(3, obj.getTitle());
-            pstmt.setString(4, String.valueOf(obj.getPrice()));
-            pstmt.setString(5, obj.getTime());
-            pstmt.setString(6, obj.getCustomer());
-            pstmt.setInt(7, obj.getCount());
+            pstmt.setString(1, obj.getUser());
+            pstmt.setString(2, obj.getTitle());
+            pstmt.setString(3, String.valueOf(obj.getPrice()));
+            pstmt.setString(4, obj.getTime());
+            pstmt.setString(5, obj.getCustomer());
+            pstmt.setInt(6, obj.getCount());
             pstmt.executeUpdate();
 
             pstmt.close();
