@@ -16,30 +16,30 @@ public class MypageFrame extends JFrame {
         this.state=state;
 
 
-        setTitle("Mypage");
+        setTitle("마이페이지");
         setSize(400,300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
 
         setLocationRelativeTo(null);
-        JButton changeButton = new JButton("Change");
-        changeButton.setBounds(10,80,80,25);
+        JButton changeButton = new JButton("수정하기");
+        changeButton.setBounds(10,80,85,25);
         add(changeButton);
 
-        JLabel changeLabel = new JLabel("Change your Imformation");
+        JLabel changeLabel = new JLabel("정보를 수정하세요");
         changeLabel.setBounds(100,80,280,25);
         add(changeLabel);
 
-        JButton deleteButton = new JButton("Delete");
-        deleteButton.setBounds(10,40,80,25);
+        JButton deleteButton = new JButton("회워탈퇴");
+        deleteButton.setBounds(10,40,85,25);
         add(deleteButton);
 
-        JLabel deleteLabel = new JLabel("Delete your account");
+        JLabel deleteLabel = new JLabel("계정을 삭제합니다");
         deleteLabel.setBounds(100,40,280,25);
         add(deleteLabel);
 
-        JButton backButton = new JButton("Back");
-        backButton.setBounds(10,120,80,25);
+        JButton backButton = new JButton("나가기");
+        backButton.setBounds(10,120,85,25);
         add(backButton);
 
         setVisible(true);
@@ -52,7 +52,7 @@ public class MypageFrame extends JFrame {
 
         deleteButton.addActionListener(e -> {
             //회원탈퇴 버튼 누르면 DeleteUserFrame 띄우기
-            new DeleteUse();
+            new DeleteUse(id,password,state);
             dispose();
         });
 

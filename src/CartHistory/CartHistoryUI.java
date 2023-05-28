@@ -29,7 +29,7 @@ public class CartHistoryUI implements ActionListener {
     public CartHistoryUI(JFrame TOP, String user) {
         this.user=user;
         mode = false;
-        cartHistoryFrame = new JDialog(TOP, "장바구니", true);
+        cartHistoryFrame = new JDialog(TOP, "일괄구매", true);
         cartHistoryFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
