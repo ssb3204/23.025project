@@ -76,8 +76,9 @@ public class RegisterFrame extends JFrame {
                 JOptionPane.showMessageDialog(null,"존재하는 아이디 입니다");
             }else if(id.equals("")||password.equals("")||name.equals("")||address.equals("")){
                 JOptionPane.showMessageDialog(null,"공백이 있습니다");
-            }
-            else if(id.contains(" ")||password.contains(" ")||name.contains(" ")||address.contains(" ")){
+            }else if(id.length()<4||id.length()>10||password.length()<4||password.length()>10) {
+                JOptionPane.showMessageDialog(null, "아이디와 비밀번호는 4-10자 사이입니다");
+            }else if(id.contains(" ")||password.contains(" ")||name.contains(" ")||address.contains(" ")){
                 JOptionPane.showMessageDialog(null,"띄어쓰기가 포함되어 있습니다");
             } else if (id.contains("!") || id.contains("@") || id.contains("#") || id.contains("$")||id.contains("%") || id.contains("^") || id.contains("&") || id.contains("*")||id.contains("(") || id.contains(")") || id.contains("_") || id.contains("-")||id.contains("+")|id.contains("=")) {
                 JOptionPane.showMessageDialog(null, "아이디에 특수문자 사용불가 입니다");
