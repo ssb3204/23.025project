@@ -3,8 +3,8 @@ package DatabaseConnect;
 import java.sql.*;
 
 public class DatabaseConect {
-    private String url = "jdbc:oracle:thin:@sedb.deu.ac.kr:1521/orcl";
-    private String username =  "a20193116";
+    private String url = "jdbc:mariadb://113.198.235.241:9090/shoppingmalldb";
+    private String username =  "sonb";
     private String password = "20193116";
     private Connection conn = null;
     private Statement stmt = null;
@@ -20,7 +20,7 @@ public class DatabaseConect {
 
     public void connect() throws SQLException, ClassNotFoundException {
         // 데이터베이스 연결 설정
-        Class.forName("oracle.jdbc.driver.OracleDriver");
+        Class.forName("org.mariadb.jdbc.Driver");
         conn = DriverManager.getConnection(url, username, password);
         stmt = conn.createStatement();
     }

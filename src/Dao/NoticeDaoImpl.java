@@ -43,7 +43,7 @@ public class NoticeDaoImpl implements NoticeDao{
     public void addNotice(NoticeObj notice) {
         try {
             databaseConect.connect();
-            String query = "INSERT INTO notice (userid, msg, no) VALUES (?, ?, (SELECT MAX(no) + 1 FROM notice))";
+            String query = "INSERT INTO notice (userid, msg, no) SELECT ?, ?, (SELECT MAX(no) + 1 FROM notice)";
             PreparedStatement pstmt = databaseConect.getConn().prepareStatement(query);
             pstmt.setString(1, notice.getUser());
             pstmt.setString(2, notice.getMsg());

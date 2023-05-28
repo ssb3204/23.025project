@@ -72,7 +72,7 @@ public class RegisterFrame extends JFrame {
             //입력한 정보와 기존 파일에 저장되어있는 정보 비교
             //비교해서 같은 정보가 있으면 회원가입 실패
             //없으면 회원가입 성공
-            if(userinfocheck.Userinfoexist()){
+            if(userinfocheck.userInfoExist()){
                 JOptionPane.showMessageDialog(null,"Register Failed,your imformation is already exist");
             }else if(id.equals("")||password.equals("")||name.equals("")||address.equals("")){
                 JOptionPane.showMessageDialog(null,"Register Failed,please fill in the blank");

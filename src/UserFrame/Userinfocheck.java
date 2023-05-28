@@ -1,5 +1,9 @@
 package UserFrame;
 
+import Dao.UserDAO;
+import Dao.UserDAOImpl;
+import DatabaseConnect.DatabaseConect;
+
 import javax.swing.*;
 import java.sql.*;
 
@@ -13,15 +17,11 @@ public class Userinfocheck {
     private String name;
 
     private String address;
-    private String idFile;
-    private String passwordFile;
-    private String[] userinfo;
-    private String[] userinfoFile;
-    private boolean check;
+    UserDAO userDAO;
     Userinfocheck(String id, String password){
         this.id = id;
         this.password = password;
-        check = false;
+        userDAO = new UserDAOImpl(new DatabaseConect());
     }
 
     Userinfocheck(String id, String password, String name, String address){
@@ -29,137 +29,27 @@ public class Userinfocheck {
         this.password = password;
         this.name = name;
         this.address = address;
-        check = false;
+        userDAO = new UserDAOImpl(new DatabaseConect());
     }
     
     //회원 등록
     public void addUserinfo(){
-        String id="";
-        String pass="";
-        String name="";
-        String address="";
-        Connection conn=null;
-        Statement stmt=null;
-        ResultSet rs=null;
-
-        try{
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-            conn= DriverManager.getConnection("jdbc:oracle:thin:@sedb.deu.ac.kr:1521/orcl","a20193116","20193116");
-            stmt = conn.createStatement();
-            String query = "INSERT INTO USERINFO VALUES('"+this.id+"','"+this.password+"','"+this.name+"','"+this.address+"','"+0+"')";
-            stmt.executeUpdate(query);
-            stmt.close();
-            conn.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        userDAO.addUserinfo(id, password, name, address);
     }
 
     //회원정보 있는지 확인
-    public boolean Userinfoexist(){
-
-        Statement stmt=null;
-        ResultSet rs=null;
-
-        try{
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-            Connection conn= DriverManager.getConnection("jdbc:oracle:thin:@sedb.deu.ac.kr:1521/orcl","a20193116","20193116");
-            stmt = conn.createStatement();
-            String query = "SELECT * FROM USERINFO WHERE ID='"+this.id+"'";
-            rs = stmt.executeQuery(query);
-            if(rs.next()){
-                return true;
-            }
-            else{
-                return false;
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
+    public boolean userInfoExist(){
+        return userDAO.userInfoExist(id);
     }
 
     //회원정보 변경사항 저장
     public void saveUserinfo(){
-        Connection conn=null;
-        Statement stmt=null;
-        ResultSet rs=null;
-
-        try{
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-            conn= DriverManager.getConnection("jdbc:oracle:thin:@sedb.deu.ac.kr:1521/orcl","a20193116","20193116");
-            stmt = conn.createStatement();
-
-            String sql_query= String.format("UPDATE USERINFO SET PW='"+this.password+"', NAME='"+this.name+"', ADDRESS='"+this.address+"' WHERE ID='"+this.id+"'");
-            stmt.executeUpdate(sql_query);
-
-
-            rs=stmt.executeQuery(sql_query);
-            rs.next();
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        userDAO.saveUserinfo(id, password, name, address);
     }
 
     //로그인시 회원 확인
     public boolean checkUserinfo(){
-        String id= this.id;
-        String pass = this.password;
-        try{
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-            Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@sedb.deu.ac.kr:1521/orcl","a20193116","20193116");
-            Statement stmt =conn.createStatement();
-
-            String sql_query=String.format("SELECT pw FROM userinfo WHERE id='%s' AND pw='%s'",id,pass);
-            ResultSet rs = stmt.executeQuery(sql_query);
-
-            PreparedStatement psmt = conn.prepareStatement(sql_query);
-            rs=stmt.executeQuery(sql_query);
-            rs.next();
-
-            if(pass.equals(rs.getString("pw"))){
-                check=true;
-            }
-            else{
-                check=false;
-            }
-
-            rs.close();
-            stmt.close();
-            conn.close();
-        }catch (SQLException e) {
-            JOptionPane.showMessageDialog(null,"Login Failed");
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        return check;
+        return userDAO.checkUserinfo(id, password);
     }
 
-    //회원정보 삭제
-    public void deleteUserinfo() {
-        Connection conn = null;
-        Statement stmt = null;
-        ResultSet rs = null;
-
-        try {
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-            conn = DriverManager.getConnection("jdbc:oracle:thin:@sedb.deu.ac.kr:1521/orcl", "a20193116", "20193116");
-            stmt = conn.createStatement();
-
-            String sql_query = String.format("DELETE FROM USERINFO WHERE ID='" + this.id + "'");
-            stmt.executeUpdate(sql_query);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

@@ -14,73 +14,96 @@ public class UserDAOImpl implements UserDAO {
         this.database = database;
     }
     @Override
-    public void addUserinfo(String id, String password, String name, String email) throws SQLException {
-        try (Connection conn = database.getConn();
-             PreparedStatement stmt = conn.prepareStatement("INSERT INTO users (id, password, name, email) VALUES (?, ?, ?, ?)")) {
-            stmt.setString(1, id);
-            stmt.setString(2, password);
-            stmt.setString(3, name);
-            stmt.setString(4, email);
-            stmt.executeUpdate();
+    public void addUserinfo(String id, String password, String name, String address){
+        try {
+            database.connect();
+            String query = "INSERT INTO userinfo (id, pw, name, address) VALUES (?, ?, ?, ?)";
+            PreparedStatement pstmt = database.getConn().prepareStatement(query);
+            pstmt.setString(1, id);
+            pstmt.setString(2, password);
+            pstmt.setString(3, name);
+            pstmt.setString(4, address);
+            pstmt.executeUpdate();
+
+            pstmt.close();
+            database.closeConnect();
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public Boolean UserinfoExist(String id) throws SQLException{
-        try (Connection conn = database.getConn();
-             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM users WHERE id = ?")) {
-            stmt.setString(1, id);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return Boolean.TRUE;
-                } else {
-                    return Boolean.FALSE;
-                }
+    public boolean userInfoExist(String id){
+        boolean result = false;
+        try {
+            database.connect();
+            String query = "SELECT * FROM userinfo WHERE id = ?";
+            PreparedStatement pstmt = database.getConn().prepareStatement(query);
+            pstmt.setString(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()){
+                result = true;
             }
+            pstmt.close();
+            database.closeConnect();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
+        return result;
     }
 
 
     @Override
-    public void saveUserinfo(String id, String password, String name, String email) throws SQLException {
-        try (Connection conn = database.getConn();
-             PreparedStatement stmt = conn.prepareStatement("UPDATE users SET password = ?, name = ?, email = ? WHERE id = ?")) {
-            stmt.setString(1, password);
-            stmt.setString(2, name);
-            stmt.setString(3, email);
-            stmt.setString(4, id);
-            stmt.executeUpdate();
+    public void saveUserinfo(String id, String password, String name, String address) {
+        try {
+            database.connect();
+            String query = "UPDATE userinfo SET pw = ?, name = ?, address = ? WHERE id = ?";
+            PreparedStatement pstmt = database.getConn().prepareStatement(query);
+            pstmt.setString(1, password);
+            pstmt.setString(2, name);
+            pstmt.setString(3, address);
+            pstmt.setString(4, id);
+            pstmt.executeUpdate();
+
+            pstmt.close();
+            database.closeConnect();
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public boolean checkUserinfo(String id, String password) throws SQLException {
-        try (Connection conn = database.getConn();
-             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM users WHERE id = ? AND password = ?")) {
-            stmt.setString(1, id);
-            stmt.setString(2, password);
-            try (ResultSet rs = stmt.executeQuery()) {
-                return rs.next();
+    public boolean checkUserinfo(String id, String password){
+        boolean result = false;
+        try {
+            database.connect();
+            String query = "SELECT * FROM userinfo WHERE id = ? AND pw = ?";
+            PreparedStatement pstmt = database.getConn().prepareStatement(query);
+            pstmt.setString(1, id);
+            pstmt.setString(2, password);
+            ResultSet rs = pstmt.executeQuery();
+
+            while(rs.next()){
+                result = true;
             }
+
+            pstmt.close();
+            rs.close();
+            database.closeConnect();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
+        return result;
     }
 
-    @Override
-    public void deleteUserinfo(String id) throws SQLException {
-        try (Connection conn = database.getConn();
-             PreparedStatement stmt = conn.prepareStatement("DELETE FROM users WHERE id = ?")) {
-            stmt.setString(1, id);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     @Override
     public boolean isFirstPayment(String id) {

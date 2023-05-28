@@ -18,5 +18,6 @@
     </orderEntry>
     <orderEntry type="library" name="orai18n" level="project" />
     <orderEntry type="library" name="ojdbc11" level="project" />
+    <orderEntry type="library" name="mariadb-java-client-3.1.3" level="project" />
   </component>
 </module>
