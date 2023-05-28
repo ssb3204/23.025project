@@ -80,13 +80,13 @@ public class LoginFrame extends JFrame{
                 passwordText.setText("");
                 return;
             }
-            if(id.length() > 10 || password.length() > 10){
+            else if(id.length() > 10 || password.length() > 10){
                 JOptionPane.showMessageDialog(null,"아이디 또는 비밀번호가 10자를 초과합니다.");
                 idText.setText("");
                 passwordText.setText("");
                 return;
             }
-            if(id.contains(" ") || password.contains(" ")){
+            else if(id.contains(" ") || password.contains(" ")){
                 JOptionPane.showMessageDialog(null,"아이디 또는 비밀번호에 띄어쓰기가 있습니다.");
                 idText.setText("");
                 passwordText.setText("");
